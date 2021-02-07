@@ -6,11 +6,21 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import ResetPassword from "./containers/ResetPassword";
 import Settings from "./containers/Settings";
+import ChangePassword from "./containers/ChangePassword";
+import ChangeEmail from "./containers/ChangeEmail";
 
 
 export default function Routes() {
   return (
     <Switch>
+
+      <Route exact path="/settings/email">
+        <ChangeEmail />
+      </Route>
+
+      <Route exact path="/settings/password">
+        <ChangePassword />
+      </Route>
 
       <Route exact path="/login/reset">
        <ResetPassword />
