@@ -1,16 +1,11 @@
 @media all and (min-width: 480px) {
-  .Login {
+  .Settings {
     padding: 60px 0;
-  }
-
-  .Login form {
     margin: 0 auto;
-    max-width: 320px;
+    max-width: 480px;
   }
 
-  .Login form a {
+  .Settings > .LoaderButton:first-child {
     margin-bottom: 15px;
-    display: block;
-    font-size: 14px;
   }
 }
