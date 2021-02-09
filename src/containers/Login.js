@@ -8,7 +8,6 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./Login.css";
 import { Link } from "react-router-dom";
-import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
   const history = useHistory();
@@ -41,10 +40,6 @@ export default function Login() {
   return (
     <div className="Login">
       <Form onSubmit={handleSubmit}>
-      <FacebookButton
-        onLogin={this.handleFbLogin}
-      />
-      <hr />
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
