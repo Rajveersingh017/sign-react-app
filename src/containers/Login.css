@@ -5,6 +5,10 @@
 
   .Login form {
     margin: 0 auto;
-    max-width: 320px;
+    padding: 50px;
+    border: 1px black solid;
+    box-shadow: 6px 5px grey;
+    max-width: 400px;
   }
 }
+ 

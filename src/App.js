@@ -48,7 +48,7 @@ function App() {
         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
-              SIGN Foundation Home
+              My Next Meal
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle />
@@ -59,6 +59,12 @@ function App() {
                 
               ) : (
                 <>
+                  <LinkContainer to="/Volunteer_Registration">
+                    <Nav.Link>Volunteer Sign Up</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/Request_Meal">
+                    <Nav.Link>Request Meal</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/signup">
                     <Nav.Link>Signup</Nav.Link>
                   </LinkContainer>
