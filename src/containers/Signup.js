@@ -69,7 +69,7 @@ export default function Signup() {
 
   function renderConfirmationForm() {
     return (
-      <Form onSubmit={handleConfirmationSubmit}>
+      <Form onSubmit={handleConfirmationSubmit} method = "post">
         <Form.Group controlId="confirmationCode" size="lg">
           <Form.Label>Confirmation Code</Form.Label>
           <Form.Control

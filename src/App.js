@@ -65,6 +65,12 @@ function App() {
                 </>
               ) : (
                 <>
+                  <LinkContainer to="/Volunteer_Registration">
+                    <Nav.Link>Volunteer Sign Up</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/Request_Meal">
+                    <Nav.Link>Request Meal</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/signup">
                     <Nav.Link>Signup</Nav.Link>
                   </LinkContainer>
