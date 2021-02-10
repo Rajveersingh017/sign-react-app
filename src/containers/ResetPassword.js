@@ -13,8 +13,8 @@ import { onError } from "../libs/errorLib";
 import "./ResetPassword.css";
 
 // import ReactDOM from 'react-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLaugh } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLaugh } from '@fortawesome/free-solid-svg-icons';
 
 export default function ResetPassword() {
   const [fields, handleFieldChange] = useFormFields({

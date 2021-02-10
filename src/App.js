@@ -50,11 +50,7 @@ function App() {
         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
-<<<<<<< HEAD
-              My Next Meal
-=======
               SIGN Home
->>>>>>> bbec4008f6d4ecaa3a31b02cb58d730641d0e07d
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle />
