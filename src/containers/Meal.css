@@ -1,0 +1,68 @@
+.Meal_Container_Top{
+    width: 60%;
+    margin: 5% auto;
+    border: 2px #f1f1f1 solid;
+    box-shadow: 6px 6px gray;
+}
+.Meal_Container_Top ul li{
+    list-style-type: none;
+    display: inline;
+}
+.Meal_Container_Top label{
+    font-size: 4.2vh;
+    padding: 30px;
+}
+#MealFriendBox{
+    transform: scale(4);
+    margin: 20px;
+}
+.Meal_Container{
+    width: 60%;
+    margin: 5% auto;
+    border: 2px #f1f1f1 solid;
+    box-shadow: 6px 6px gray;
+}
+.Meal_Container h1{
+    text-align: center;
+    text-decoration: underline;
+}
+.Meal_Container hr{
+    width: 70%;
+    border-bottom: 2px black solid;
+}
+.Meal_Container form{
+    width: 55%;
+    margin: 0 auto;
+    margin-bottom: 5%;
+}
+.Meal_Container form label{
+    display: block;
+    font-size: 1.4rem;
+    padding-top: 3%;
+}
+.Meal_Container form input,textarea{
+    padding: 10px;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 2px slateblue solid;
+    transition: 1s;
+}
+
+.Meal_Container button{
+    display: block;
+    margin:0 auto;
+    padding: 10px;
+    margin-top: 3%;
+    background-color:black;
+    color: whitesmoke;
+    border: none;
+    font-size: 1.4rem;
+    box-shadow: 6px 5px gray;
+    transition: 1s;
+}
+.Meal_Container button:hover{
+    background-color: firebrick;
+  
+}
