@@ -69,6 +69,9 @@ export default function Login() {
         >
           Login
         </LoaderButton>
+        <Form.Group lg={24}>
+                Or <Link to="/signup">Signup now!</Link>
+        </Form.Group>
       </Form>
     </div>
   );
