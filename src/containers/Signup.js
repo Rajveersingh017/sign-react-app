@@ -131,13 +131,11 @@ export default function Signup() {
           />
         </Form.Group>
 
-        <Form.Group controlId="formCheckbox">
-          
-        </Form.Group>
 
        <Form.Group controlId="disclaimerCheckBox">
          <Form.Check type="checkbox" label="The Disclaimer statement goes here"/>
        </Form.Group>
+
        <Form.Group controlId="policyCheckBox">
          <Form.Check type="checkbox" label="The policy information goes here"/>
        </Form.Group>
