@@ -14,17 +14,33 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
     confirmationCode: "",
+    disclaimerCheckBox: false ,
+    policyCheckBox: false ,
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
+  // function checkChanged(e){
+  //   alert(e.target.id)
+  //   let value = e.target.checked;
+  //   if (e.target.id=="disclaimerCheckBox"){
+  //     fields.disclaimerCheckBox= value;
+  //   }else if (e.target.id=="policyCheckBox"){
+  //     fields.policyCheckBox= value;
+  //   }
+  // }
+
   function validateForm() {
+   //  alert(JSON.stringify(fields));
     return (
+      
       fields.email.length > 0 &&
       fields.password.length > 0 &&
-      fields.password === fields.confirmPassword
+      fields.password === fields.confirmPassword &&
+      fields.disclaimerCheckBox  &&
+      fields.policyCheckBox 
     );
   }
 
@@ -130,14 +146,14 @@ export default function Signup() {
             value={fields.confirmPassword}
           />
         </Form.Group>
+        
 
-
-       <Form.Group controlId="disclaimerCheckBox">
-         <Form.Check type="checkbox" label="The Disclaimer statement goes here"/>
+       <Form.Group  controlId="disclaimerCheckBox">
+         <Form.Check onChange={handleFieldChange}   type="checkbox" label="The Disclaimer statement goes here"/>
        </Form.Group>
 
        <Form.Group controlId="policyCheckBox">
-         <Form.Check type="checkbox" label="The policy information goes here"/>
+         <Form.Check onChange={handleFieldChange}  type="checkbox" label="The policy information goes here"/>
        </Form.Group>
        
         <LoaderButton
@@ -146,7 +162,7 @@ export default function Signup() {
           type="submit"
           variant="success"
           isLoading={isLoading}
-          disabled={!validateForm()}
+           disabled={!validateForm()}
         >
           Agree and Signup
         </LoaderButton>
