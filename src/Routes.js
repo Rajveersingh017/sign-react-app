@@ -11,17 +11,20 @@ import Settings from "./containers/Settings";
 import ChangePassword from "./containers/ChangePassword";
 import ChangeEmail from "./containers/ChangeEmail";
 
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+
 export default function Routes() {
   return (
     <Switch>
 
-      <Route exact path="/Volunteer_Registration">
+      <UnauthenticatedRoute exact path="/Volunteer_Registration">
         <VolunteerSignUp />
-      </Route>
+      </UnauthenticatedRoute>
 
-      <Route exact path="/Request_Meal">
+      <AuthenticatedRoute  exact path="/Request_Meal">
         <Meal />
-      </Route>
+      </AuthenticatedRoute >
 
       <Route exact path="/settings/email">
         <ChangeEmail />
@@ -35,17 +38,17 @@ export default function Routes() {
        <ResetPassword />
       </Route>
 
-      <Route exact path="/signup">
+      <UnauthenticatedRoute exact path="/signup">
         <Signup />
-      </Route>
+      </UnauthenticatedRoute>
 
-      <Route exact path="/settings">
+      <AuthenticatedRoute  exact path="/settings">
         <Settings />
-      </Route>  
+      </AuthenticatedRoute>  
 
-      <Route exact path="/login">
+      <UnauthenticatedRoute exact path="/login">
        <Login />
-      </Route>
+      </UnauthenticatedRoute>
 
       <Route exact path="/">
         <Home />
