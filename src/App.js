@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";import Navbar from "react-bootstrap/Navbar";
+import React, { useState, useEffect, Component, Fragment } from "react";
+import Navbar from "react-bootstrap/Navbar";
 import "./App.css";
 import Routes from "./Routes";
 import Nav from "react-bootstrap/Nav";
@@ -8,8 +9,8 @@ import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { onError } from "./libs/errorLib";
 
-import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
+
+
 
 
 function App() {
