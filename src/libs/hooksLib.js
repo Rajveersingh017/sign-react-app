@@ -3,13 +3,16 @@ import { useState } from "react";
 export function useFormFields(initialState) {
   const [fields, setValues] = useState(initialState);
 
-  return [
+  let ret =  [
     fields,
     function(event) {
-      setValues({
+      let value = (event.target.type == 'checkbox')?event.target.checked:event.target.value;
+     setValues({
         ...fields,
-        [event.target.id]: event.target.value
+        [event.target.id]: value
       });
     }
   ];
+
+  return ret;
 }

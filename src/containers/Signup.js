@@ -14,17 +14,33 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
     confirmationCode: "",
+    disclaimerCheckBox: false ,
+    policyCheckBox: false ,
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
+  // function checkChanged(e){
+  //   alert(e.target.id)
+  //   let value = e.target.checked;
+  //   if (e.target.id=="disclaimerCheckBox"){
+  //     fields.disclaimerCheckBox= value;
+  //   }else if (e.target.id=="policyCheckBox"){
+  //     fields.policyCheckBox= value;
+  //   }
+  // }
+
   function validateForm() {
+   //  alert(JSON.stringify(fields));
     return (
+      
       fields.email.length > 0 &&
       fields.password.length > 0 &&
-      fields.password === fields.confirmPassword
+      fields.password === fields.confirmPassword &&
+      fields.disclaimerCheckBox  &&
+      fields.policyCheckBox 
     );
   }
 
@@ -102,45 +118,53 @@ export default function Signup() {
           <Form.Control
             autoFocus
             type="email"
+            placeholder="Enter email"
             value={fields.email}
             onChange={handleFieldChange}
           />
+          <Form.Text className="text-muted">
+           We'll never share your email with anyone else.
+          </Form.Text>
         </Form.Group>
-
-        {/* <Form.Group controlId="userName" size="lg">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="userName"
-            value={fields.userName}
-            onChange={handleFieldChange}
-          />
-        </Form.Group> */}
 
         <Form.Group controlId="password" size="lg">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
+            placeholder="Password01!"
             value={fields.password}
             onChange={handleFieldChange}
           />
         </Form.Group>
+
         <Form.Group controlId="confirmPassword" size="lg">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
+            placeholder="Password01!"
             onChange={handleFieldChange}
             value={fields.confirmPassword}
           />
         </Form.Group>
+        
+
+       <Form.Group  controlId="disclaimerCheckBox">
+         <Form.Check onChange={handleFieldChange}   type="checkbox" label="The Disclaimer statement goes here"/>
+       </Form.Group>
+
+       <Form.Group controlId="policyCheckBox">
+         <Form.Check onChange={handleFieldChange}  type="checkbox" label="The policy information goes here"/>
+       </Form.Group>
+       
         <LoaderButton
           block
           size="lg"
           type="submit"
           variant="success"
           isLoading={isLoading}
-          disabled={!validateForm()}
+           disabled={!validateForm()}
         >
-          Signup
+          Agree and Signup
         </LoaderButton>
       </Form>
     );

@@ -12,21 +12,24 @@ import ChangePassword from "./containers/ChangePassword";
 import ChangeEmail from "./containers/ChangeEmail";
 import Edit_Profile from "./containers/Edit_Profile";
 import AgencySignUp from "./containers/AgencySignUp";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 export default function Routes() {
   return (
     <Switch>
 
-      <Route exact path="/Agency_Registration">
-        <AgencySignUp></AgencySignUp>
-      </Route>
-      <Route exact path="/Volunteer_Registration">
+      <UnauthenticatedRoute exact path="/Volunteer_Registration">
         <VolunteerSignUp />
-      </Route>
+      </UnauthenticatedRoute>
 
-      <Route exact path="/Request_Meal">
+      <UnauthenticatedRoute exact path="/Agency_Registration">
+        <AgencySignUp></AgencySignUp>
+      </UnauthenticatedRoute>
+
+      <AuthenticatedRoute  exact path="/Request_Meal">
         <Meal />
-      </Route>
+      </AuthenticatedRoute >
 
       <Route exact path="/Edit_Profile">
         <Edit_Profile />
@@ -44,17 +47,17 @@ export default function Routes() {
        <ResetPassword />
       </Route>
 
-      <Route exact path="/signup">
+      <UnauthenticatedRoute exact path="/signup">
         <Signup />
-      </Route>
+      </UnauthenticatedRoute>
 
-      <Route exact path="/settings">
+      <AuthenticatedRoute  exact path="/settings">
         <Settings />
-      </Route>  
+      </AuthenticatedRoute>  
 
-      <Route exact path="/login">
+      <UnauthenticatedRoute exact path="/login">
        <Login />
-      </Route>
+      </UnauthenticatedRoute>
 
       <Route exact path="/">
         <Home />
