@@ -58,6 +58,9 @@ function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
+                  <LinkContainer to="/Edit_Profile">
+                    <Nav.Link>Edit Profile</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
@@ -67,6 +70,9 @@ function App() {
                 <>
                   <LinkContainer to="/Volunteer_Registration">
                     <Nav.Link>Volunteer Sign Up</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/Agency_Registration">
+                    <Nav.Link>Agency Sign Up</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/Request_Meal">
                     <Nav.Link>Request Meal</Nav.Link>
