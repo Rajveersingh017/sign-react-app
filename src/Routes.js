@@ -13,6 +13,7 @@ import ChangeEmail from "./containers/ChangeEmail";
 
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+import UserInfo from "./containers/UserInfo";
 
 export default function Routes() {
   return (
@@ -24,6 +25,10 @@ export default function Routes() {
 
       <AuthenticatedRoute  exact path="/Request_Meal">
         <Meal />
+      </AuthenticatedRoute >
+
+      <AuthenticatedRoute  exact path="/userinfo">
+        <UserInfo />
       </AuthenticatedRoute >
 
       <Route exact path="/settings/email">

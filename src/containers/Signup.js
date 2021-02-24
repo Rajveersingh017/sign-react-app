@@ -15,6 +15,8 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
     confirmationCode: "",
+    phoneNumber: "",
+    address: "",
     disclaimerCheckBox: false ,
     policyCheckBox: false ,
   });
@@ -42,7 +44,9 @@ export default function Signup() {
       fields.password.length > 0 &&
       fields.password === fields.confirmPassword &&
       fields.disclaimerCheckBox  &&
-      fields.policyCheckBox 
+      fields.policyCheckBox &&
+      fields.address.length > 0 &&
+      fields.phoneNumber.length > 0
     );
   }
 
@@ -56,10 +60,13 @@ export default function Signup() {
     setIsLoading(true);
   
     try {
-      const newUser = await Auth.signUp({
+      let user = {
         username: fields.email,
         password: fields.password,
-      });
+        userAddress: fields.address,
+        phoneNumber: fields.phoneNumber,
+      }
+      const newUser = await Auth.signUp(user);
       setIsLoading(false);
       setNewUser(newUser);
     } catch (e) {
@@ -148,6 +155,26 @@ export default function Signup() {
             placeholder="Password01!"
             onChange={handleFieldChange}
             value={fields.confirmPassword}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="address" size="lg">
+          <Form.Label>Home Address</Form.Label>
+          <Form.Control
+            type="address"
+            placeholder="Your home address"
+            value={fields.address}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="phoneNumber" size="lg">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            type="phone"
+            placeholder="Phone number"
+            value={fields.phoneNumber}
+            onChange={handleFieldChange}
           />
         </Form.Group>
         

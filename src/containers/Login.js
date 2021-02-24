@@ -32,6 +32,8 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
+
+      localStorage.setItem("userId",fields.email);
       
     } catch (e) {
       onError(e);
