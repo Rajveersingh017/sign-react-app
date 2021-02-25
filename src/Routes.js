@@ -32,15 +32,12 @@ export default function Routes() {
         <Meal />
       </AuthenticatedRoute >
 
-<<<<<<< HEAD
       <AuthenticatedRoute  exact path="/userinfo">
         <UserInfo />
       </AuthenticatedRoute >
-=======
       <AuthenticatedRoute exact path="/Edit_Profile">
         <Edit_Profile />
       </AuthenticatedRoute>
->>>>>>> 45934c384ba3a7981165fa7db63e1515863bd551
 
       <Route exact path="/settings/email">
         <ChangeEmail />
