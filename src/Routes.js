@@ -31,9 +31,9 @@ export default function Routes() {
         <Meal />
       </AuthenticatedRoute >
 
-      <Route exact path="/Edit_Profile">
+      <AuthenticatedRoute exact path="/Edit_Profile">
         <Edit_Profile />
-      </Route>
+      </AuthenticatedRoute>
 
       <Route exact path="/settings/email">
         <ChangeEmail />

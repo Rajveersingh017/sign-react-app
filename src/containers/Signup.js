@@ -57,6 +57,16 @@ export default function Signup() {
       const newUser = await Auth.signUp({
         username: fields.email,
         password: fields.password,
+        attributes: {
+          email: fields.email,
+          phone_number: "",
+          preferred_username: "",
+          name: "",
+          'custom:license': "",
+          'custom:hasVehicle': "",
+          'custom:kitchen': "",
+          'custom:role': "1"
+        }
       });
       setIsLoading(false);
       setNewUser(newUser);

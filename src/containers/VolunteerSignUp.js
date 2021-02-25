@@ -19,9 +19,9 @@ export default function VolunteerSignUp() {
       password: "",
       confirmPassword: "",
       license:"-1",
-      hasVehicle:"-1",
+      hasVehicle:"2",
       kitchen:"-1",
-      role: "3",
+      role: "",
       confirmationCode: "",
     });
     const history = useHistory();
@@ -51,8 +51,19 @@ export default function VolunteerSignUp() {
         const newUser = await Auth.signUp({
           username: fields.email,
           password: fields.password,
+          attributes: {
+            email: fields.email,
+            phone_number: fields.phone,
+            preferred_username: fields.userName,
+            name: fields.name,
+            'custom:license': fields.license,
+            'custom:hasVehicle': fields.hasVehicle,
+            'custom:kitchen': fields.kitchen,
+            'custom:role': "0"
+          }
         });
         setIsLoading(false);
+        console.log(newUser);
         setNewUser(newUser);
       } catch (e) {
         onError(e);
@@ -179,8 +190,9 @@ export default function VolunteerSignUp() {
             <Form.Control 
                 as="select" 
                 value={fields.hasVehicle}
-                onChange={handleFieldChange} 
+                onChange={handleFieldChange}            
             >
+                <option value ="-2">dsf</option>
                 <option value="-1">Select</option>
                 <option value="1">yes</option>
                 <option value="0">no</option>
