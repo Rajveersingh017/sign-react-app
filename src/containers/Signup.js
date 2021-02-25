@@ -8,7 +8,6 @@ import { onError } from "../libs/errorLib";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
 
-
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
       name:"",
@@ -37,8 +36,7 @@ export default function Signup() {
   //     fields.policyCheckBox= value;
   //   }
   // }
- 
-  
+
   function validateForm() {
    //  alert(JSON.stringify(fields));
     return (
@@ -47,9 +45,7 @@ export default function Signup() {
       fields.password.length > 0 &&
       fields.password === fields.confirmPassword &&
       fields.disclaimerCheckBox  &&
-      fields.policyCheckBox
-      // fields.address.length > 0 &&
-      // fields.phoneNumber.length > 0
+      fields.policyCheckBox 
     );
   }
 
@@ -63,7 +59,7 @@ export default function Signup() {
     setIsLoading(true);
   
     try {
-      let user = ({
+      const newUser = await Auth.signUp({
         username: fields.email,
         password: fields.password,
         attributes: {
@@ -131,9 +127,7 @@ export default function Signup() {
 
   function renderForm() {
     return (
-      
       <Form onSubmit={handleSubmit}>
-
         <Form.Group controlId="email" size="lg">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -167,26 +161,6 @@ export default function Signup() {
             value={fields.confirmPassword}
           />
         </Form.Group>
-
-        {/* <Form.Group controlId="address" size="lg">
-          <Form.Label>Home Address</Form.Label>
-          <Form.Control
-            type="address"
-            placeholder="Your home address"
-            value={fields.address}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="phoneNumber" size="lg">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control
-            type="phone"
-            placeholder="Phone number"
-            value={fields.phoneNumber}
-            onChange={handleFieldChange}
-          />
-        </Form.Group> */}
         
 
        <Form.Group  controlId="disclaimerCheckBox">
