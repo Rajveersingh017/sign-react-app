@@ -9,8 +9,13 @@ import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { onError } from "./libs/errorLib";
 
+<<<<<<< HEAD
 
 
+=======
+// import FacebookLogin from 'react-facebook-login';
+// import GoogleLogin from 'react-google-login';
+>>>>>>> 45934c384ba3a7981165fa7db63e1515863bd551
 
 
 function App() {
@@ -61,10 +66,16 @@ function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
+<<<<<<< HEAD
                   <LinkContainer to="/userinfo">
                   <Nav.Link>User Information</Nav.Link>
                   </LinkContainer>
 
+=======
+                  <LinkContainer to="/Edit_Profile">
+                    <Nav.Link>Edit Profile</Nav.Link>
+                  </LinkContainer>
+>>>>>>> 45934c384ba3a7981165fa7db63e1515863bd551
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
@@ -74,6 +85,9 @@ function App() {
                 <>
                   <LinkContainer to="/Volunteer_Registration">
                     <Nav.Link>Volunteer Sign Up</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/Agency_Registration">
+                    <Nav.Link>Agency Sign Up</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/Request_Meal">
                     <Nav.Link>Request Meal</Nav.Link>

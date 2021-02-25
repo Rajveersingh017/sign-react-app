@@ -8,7 +8,7 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import { Auth } from "aws-amplify";
 
-export default function VolunteerSignUp() {
+function AgencySignUp() {
     const options=[{value: 'yes'}, {value: 'no'}];
 
     const [fields, handleFieldChange] = useFormFields({
@@ -18,10 +18,10 @@ export default function VolunteerSignUp() {
       username:"",
       password: "",
       confirmPassword: "",
-      license:"-1",
-      hasVehicle:"2",
-      kitchen:"-1",
-      role: "",
+      service:"0",
+      hasVehicle:"0",
+      kitchen:"-0",
+      role: "3",
       confirmationCode: "",
     });
     const history = useHistory();
@@ -51,19 +51,8 @@ export default function VolunteerSignUp() {
         const newUser = await Auth.signUp({
           username: fields.email,
           password: fields.password,
-          attributes: {
-            email: fields.email,
-            phone_number: fields.phone,
-            preferred_username: fields.userName,
-            name: fields.name,
-            'custom:license': fields.license,
-            'custom:hasVehicle': fields.hasVehicle,
-            'custom:kitchen': fields.kitchen,
-            'custom:role': "0"
-          }
         });
         setIsLoading(false);
-        console.log(newUser);
         setNewUser(newUser);
       } catch (e) {
         onError(e);
@@ -119,7 +108,7 @@ export default function VolunteerSignUp() {
       return (
         <Form onSubmit={handleSubmit}>
             <Form.Group controlId="name" size="lg">
-                <Form.Label>Full Name</Form.Label>
+                <Form.Label>Organisation Name</Form.Label>
                 <Form.Control
                 autoFocus
                 type="name"
@@ -171,46 +160,41 @@ export default function VolunteerSignUp() {
             />
           </Form.Group>
 
-          <Form.Group controlId="license" size="lg">
-            <Form.Label>Do you have a valid driving license?</Form.Label>
+          <Form.Group controlId="FB_Link" size="lg">
+            <Form.Label>Facebook Link</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={handleFieldChange}
+              value={fields.confirmtext}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="IG_Link" size="lg">
+            <Form.Label>Instagram Link</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={handleFieldChange}
+              value={fields.confirmtext}
+            />
+          </Form.Group>
+
+          
+
+          <Form.Group controlId="service" size="lg">
+            <Form.Label>Services Offered</Form.Label>
             <Form.Control 
                 as="select" 
-                value={fields.license}
+                value={fields.service}
                 onChange={handleFieldChange}            
             >
-                <option value ="-2">dsf</option>
-                <option value="-1">Select</option>
-                <option value="1">yes</option>
-                <option value="0">no</option>
+                <option value ="-2">Food</option>
+                <option value="-1">Shelter</option>
+                <option value="1">Clothes</option>
+                <option value="0">Select</option>
             </Form.Control>
           </Form.Group>
 
-          <Form.Group controlId="vehicle" size="lg">
-            <Form.Label>Do you have your own vehicle?</Form.Label>
-            <Form.Control 
-                as="select" 
-                value={fields.hasVehicle}
-                onChange={handleFieldChange}            
-            >
-                <option value ="-2">dsf</option>
-                <option value="-1">Select</option>
-                <option value="1">yes</option>
-                <option value="0">no</option>
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="kitchen" size="lg">
-            <Form.Label>Do you prefer to work in kitchen?</Form.Label>
-            <Form.Control 
-                as="select" 
-                value={fields.kitchen}
-                onChange={handleFieldChange} 
-            >
-                <option value="-1">Select</option>
-                <option value="1">yes</option>
-                <option value="0">no</option>
-            </Form.Control>
-          </Form.Group>
+         
 
           <LoaderButton
             block
@@ -231,4 +215,6 @@ export default function VolunteerSignUp() {
         {newUser === null ? renderForm() : renderConfirmationForm()}
       </div>
     );
-  }
+}
+
+export default AgencySignUp

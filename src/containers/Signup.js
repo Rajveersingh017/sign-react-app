@@ -11,12 +11,17 @@ import { Auth } from "aws-amplify";
 
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    confirmationCode: "",
-    disclaimerCheckBox: false ,
-    policyCheckBox: false ,
+      name:"",
+      email: "",
+      phone: "",
+      username:"",
+      password: "",
+      confirmPassword: "",
+      license:"",
+      hasVehicle:"",
+      kitchen:"",
+      role: "",
+      confirmationCode: "",
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
@@ -61,10 +66,24 @@ export default function Signup() {
       let user = {
         username: fields.email,
         password: fields.password,
+<<<<<<< HEAD
         // userAddress: fields.address,
         // phoneNumber: fields.phoneNumber,
       }
       const newUser = await Auth.signUp(user);
+=======
+        attributes: {
+          email: fields.email,
+          phone_number: "+1204123456",
+          preferred_username: "null",
+          name: "null",
+          'custom:license': "0",
+          'custom:hasVehicle': "0",
+          'custom:kitchen': "0",
+          'custom:role': "1"
+        }
+      });
+>>>>>>> 45934c384ba3a7981165fa7db63e1515863bd551
       setIsLoading(false);
       setNewUser(newUser);
     } catch (e) {

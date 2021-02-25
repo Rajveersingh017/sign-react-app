@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
@@ -10,7 +10,8 @@ import ResetPassword from "./containers/ResetPassword";
 import Settings from "./containers/Settings";
 import ChangePassword from "./containers/ChangePassword";
 import ChangeEmail from "./containers/ChangeEmail";
-
+import Edit_Profile from "./containers/Edit_Profile";
+import AgencySignUp from "./containers/AgencySignUp";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import UserInfo from "./containers/UserInfo";
@@ -23,13 +24,23 @@ export default function Routes() {
         <VolunteerSignUp />
       </UnauthenticatedRoute>
 
+      <UnauthenticatedRoute exact path="/Agency_Registration">
+        <AgencySignUp></AgencySignUp>
+      </UnauthenticatedRoute>
+
       <AuthenticatedRoute  exact path="/Request_Meal">
         <Meal />
       </AuthenticatedRoute >
 
+<<<<<<< HEAD
       <AuthenticatedRoute  exact path="/userinfo">
         <UserInfo />
       </AuthenticatedRoute >
+=======
+      <AuthenticatedRoute exact path="/Edit_Profile">
+        <Edit_Profile />
+      </AuthenticatedRoute>
+>>>>>>> 45934c384ba3a7981165fa7db63e1515863bd551
 
       <Route exact path="/settings/email">
         <ChangeEmail />
