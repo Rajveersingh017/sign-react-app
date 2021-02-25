@@ -15,8 +15,6 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
     confirmationCode: "",
-    phoneNumber: "",
-    address: "",
     disclaimerCheckBox: false ,
     policyCheckBox: false ,
   });
