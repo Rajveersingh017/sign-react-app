@@ -44,9 +44,9 @@ export default function Signup() {
       fields.password.length > 0 &&
       fields.password === fields.confirmPassword &&
       fields.disclaimerCheckBox  &&
-      fields.policyCheckBox &&
-      fields.address.length > 0 &&
-      fields.phoneNumber.length > 0
+      fields.policyCheckBox
+      // fields.address.length > 0 &&
+      // fields.phoneNumber.length > 0
     );
   }
 
@@ -63,8 +63,8 @@ export default function Signup() {
       let user = {
         username: fields.email,
         password: fields.password,
-        userAddress: fields.address,
-        phoneNumber: fields.phoneNumber,
+        // userAddress: fields.address,
+        // phoneNumber: fields.phoneNumber,
       }
       const newUser = await Auth.signUp(user);
       setIsLoading(false);
@@ -158,7 +158,7 @@ export default function Signup() {
           />
         </Form.Group>
 
-        <Form.Group controlId="address" size="lg">
+        {/* <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
           <Form.Control
             type="address"
@@ -176,7 +176,7 @@ export default function Signup() {
             value={fields.phoneNumber}
             onChange={handleFieldChange}
           />
-        </Form.Group>
+        </Form.Group> */}
         
 
        <Form.Group  controlId="disclaimerCheckBox">
