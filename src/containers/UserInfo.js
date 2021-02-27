@@ -7,6 +7,8 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
 import { Auth } from "aws-amplify";
+import { useFormik } from 'formik';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 
 export default function Signup() {
@@ -86,7 +88,48 @@ export default function Signup() {
             onChange={handleFieldChange}
           />
         </Form.Group>
-        
+
+        <Form.Group controlId="clientName" size="lg">
+          <Form.Label>Full Name</Form.Label>
+          <Form.Control
+            type="clientName"
+            placeholder="First name and Last name"
+            value={fields.clientName}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="clientCity" size="lg">
+          <Form.Label>City</Form.Label>
+          <Form.Control
+            type="clientCity"
+            placeholder="Your City"
+            value={fields.clientCity}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="clientProvince" size="lg">
+          <Form.Label>Province</Form.Label>
+          <Form.Control
+            type="clientProvince"
+            placeholder="Your Province"
+            value={fields.clientProvince}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="clientAllergies">
+          <Form.Label>Please list any allergies you may have</Form.Label>
+          <Form.Control 
+          as="textarea" rows={3} 
+          type="clientAllergies"
+          placeholder="Eg. Flower, Milk, Nuts"
+          value={fields.clientAllergies}
+          onChange={handleFieldChange}
+          />
+        </Form.Group>
+              
        
         <LoaderButton
           block

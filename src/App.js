@@ -68,9 +68,15 @@ function App() {
                   <LinkContainer to="/Edit_Profile">
                     <Nav.Link>Edit Profile</Nav.Link>
                   </LinkContainer>
+
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
+
+                  <LinkContainer to="/Request_Meal">
+                    <Nav.Link>Request Meal</Nav.Link>
+                  </LinkContainer>
+                  
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
               ) : (
@@ -81,9 +87,7 @@ function App() {
                   <LinkContainer to="/Agency_Registration">
                     <Nav.Link>Agency Sign Up</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/Request_Meal">
-                    <Nav.Link>Request Meal</Nav.Link>
-                  </LinkContainer>
+                 
                   <LinkContainer to="/signup">
                     <Nav.Link>Signup</Nav.Link>
                   </LinkContainer>
