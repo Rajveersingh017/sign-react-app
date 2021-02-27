@@ -89,7 +89,7 @@ function App() {
                   </LinkContainer>
                  
                   <LinkContainer to="/signup">
-                    <Nav.Link>Signup</Nav.Link>
+                    <Nav.Link>Client Signup</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
