@@ -8,7 +8,7 @@ import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
 import { Auth } from "aws-amplify";
 import { useFormik } from 'formik';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Image } from 'react-bootstrap';
 
 
 export default function Signup() {
@@ -21,24 +21,7 @@ export default function Signup() {
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  // function checkChanged(e){
-  //   alert(e.target.id)
-  //   let value = e.target.checked;
-  //   if (e.target.id=="disclaimerCheckBox"){
-  //     fields.disclaimerCheckBox= value;
-  //   }else if (e.target.id=="policyCheckBox"){
-  //     fields.policyCheckBox= value;
-  //   }
-  // }
- 
   
-  // function validateForm() {
-  //  //  alert(JSON.stringify(fields));
-  //   return (
-  //     fields.address.length > 0 &&
-  //     fields.phoneNumber.length > 0
-  //   );
-  // }
 
 
   async function handleSubmit(event) {
@@ -119,6 +102,63 @@ export default function Signup() {
           />
         </Form.Group>
 
+        <Form.Group controlId="neighbourhood" size="lg">
+            <Form.Label>Neighbourhood:</Form.Label>
+            <Form.Control 
+                as="select" 
+                type="neighbourhood"
+                value={fields.neighbourhood}
+                onChange={handleFieldChange}            
+            >
+                <option value="0" selected>Select your neighbourhood</option>
+                <option value="1">I'm not sure</option>
+                <option value="2">South East</option>
+                <option value="3">South West</option>
+                <option value="4">North West</option>
+                <option value="5">Central</option>
+                <option value="6">North</option>
+                <option value="7">North East</option>   
+            </Form.Control>
+        </Form.Group>
+        <img src="https://mdbootstrap.com/img/Others/documentation/1.jpg" className="img-fluid" alt="" />   
+          
+        <Form.Group controlId="adultsHome" size="lg">
+            <Form.Label>How many adults 18 and over live in the home:</Form.Label>
+            <Form.Control 
+                as="select" 
+                type="adultsHome"
+                value={fields.adultsHome}
+                onChange={handleFieldChange}            
+            >
+                <option value="0" selected>Select the number of adults in the home</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="childrenHome" size="lg">
+            <Form.Label>How many children under 18 live in the home:</Form.Label>
+            <Form.Control 
+                as="select" 
+                type="childrenHome"
+                value={fields.childrenHome}
+                onChange={handleFieldChange}            
+            >
+                <option value="0" selected>Select the number of children in the home</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </Form.Control>
+        </Form.Group>
+
         <Form.Group controlId="clientAllergies">
           <Form.Label>Please list any allergies you may have</Form.Label>
           <Form.Control 
@@ -129,7 +169,6 @@ export default function Signup() {
           onChange={handleFieldChange}
           />
         </Form.Group>
-              
        
         <LoaderButton
           block
