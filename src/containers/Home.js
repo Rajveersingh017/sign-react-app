@@ -2,6 +2,7 @@ import React from "react";
 import "./Home.css";
 import Card from 'react-bootstrap/Card'
 
+
 export default function Home() {
   return (
     <div className="Home">
@@ -20,7 +21,7 @@ export default function Home() {
           <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
       </Card>
-
+      <br />
       <Card style={{ width: '36rem' }}>
         <Card.Img variant="top" src="https://mdbootstrap.com/img/Others/documentation/1.jpg" className="img-fluid" alt="" />
         <Card.Body>
