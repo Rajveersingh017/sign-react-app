@@ -120,7 +120,7 @@ export default function Signup() {
                 <option value="7">North East</option>   
             </Form.Control>
         </Form.Group>
-        <img src="https://mdbootstrap.com/img/Others/documentation/1.jpg" className="img-fluid" alt="" />   
+        <img src="https://mediavault.point2.com/p2a/htmltext/e683/3340/686d/b7a53cccfda1d6128d60/original.png" className="img-fluid" alt="" />   
           
         <Form.Group controlId="adultsHome" size="lg">
             <Form.Label>How many adults 18 and over live in the home:</Form.Label>
