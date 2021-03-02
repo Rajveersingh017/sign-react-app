@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button';
 
 
 export default function Home() {
@@ -36,6 +37,21 @@ export default function Home() {
           <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
       </Card>
+      </div>
+      <div>
+        <Card className="text-center">
+          <Card.Header>Please Consider Making a Difference and Donating</Card.Header>
+          <Card.Body>
+            <Card.Title>Donate</Card.Title>
+            <Card.Text>
+              With your support, together we can make a difference to those less fortunate
+            </Card.Text>
+            <Button variant="primary" href="https://www.facebook.com/TheSIGNFoundation" target="_blank">Donate through Facebook</Button>{' '}
+            
+            <Button variant="secondary" href="https://www.thesignfoundation.org/" target="_blank" >Donate through our Website</Button>
+          </Card.Body>
+          <Card.Footer className="text-muted">Some text can go here</Card.Footer>
+        </Card>
       </div>
     </div>
   );
