@@ -6,25 +6,41 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
-import { Auth } from "aws-amplify";
-import { useFormik } from 'formik';
+// import { Auth } from "aws-amplify";
+import { API } from "aws-amplify";
+// import { useFormik } from 'formik';
 import { Grid, Row, Col, Image } from 'react-bootstrap';
 
 
-export default function Signup() {
+export default function UserInfo() {
+
+  function updateUser(user) {
+    return API.put("client-portal-api", "/updateUser", {
+      body: user
+    });
+
+  }
+
   const [fields, handleFieldChange] = useFormFields({
-    phoneNumber: "",
-    address: "",
-  });
+    address:"",
+    phoneNumber:"",
+    clientName:"",
+    clientCity:"",
+    neighbourhood:"",
+    adultsHome:"",
+    childrenHome:"",
+    clientAllergies:"",
+});
+
+  
   const history = useHistory();
   // const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  
-
 
   async function handleSubmit(event) {
+    
     event.preventDefault();
   
     setIsLoading(true);
@@ -32,17 +48,63 @@ export default function Signup() {
     try {
       let user = {
         email: localStorage.getItem("userId"),
-        userAddress: fields.address,
-        phoneNumber: fields.phoneNumber,
+        address:fields.address,
+        phoneNumber:fields.phoneNumber,
+        clientName:fields.clientName,
+        clientCity:fields.clientCity,
+        neighbourhood:fields.neighbourhood,
+        adultsHome:fields.adultsHome,
+        childrenHome:fields.childrenHome,
+        clientAllergies:fields.clientAllergies,
       }
-      // const newUser = await Auth.signUp(user);
-      console.log(JSON.stringify(user));
-      setIsLoading(false);
-      // setNewUser(newUser);
+
+      await updateUser (user);
+      alert("user updated");
+      // const JSON_SETINGS = {
+      //   // *GET, POST, PUT, DELETE, etc.
+      //   method: "PUT",
+      //   // no-cors, *cors, same-origin,cors
+      //   mode: "cors",
+      //   // *default, no-cache, reload, force-cache, only-if-cached
+      //   cache: "no-cache",
+      //   // include, *same-origin, omit
+      //   credentials: "omit",
+      //   // manual, *follow, error
+      //   redirect: "follow",
+      //   // no-referrer, *client
+      //   referrer: "no-referrer",
+      //   // 'application/json' 'Content-Type': 'application/x-www-form-urlencoded',
+      //   headers: {
+      //     "Content-Type": "text/plain"
+      //   },
+      //   body: null
+      // };
+      // let json_setings = JSON_SETINGS;
+      // json_setings.body = JSON.stringify(user);
+      // let url = "https://8pysyfg5ce.execute-api.us-east-2.amazonaws.com/dev/updateUser";
+      // setIsLoading(true);
+      // // ******************************
+      // fetch(url, json_setings)
+      // .then(response => response.json())
+      // .then(result => {
+      //   if(result.status){
+      //     alert("UPDATED");
+      //   }else{
+      //     alert("UPDATE FAILED");
+      //   }
+      //   setIsLoading(false);
+      // })
+      // .catch(error => {
+      //   alert("ERROR "+error.message);
+      //   setIsLoading(false);
+      // });
+      //****************************************************** 
+      // alert("call lambda function "+JSON.stringify(user));
+      
     } catch (e) {
       onError(e);
       setIsLoading(false);
-    }
+   }
   }
   
  
@@ -92,7 +154,7 @@ export default function Signup() {
           />
         </Form.Group>
 
-        <Form.Group controlId="clientProvince" size="lg">
+        {/* <Form.Group controlId="clientProvince" size="lg">
           <Form.Label>Province</Form.Label>
           <Form.Control
             type="clientProvince"
@@ -100,7 +162,7 @@ export default function Signup() {
             value={fields.clientProvince}
             onChange={handleFieldChange}
           />
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group controlId="neighbourhood" size="lg">
             <Form.Label>Neighbourhood:</Form.Label>
