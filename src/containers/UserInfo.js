@@ -174,15 +174,24 @@ export default function UserInfo() {
             >
                 <option value="0" selected>Select your neighbourhood</option>
                 <option value="1">I'm not sure</option>
-                <option value="2">South East</option>
-                <option value="3">South West</option>
-                <option value="4">North West</option>
-                <option value="5">Central</option>
-                <option value="6">North</option>
-                <option value="7">North East</option>   
+                <option value="2">Charleswood - Tuxedo - Westwood</option>
+                <option value="3">Daniel McIntyre</option>
+                <option value="4">Elmwood - East Kildonan</option>
+                <option value="5">Fort Rouge - East Fort Garry</option>
+                <option value="6">Mynarski</option>
+                <option value="7">North Kildonan</option>   
+                <option value="8">Old Kildonan</option>
+                <option value="9">Point Douglas</option>
+                <option value="10">River Heights - Fort Garry</option>
+                <option value="11">St. Boniface</option>
+                <option value="12">St. James</option>
+                <option value="13">St. Norbert - Seine River</option>
+                <option value="14">St. Vital </option> 
+                <option value="13">Transcona</option>
+                <option value="14">Waverley West </option> 
             </Form.Control>
         </Form.Group>
-        <img src="https://mediavault.point2.com/p2a/htmltext/e683/3340/686d/b7a53cccfda1d6128d60/original.png" className="img-fluid" alt="" />   
+        <img src="https://winnipeg.ca/census/2016/Images/ElectoralWards.gif" className="img-fluid" alt="" />   
           
         <Form.Group controlId="adultsHome" size="lg">
             <Form.Label>How many adults 18 and over live in the home:</Form.Label>
