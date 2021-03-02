@@ -81,6 +81,11 @@ function App() {
                 </>
               ) : (
                 <>
+
+                  <LinkContainer to="/AdminUserData">
+                    <Nav.Link>Admin User Data</Nav.Link>
+                  </LinkContainer>
+
                   <LinkContainer to="/Volunteer_Registration">
                     <Nav.Link>Volunteer Sign Up</Nav.Link>
                   </LinkContainer>

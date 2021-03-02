@@ -16,9 +16,18 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import UserInfo from "./containers/UserInfo";
 
+import AdminUserData from "./containers/AdminUserData";
+
 export default function Routes() {
   return (
     <Switch>
+
+
+      <UnauthenticatedRoute exact path="/AdminUserData">
+            <AdminUserData />
+      </UnauthenticatedRoute>
+
+
 
       <UnauthenticatedRoute exact path="/Volunteer_Registration">
         <VolunteerSignUp />
