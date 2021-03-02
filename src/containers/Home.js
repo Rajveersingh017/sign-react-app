@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="lander">
-      <Card style={{ width: '36rem' }}>
+      <Card style={{ width: '36rem' }}class="flex" > 
         <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" className="img-fluid" alt="" />
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
