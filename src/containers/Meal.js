@@ -1,14 +1,86 @@
 import React from 'react';
 import './Meal.css';
-import '../components/OrderId.js'
+import '../components/OrderId.js';
+import Form from "react-bootstrap/Form";
+import Amplify from "aws-amplify";
+import {API} from "aws-amplify";
+// import awsExports from "./aws-exports";
+// Amplify.configure(awsExports);
+import { useFormFields } from "../libs/hooksLib";
+
+
 
 
 function Meal() {
+
     const randomOrderId = () =>{
         return "OD-" + Math.random().toString(36).substr(2,9);
     }
-    console.log(randomOrderId());
 
+    const [fields, handleFieldChange] = useFormFields({
+        email:"",
+        name:"",
+        street:"",
+        city:"",
+        province:"",
+        postalCode:"",
+        numberOfMeals:"",
+        Alergies:"",
+        instructions:"",
+    });
+
+
+
+    ////
+    async function handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const data = {
+                body:{
+                    OrderId: randomOrderId(),
+                    email: fields.email,
+                    name: fields.name,
+                    street: fields.street,
+                    city: fields.city,
+                    province: fields.province,
+                    postalCode: fields.postalCode,
+                    numberOfMeals: fields.numberOfMeals,
+                    Alergies: fields.Alergies,
+                    instructions: fields.instructions
+                }
+            };
+            console.log(data);
+            const apiData = await API.post('DynamoAccess', '/mealpost' , data);
+            
+            fetch('https://z6i4s4dis4.execute-api.us-east-2.amazonaws.com/production/mealpost',{
+                    method: 'POST',
+                    headers: {
+                       'Accept':'application/json',
+                       'content-type':'application/json'
+                    },
+                    body: JSON.stringify({data})});
+        } catch (e) {
+        }
+      }
+      ////
+
+    // async function postMyMeal(){
+    //     const data = {
+    //         body:{
+    //             OrderId: randomOrderId(),
+    //             email: fields.email,
+    //             name: fields.name,
+    //             street: fields.street,
+    //             city: fields.city,
+    //             province: fields.province,
+    //             postalCode: fields.postalCode,
+    //             numberOfMeals: fields.numberOfMeals,
+    //             Alergies: fields.Alergies,
+    //             instructions: fields.instructions
+    //         }
+    //     };
+    //     const apiData = await API.post('DynamoAccess', '/mealpost' , data);
+    // }
     return (
         <div>
             <div className="Meal_Container_Top">
@@ -18,37 +90,38 @@ function Meal() {
             <div className="Meal_Container">
             <h1>Request A Meal!</h1>
             <hr></hr>
-            <form method="post" action="../components/PostMeal">
-                <label htmlFor = "EmailOrPhone">Email/Phone</label>
-                <input type="text" id="EmailOrPhone" placeholder = "example@example.com"></input>
+            <form onSubmit={handleSubmit}>
+                    
+                <label htmlFor = "email">Email/Phone</label>
+                <input type="text" value={fields.email} onChange={handleFieldChange} id="email" placeholder = "example@example.com"></input>
 
-                <label htmlFor = "Name">Name</label>
-                <input type="text" id="Name" placeholder="First Last"></input>
+                <label htmlFor = "name">Name</label>
+                <input type="text" id="name" value={fields.name} onChange={handleFieldChange} placeholder="First Last"></input>
 
-                <label htmlFor = "Street" >Street</label>
-                <input type="text" id="Street" placeholder="Street"></input>
+                <label htmlFor = "street" >Street</label>
+                <input type="text" id="street" value={fields.street} onChange={handleFieldChange} placeholder="Street"></input>
 
-                <label htmlFor = "City" >City</label>
-                <input type="text" id="City" placeholder="City"></input>
+                <label htmlFor = "city" >City</label>
+                <input type="text" id="city" value={fields.city} onChange={handleFieldChange} placeholder="City"></input>
 
-                <label htmlFor = "Province" >Province</label>
-                <input type="text" id="Province" placeholder="Province"></input>
+                <label htmlFor = "province" >Province</label>
+                <input type="text" id="province" value={fields.province} onChange={handleFieldChange} placeholder="Province"></input>
 
-                <label htmlFor = "PostalCode" >Postal Code</label>
-                <input type="text" id="PostalCode" placeholder="PostalCode"></input>
+                <label htmlFor = "postalCode" >Postal Code</label>
+                <input type="text" id="postalCode" placeholder="PostalCode" value={fields.postalCode} onChange={handleFieldChange}></input>
 
-                <label htmlFor = "NoOfAdults" >Number Of Meals</label>
-                <input type="number" id="NoOfAdults" placeholder="NoOfAdults"></input>
+                <label htmlFor = "numberOfMeals" >Number Of Meals</label>
+                <input type="number" id="numberOfMeals" placeholder="NoOfAdults" value={fields.numberOfMeals} onChange={handleFieldChange}></input>
 
                 <label htmlFor = "Alergies" >Alergies</label>
-                <textarea id="Alergies"></textarea>
+                <textarea id="Alergies" value={fields.Alergies} onChange={handleFieldChange}></textarea>
 
-                <label htmlFor = "Delivery" >Delivery Instructions</label>
-                <textarea id="Delivery"></textarea>
+                <label htmlFor = "instructions" >Delivery Instructions</label>
+                <textarea id="instructions" value={fields.instructions} onChange={handleFieldChange}></textarea>
                 
-                <button type="Submit">Request!</button>
+                <button type="Submit" >Request!</button>
 
-                <h1>{randomOrderId}</h1>
+                <h1>{randomOrderId()}</h1>
             </form>
             </div>
         </div>
