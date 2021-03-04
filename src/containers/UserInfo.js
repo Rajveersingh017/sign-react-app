@@ -15,7 +15,7 @@ import { Grid, Row, Col, Image } from 'react-bootstrap';
 export default function UserInfo() {
 
   function updateUser(user) {
-    return API.put("client-portal-api", "/updateUser", {
+    return API.put("prod-DynamoAccess", "/updateUser", {
       body: user
     });
 
@@ -27,8 +27,8 @@ export default function UserInfo() {
     clientName:"",
     clientCity:"",
     neighbourhood:"",
-    adultsHome:"",
-    childrenHome:"",
+    adultsHome:0,
+    childrenHome:0,
     clientAllergies:"",
 });
 
@@ -172,7 +172,7 @@ export default function UserInfo() {
                 value={fields.neighbourhood}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select your neighbourhood</option>
+                <option value="0" >Select your neighbourhood</option>
                 <option value="1">I'm not sure</option>
                 <option value="2">Charleswood - Tuxedo - Westwood</option>
                 <option value="3">Daniel McIntyre</option>
@@ -201,7 +201,7 @@ export default function UserInfo() {
                 value={fields.adultsHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select the number of adults in the home</option>
+                <option value="0" >Select the number of adults in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -218,7 +218,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select the number of children in the home</option>
+                <option value="0" >Select the number of children in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
