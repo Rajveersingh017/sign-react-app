@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";import Navbar from "react-bootstrap/Navbar";
+import React, { useState, useEffect, Component, Fragment } from "react";
+import Navbar from "react-bootstrap/Navbar";
 import "./App.css";
 import Routes from "./Routes";
 import Nav from "react-bootstrap/Nav";
@@ -60,27 +61,40 @@ function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
+                  <LinkContainer to="/userinfo">
+                  <Nav.Link>User Information</Nav.Link>
+                  </LinkContainer>
+ 
                   <LinkContainer to="/Edit_Profile">
                     <Nav.Link>Edit Profile</Nav.Link>
                   </LinkContainer>
+
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
+
+                  <LinkContainer to="/Request_Meal">
+                    <Nav.Link>Request Meal</Nav.Link>
+                  </LinkContainer>
+                  
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
               ) : (
                 <>
+
+                  <LinkContainer to="/AdminUserData">
+                    <Nav.Link>Admin User Data</Nav.Link>
+                  </LinkContainer>
+
                   <LinkContainer to="/Volunteer_Registration">
                     <Nav.Link>Volunteer Sign Up</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/Agency_Registration">
                     <Nav.Link>Agency Sign Up</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/Request_Meal">
-                    <Nav.Link>Request Meal</Nav.Link>
-                  </LinkContainer>
+                 
                   <LinkContainer to="/signup">
-                    <Nav.Link>Signup</Nav.Link>
+                    <Nav.Link>Client Signup</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>

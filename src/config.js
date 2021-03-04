@@ -5,7 +5,7 @@ const config = {
     },
     apiGateway: {
       REGION: "us-east-2",
-      URL: "https://kf6opb6831.execute-api.us-east-2.amazonaws.com/prod",
+      URL: "https://ok811mbo76.execute-api.us-east-2.amazonaws.com/prod",
     },
     cognito: {
       REGION: "us-east-2",
@@ -13,7 +13,11 @@ const config = {
       APP_CLIENT_ID: "61tk5i5rvvr6a98h4dnqmdugrc",
       IDENTITY_POOL_ID: "ed1c32a6-93c5-4d47-9ee5-be38db7baf36",
     },
+    social: {
+      FB: "711969332835096"
+    }
     
   };
-  
+  //URL: "https://ok811mbo76.execute-api.us-east-2.amazonaws.com/prod
+  // URL: "https://kf6opb6831.execute-api.us-east-2.amazonaws.com/prod",
   export default config;

@@ -150,6 +150,10 @@ export default function Signup() {
             value={fields.password}
             onChange={handleFieldChange}
           />
+          <Form.Text id="passwordHelpBlock" muted>
+            Your password must be 8-20 characters long, contain letters, one number and one special characters (such as !@#$%), and
+            must not contain spaces.
+          </Form.Text>
         </Form.Group>
 
         <Form.Group controlId="confirmPassword" size="lg">
@@ -168,7 +172,10 @@ export default function Signup() {
        </Form.Group>
 
        <Form.Group controlId="policyCheckBox">
-         <Form.Check onChange={handleFieldChange}  type="checkbox" label="The policy information goes here"/>
+         <Form.Check onChange={handleFieldChange}  type="checkbox" label="Privacy Policy" />
+         <Form.Text id="passwordHelpBlock" muted >
+          <a href="https://www.thesignfoundation.org/privacy-policy" target="_blank">Read our Privacy Policy</a>
+          </Form.Text>
        </Form.Group>
        
         <LoaderButton

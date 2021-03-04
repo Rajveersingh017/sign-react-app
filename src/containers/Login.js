@@ -8,6 +8,8 @@ import { onError } from "../libs/errorLib";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
+
+
 export default function Login() {
   
   const { userHasAuthenticated } = useAppContext();
@@ -16,6 +18,7 @@ export default function Login() {
     email: "",
     password: ""
   });
+
 
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
@@ -29,6 +32,8 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
+
+      localStorage.setItem("userId",fields.email);
       
     } catch (e) {
       onError(e);
@@ -36,9 +41,13 @@ export default function Login() {
     }
   }
 
+
   return (
+    
     <div className="Login">
+
       <Form onSubmit={handleSubmit}>
+
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
