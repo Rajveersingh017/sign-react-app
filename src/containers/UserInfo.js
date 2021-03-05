@@ -9,15 +9,43 @@ import "./UserInfo.css";
 // import { Auth } from "aws-amplify";
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
-import { Grid, Row, Col, Image } from 'react-bootstrap';
+// import { Grid, Row, Col, Image } from 'react-bootstrap';
 
 
 export default function UserInfo() {
 
   function updateUser(user) {
+<<<<<<< HEAD
     return API.put("prod-DynamoAccess", "/updateUser", {
       body: user
+=======
+    //
+    API.configure();
+    // return API.put("DynamoAccess", "/updateUser", {
+    //   body: user,
+     
+    // });
+
+    return API.put("production-DynamoAccess-api", "/updateUser", {
+      body: user,
+      headers:{
+          "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+          "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
+        }
+>>>>>>> updateUserInformation
     });
+
+    
+    // headers:{
+    //   "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    //   "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
+    // }
+
+    // return API.put("client-portal-api", "/updateUser", {
+    //   body: user,
+    //   "x-api-key": "zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    // }); 
+    //"x-authorization-token": "",DynamoAccess
 
   }
 
