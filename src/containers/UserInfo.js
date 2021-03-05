@@ -15,10 +15,6 @@ import { API } from "aws-amplify";
 export default function UserInfo() {
 
   function updateUser(user) {
-<<<<<<< HEAD
-    return API.put("prod-DynamoAccess", "/updateUser", {
-      body: user
-=======
     //
     API.configure();
     // return API.put("DynamoAccess", "/updateUser", {
@@ -32,7 +28,6 @@ export default function UserInfo() {
           "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
           "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
         }
->>>>>>> updateUserInformation
     });
 
     
@@ -55,8 +50,8 @@ export default function UserInfo() {
     clientName:"",
     clientCity:"",
     neighbourhood:"",
-    adultsHome:0,
-    childrenHome:0,
+    adultsHome:"",
+    childrenHome:"",
     clientAllergies:"",
 });
 
@@ -200,7 +195,7 @@ export default function UserInfo() {
                 value={fields.neighbourhood}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select your neighbourhood</option>
+                <option value="0" selected>Select your neighbourhood</option>
                 <option value="1">I'm not sure</option>
                 <option value="2">Charleswood - Tuxedo - Westwood</option>
                 <option value="3">Daniel McIntyre</option>
@@ -229,7 +224,7 @@ export default function UserInfo() {
                 value={fields.adultsHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select the number of adults in the home</option>
+                <option value="0" selected>Select the number of adults in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -246,7 +241,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select the number of children in the home</option>
+                <option value="0" selected>Select the number of children in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

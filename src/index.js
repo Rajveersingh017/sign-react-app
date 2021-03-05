@@ -33,11 +33,7 @@ Amplify.configure({
       //   region: config.apiGateway.REGION
       // },
       {
-<<<<<<< HEAD
-        name: "prod-DynamoAccess",
-=======
         name: "production-DynamoAccess-api",
->>>>>>> updateUserInformation
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION
       },
