@@ -21,14 +21,20 @@ export default function UserInfo() {
     //   body: user,
      
     // });
-
-    return API.put("production-DynamoAccess-api", "/updateUser", {
-      body: user,
-      headers:{
-          "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-          "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
-        }
-    });
+   
+    let authenticationToken = localStorage.getItem("authenticationToken");
+    let headers = {
+          "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+           "Authorization":authenticationToken
+      };
+      let init = {
+        body: user,
+        // headers:headers
+      }
+      let apiName= "production-DynamoAccess-api";
+      let path = "/updateUser";
+     
+    return API.put(apiName, path, init);
 
     
     // headers:{
@@ -70,7 +76,8 @@ export default function UserInfo() {
   
     try {
       let user = {
-        email: localStorage.getItem("userId"),
+        userID : localStorage.getItem("userID"),
+        email: localStorage.getItem("email"),
         address:fields.address,
         phoneNumber:fields.phoneNumber,
         clientName:fields.clientName,
@@ -83,6 +90,7 @@ export default function UserInfo() {
 
       await updateUser (user);
       alert("user updated");
+      setIsLoading(false);
       // const JSON_SETINGS = {
       //   // *GET, POST, PUT, DELETE, etc.
       //   method: "PUT",

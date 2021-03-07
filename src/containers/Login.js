@@ -32,8 +32,14 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-
-      localStorage.setItem("userId",fields.email);
+      let authenticationToken = (await Auth.currentSession()).getIdToken().getJwtToken();
+//let tst = (await Auth.currentSession()).getIdToken();
+//alert(JSON.stringify(tst))
+//console.log(authenticationToken)
+      let userID = (await Auth.currentUserInfo()).attributes.sub;
+      localStorage.setItem("email",fields.email);
+      localStorage.setItem("authenticationToken",authenticationToken);
+      localStorage.setItem("userID",userID);
       
     } catch (e) {
       onError(e);
