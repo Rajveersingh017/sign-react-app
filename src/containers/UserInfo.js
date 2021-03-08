@@ -23,7 +23,7 @@ export default function UserInfo() {
      
     // });
    
-    let authenticationToken = localStorage.getItem("authenticationToken");
+    // let authenticationToken = localStorage.getItem("authenticationToken");
     // let headers = {
     //       "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
     //        "Authorization":authenticationToken

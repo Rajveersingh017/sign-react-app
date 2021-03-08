@@ -1,3 +1,5 @@
+import swal from "sweetalert";
+
 export function onError(error) {
     let message = error.toString();
   
@@ -6,5 +8,6 @@ export function onError(error) {
       message = error.message;
     }
   
-    alert(message);
+    // alert(message);
+    swal(message);
   }
