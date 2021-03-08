@@ -6,18 +6,52 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
+<<<<<<< HEAD
 
+=======
+import swal from "sweetalert";
+// import { Auth } from "aws-amplify";
+>>>>>>> a309d40e4f6caafafe5dab1ff1137a54fc63b513
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
-import { Grid, Row, Col, Image } from 'react-bootstrap';
+// import { Grid, Row, Col, Image } from 'react-bootstrap';
 
 
 export default function UserInfo() {
 
   function updateUser(user) {
-    return API.put("prod-DynamoAccess", "/updateUser", {
-      body: user
-    });
+    //
+    API.configure();
+    // return API.put("DynamoAccess", "/updateUser", {
+    //   body: user,
+     
+    // });
+   
+    // let authenticationToken = localStorage.getItem("authenticationToken");
+    // let headers = {
+    //       "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    //        "Authorization":authenticationToken
+    //   };
+      let init = {
+        body: user,
+        // headers:headers
+      }
+      let apiName= "production-DynamoAccess-api";
+      let path = "/updateUser";
+     
+    return API.put(apiName, path, init);
+
+    
+    // headers:{
+    //   "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    //   "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
+    // }
+
+    // return API.put("client-portal-api", "/updateUser", {
+    //   body: user,
+    //   "x-api-key": "zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    // }); 
+    //"x-authorization-token": "",DynamoAccess
 
   }
 
@@ -27,8 +61,8 @@ export default function UserInfo() {
     clientName:"",
     clientCity:"",
     neighbourhood:"",
-    adultsHome:0,
-    childrenHome:0,
+    adultsHome:"",
+    childrenHome:"",
     clientAllergies:"",
 });
 
@@ -47,7 +81,8 @@ export default function UserInfo() {
   
     try {
       let user = {
-        email: localStorage.getItem("userId"),
+        userID : localStorage.getItem("userID"),
+        email: localStorage.getItem("email"),
         address:fields.address,
         phoneNumber:fields.phoneNumber,
         clientName:fields.clientName,
@@ -59,7 +94,8 @@ export default function UserInfo() {
       }
 
       await updateUser (user);
-      alert("user updated");
+      swal("Profile successfully updated.");
+      setIsLoading(false);
       // const JSON_SETINGS = {
       //   // *GET, POST, PUT, DELETE, etc.
       //   method: "PUT",
@@ -172,7 +208,7 @@ export default function UserInfo() {
                 value={fields.neighbourhood}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select your neighbourhood</option>
+                <option value="0" selected>Select your neighbourhood</option>
                 <option value="1">I'm not sure</option>
                 <option value="2">Charleswood - Tuxedo - Westwood</option>
                 <option value="3">Daniel McIntyre</option>
@@ -201,7 +237,7 @@ export default function UserInfo() {
                 value={fields.adultsHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select the number of adults in the home</option>
+                <option value="0" selected>Select the number of adults in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -218,7 +254,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select the number of children in the home</option>
+                <option value="0" selected>Select the number of children in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
