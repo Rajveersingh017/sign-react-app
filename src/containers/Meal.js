@@ -50,11 +50,12 @@ function Meal() {
                 }
             };
             console.log(data);
-            const apiData = await API.post('DynamoAccess', '/mealpost' , data);
-            
+            // const apiData = await API.post('DynamoAccess', '/mealpost' , data);
+
             fetch('https://z6i4s4dis4.execute-api.us-east-2.amazonaws.com/production/mealpost',{
                     method: 'POST',
                     headers: {
+                       'Access-Control-Allow-Origin': '*',
                        'Accept':'application/json',
                        'content-type':'application/json'
                     },

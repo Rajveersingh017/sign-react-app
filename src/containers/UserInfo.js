@@ -6,7 +6,7 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
-// import { Auth } from "aws-amplify";
+
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
 import { Grid, Row, Col, Image } from 'react-bootstrap';
