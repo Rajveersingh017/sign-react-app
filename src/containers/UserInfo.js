@@ -219,8 +219,8 @@ export default function UserInfo() {
                 <option value="12">St. James</option>
                 <option value="13">St. Norbert - Seine River</option>
                 <option value="14">St. Vital </option> 
-                <option value="13">Transcona</option>
-                <option value="14">Waverley West </option> 
+                <option value="15">Transcona</option>
+                <option value="16">Waverley West </option> 
             </Form.Control>
         </Form.Group>
         <img src="https://winnipeg.ca/census/2016/Images/ElectoralWards.gif" className="img-fluid" alt="" />   
