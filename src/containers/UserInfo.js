@@ -6,6 +6,7 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
+import swal from "sweetalert";
 // import { Auth } from "aws-amplify";
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
@@ -23,10 +24,10 @@ export default function UserInfo() {
     // });
    
     let authenticationToken = localStorage.getItem("authenticationToken");
-    let headers = {
-          "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-           "Authorization":authenticationToken
-      };
+    // let headers = {
+    //       "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
+    //        "Authorization":authenticationToken
+    //   };
       let init = {
         body: user,
         // headers:headers
@@ -89,7 +90,7 @@ export default function UserInfo() {
       }
 
       await updateUser (user);
-      alert("user updated");
+      swal("Profile successfully updated.");
       setIsLoading(false);
       // const JSON_SETINGS = {
       //   // *GET, POST, PUT, DELETE, etc.
