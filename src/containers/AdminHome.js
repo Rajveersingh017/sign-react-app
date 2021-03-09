@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import CardDeck from 'react-bootstrap/CardDeck'
 import { Container, CardGroup, Card, Row, Col } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
+import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 
 const styles = {
@@ -74,8 +75,8 @@ export default function AdminHome() {
   </Card>
 </CardDeck>
 <br />
-<CardDeck style={{ width: '35.5rem' }}>
-  <Card style={styles.card}>
+<CardDeck >
+  <Card style={styles.card} >
     <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" alt=""/>
     <Card.Body>
       <Card.Title>Assign a Route</Card.Title>

@@ -82,9 +82,9 @@ function App() {
               ) : (
                 <>
 
-                  <LinkContainer to="/AdminUserData">
+                  {/* <LinkContainer to="/AdminUserData">
                     <Nav.Link>Admin User Data</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
                   <LinkContainer to="/AdminHome">
                     <Nav.Link>AdminHome</Nav.Link>
