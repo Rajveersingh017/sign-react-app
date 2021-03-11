@@ -235,6 +235,7 @@ export default function UserInfo() {
             </Form.Control>
         </Form.Group>
         <img src="https://winnipeg.ca/census/2016/Images/ElectoralWards.gif" className="img-fluid" alt="" />   
+        
           
         <Form.Group controlId="adultsHome" size="lg">
             <Form.Label>How many adults 18 and over live in the home:</Form.Label>
