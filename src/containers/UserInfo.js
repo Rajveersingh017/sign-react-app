@@ -205,22 +205,22 @@ export default function UserInfo() {
                 onChange={handleFieldChange}            
             >
                 <option value="0" selected>Select your neighbourhood</option>
-                <option value="1">I'm not sure</option>
-                <option value="2">Charleswood - Tuxedo - Westwood</option>
-                <option value="3">Daniel McIntyre</option>
-                <option value="4">Elmwood - East Kildonan</option>
-                <option value="5">Fort Rouge - East Fort Garry</option>
-                <option value="6">Mynarski</option>
-                <option value="7">North Kildonan</option>   
-                <option value="8">Old Kildonan</option>
-                <option value="9">Point Douglas</option>
-                <option value="10">River Heights - Fort Garry</option>
-                <option value="11">St. Boniface</option>
-                <option value="12">St. James</option>
-                <option value="13">St. Norbert - Seine River</option>
-                <option value="14">St. Vital </option> 
-                <option value="15">Transcona</option>
-                <option value="16">Waverley West </option> 
+                <option value="I'm not sure">I'm not sure</option>
+                <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
+                <option value="Daniel McIntyre">Daniel McIntyre</option>
+                <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
+                <option value="Fort Rouge - East Fort Garry">Fort Rouge - East Fort Garry</option>
+                <option value="Mynarski6">Mynarski</option>
+                <option value="North Kildonan">North Kildonan</option>   
+                <option value="Old Kildonan">Old Kildonan</option>
+                <option value="Point Douglas">Point Douglas</option>
+                <option value="River Heights - Fort Garry0">River Heights - Fort Garry</option>
+                <option value="St. Boniface">St. Boniface</option>
+                <option value="St. James">St. James</option>
+                <option value="St. Norbert - Seine River">St. Norbert - Seine River</option>
+                <option value="St. Vital">St. Vital </option> 
+                <option value="Transcona">Transcona</option>
+                <option value="Waverley West">Waverley West </option> 
             </Form.Control>
         </Form.Group>
         <img src="https://winnipeg.ca/census/2016/Images/ElectoralWards.gif" className="img-fluid" alt="" />   
@@ -250,7 +250,8 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select the number of children in the home</option>
+                <option value="-0" selected>Select the number of children in the home</option>
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
