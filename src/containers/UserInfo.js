@@ -11,6 +11,7 @@ import swal from "sweetalert";
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
 // import { Grid, Row, Col, Image } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert'
 
 
 export default function UserInfo() {
@@ -146,6 +147,16 @@ export default function UserInfo() {
       
       <Form onSubmit={handleSubmit}>
 
+<Alert variant="success">
+  <Alert.Heading>Hey, nice to see you</Alert.Heading>
+  <p>
+  Please complete or update your information.
+  </p>
+</Alert>
+
+
+        
+        
         <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
           <Form.Control
