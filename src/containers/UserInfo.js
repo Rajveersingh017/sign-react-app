@@ -6,12 +6,8 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
-<<<<<<< HEAD
-
-=======
 import swal from "sweetalert";
 // import { Auth } from "aws-amplify";
->>>>>>> a309d40e4f6caafafe5dab1ff1137a54fc63b513
 import { API } from "aws-amplify";
 // import { useFormik } from 'formik';
 // import { Grid, Row, Col, Image } from 'react-bootstrap';

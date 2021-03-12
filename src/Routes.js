@@ -4,7 +4,7 @@ import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
-import Meal from "./containers/Meal";
+import Meal from "./containers/MealPreface";
 import VolunteerSignUp from "./containers/VolunteerSignUp";
 import ResetPassword from "./containers/ResetPassword";
 import Settings from "./containers/Settings";

@@ -1,17 +1,28 @@
-import React from 'react';
 import './Meal.css';
 import '../components/OrderId.js';
 import Form from "react-bootstrap/Form";
 import Amplify from "aws-amplify";
-import {API} from "aws-amplify";
 // import awsExports from "./aws-exports";
 // Amplify.configure(awsExports);
 import { useFormFields } from "../libs/hooksLib";
+import { API } from "aws-amplify";
+import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
+import LoaderButton from "../components/LoaderButton";
+import { useAppContext } from "../libs/contextLib";
+
+import React, { useState } from "react";
 
 
 
 
 function Meal() {
+    const history = useHistory();
+    // const [newUser, setNewUser] = useState(null);
+    const { userHasAuthenticated } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
+    
+
 
     const randomOrderId = () =>{
         return "OD-" + Math.random().toString(36).substr(2,9);
@@ -63,6 +74,7 @@ function Meal() {
         } catch (e) {
         }
       }
+      
       ////
 
     // async function postMyMeal(){
@@ -92,7 +104,7 @@ function Meal() {
             <h1>Request A Meal!</h1>
             <hr></hr>
             <form onSubmit={handleSubmit}>
-                    
+                {console.log(localStorage.getItem("email"))}
                 <label htmlFor = "email">Email/Phone</label>
                 <input type="text" value={fields.email} onChange={handleFieldChange} id="email" placeholder = "example@example.com"></input>
 
