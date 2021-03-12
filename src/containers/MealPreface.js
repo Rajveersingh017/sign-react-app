@@ -10,8 +10,10 @@ import Table from 'react-bootstrap/Table';
 import swal from "sweetalert";
 import Card from 'react-bootstrap/Card';
 import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row'
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
+import { Col } from "react-bootstrap";
 
 
 export default function AdminUserData() {
@@ -75,23 +77,34 @@ export default function AdminUserData() {
             <Card>
                 <Card.Header></Card.Header>
                 <Card.Body>
-                <Card.Title>Meal Request Form:</Card.Title>
-                <Card.Text>
-                    Please fill out the delivery insturctions (optional)
-                </Card.Text>
-                
-                <form>
-                <Form.Group controlId="clientAllergies">
-                    <Form.Control 
-                    as="textarea" rows={3} 
-                    type="clientAllergies"
-                    placeholder="Eg. Flower, Milk, Nuts"
+                <Row>
+                <Col sm={8}>
+                    <Card.Title>Meal Request Form:</Card.Title>
+                    <Card.Text>
+                        Please fill out the delivery insturctions (optional)
+                    </Card.Text>
                     
-                    />
-                    </Form.Group>
-                </form>
-                <Button variant="dark" id="reqs">Request Meal!</Button>
+                    <form>
+                    <Form.Group controlId="clientAllergies">
+                        <Form.Control 
+                        as="textarea" rows={3} 
+                        type="clientAllergies"
+                        placeholder="Eg. Flower, Milk, Nuts"
+                        
+                        />
+                        </Form.Group>
+                    </form>
+                    <Button variant="dark" id="reqs">Request Meal!</Button>
+                </Col>
+                
+                <Col sm={4} class="reqFriend">
+                 <Card.Title>Requesting For a friend?</Card.Title>
+                 <Button variant="dark" id="reqs">Click here!</Button>
+                </Col>
+                </Row>
                 </Card.Body>
+
+
             </Card>
         </div>
     ));

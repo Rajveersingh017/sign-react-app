@@ -7,3 +7,16 @@
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
 }
+.Card{
+  background-color: #f7f7f7;
+  width: 30%;
+  padding: 10px;
+  box-shadow: 5px 6px #75757D;
+}
+.Card h1{
+  font-size: xx-large;
+}
+.cardAgency{
+  background-color: #f7f7f7;
+  width: 100%;
+}
