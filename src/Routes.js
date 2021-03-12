@@ -17,6 +17,8 @@ import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import UserInfo from "./containers/UserInfo";
 
 import AdminUserData from "./containers/AdminUserData";
+import AdminHome from "./containers/AdminHome";
+
 
 export default function Routes() {
   return (
@@ -25,6 +27,10 @@ export default function Routes() {
 
       <UnauthenticatedRoute exact path="/AdminUserData">
             <AdminUserData />
+      </UnauthenticatedRoute>
+
+      <UnauthenticatedRoute exact path="/AdminHome">
+            <AdminHome />
       </UnauthenticatedRoute>
 
 
