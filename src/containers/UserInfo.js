@@ -89,6 +89,7 @@ export default function UserInfo() {
         childrenHome:fields.childrenHome,
         clientAllergies:fields.clientAllergies,
       }
+      
 
       await updateUser (user);
       swal("Profile successfully updated.");
