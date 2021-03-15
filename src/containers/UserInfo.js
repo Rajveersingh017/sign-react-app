@@ -34,7 +34,8 @@ export default function UserInfo() {
         // headers:headers
       }
       let apiName= "production-DynamoAccess-api";
-      let path = "/edituserdetails ";
+      let path = "/edituserdetails";
+      console.log(user);
      
     return API.put(apiName, path, init);
 
@@ -63,7 +64,6 @@ export default function UserInfo() {
     clientAllergies:"",
 });
 
-  
   const history = useHistory();
   // const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
@@ -80,6 +80,7 @@ export default function UserInfo() {
       let user = {
         // userID : localStorage.getItem("userID"),
         email: localStorage.getItem("email"),
+        role: "CLI",
         address:fields.address,
         phoneNumber:fields.phoneNumber,
         clientName:fields.clientName,
@@ -89,9 +90,7 @@ export default function UserInfo() {
         childrenHome:fields.childrenHome,
         clientAllergies:fields.clientAllergies,
       }
-      
-
-      await updateUser (user);
+      await updateUser(user);
       swal("Profile successfully updated.");
       setIsLoading(false);
       // const JSON_SETINGS = {
