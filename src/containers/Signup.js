@@ -19,7 +19,7 @@ export default function Signup() {
       license:"",
       hasVehicle:"",
       kitchen:"",
-      role: "",
+      UserType: "",
       confirmationCode: "",
   });
   const history = useHistory();
@@ -44,7 +44,7 @@ export default function Signup() {
       fields.email.length > 0 &&
       fields.password.length > 0 &&
       fields.password === fields.confirmPassword &&
-      fields.disclaimerCheckBox  &&
+      // fields.disclaimerCheckBox  &&
       fields.policyCheckBox 
     );
   }
@@ -70,7 +70,7 @@ export default function Signup() {
           'custom:license': "0",
           'custom:hasVehicle': "0",
           'custom:kitchen': "0",
-          'custom:role': "1"
+          'custom:UserType': "CLI"
         }
       });
       setIsLoading(false);
@@ -167,9 +167,6 @@ export default function Signup() {
         </Form.Group>
         
 
-       <Form.Group  controlId="disclaimerCheckBox">
-         <Form.Check onChange={handleFieldChange}   type="checkbox" label="The Disclaimer statement goes here"/>
-       </Form.Group>
 
        <Form.Group controlId="policyCheckBox">
          <Form.Check onChange={handleFieldChange}  type="checkbox" label="Privacy Policy" />

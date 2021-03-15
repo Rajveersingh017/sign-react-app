@@ -21,7 +21,7 @@ export default function VolunteerSignUp() {
       license:"-1",
       hasVehicle:"2",
       kitchen:"-1",
-      role: "",
+      UserType: "",
       confirmationCode: "",
     });
     const history = useHistory();
@@ -59,7 +59,7 @@ export default function VolunteerSignUp() {
             'custom:license': fields.license,
             'custom:hasVehicle': fields.hasVehicle,
             'custom:kitchen': fields.kitchen,
-            'custom:role': "0"
+            'custom:UserType': "VOL"
           }
         });
         setIsLoading(false);
