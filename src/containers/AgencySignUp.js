@@ -21,7 +21,7 @@ function AgencySignUp() {
       service:"0",
       hasVehicle:"0",
       kitchen:"-0",
-      role: "3",
+      UserType: "AGE",
       confirmationCode: "",
     });
     const history = useHistory();

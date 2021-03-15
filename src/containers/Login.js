@@ -36,10 +36,10 @@ export default function Login() {
 //let tst = (await Auth.currentSession()).getIdToken();
 //alert(JSON.stringify(tst))
 //console.log(authenticationToken)
-      let userID = (await Auth.currentUserInfo()).attributes.sub;
+      // let userID = (await Auth.currentUserInfo()).attributes.sub;
       localStorage.setItem("email",fields.email);
-      localStorage.setItem("authenticationToken",authenticationToken);
-      localStorage.setItem("userID",userID);
+      // localStorage.setItem("authenticationToken",authenticationToken);
+      // localStorage.setItem("userID",userID);
       
     } catch (e) {
       onError(e);

@@ -34,7 +34,7 @@ export default function UserInfo() {
         // headers:headers
       }
       let apiName= "production-DynamoAccess-api";
-      let path = "/updateUser";
+      let path = "/edituserdetails ";
      
     return API.put(apiName, path, init);
 
@@ -78,7 +78,7 @@ export default function UserInfo() {
   
     try {
       let user = {
-        userID : localStorage.getItem("userID"),
+        // userID : localStorage.getItem("userID"),
         email: localStorage.getItem("email"),
         address:fields.address,
         phoneNumber:fields.phoneNumber,

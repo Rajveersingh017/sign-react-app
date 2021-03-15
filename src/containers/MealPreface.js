@@ -7,6 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import "./MealPreface.css";
 import Table from 'react-bootstrap/Table';
+import { useAppContext } from "../libs/contextLib";
 import swal from "sweetalert";
 import Card from 'react-bootstrap/Card';
 import Form from "react-bootstrap/Form";
@@ -16,32 +17,41 @@ import Button from 'react-bootstrap/Button'
 import { Col } from "react-bootstrap";
 
 
-export default function AdminUserData() {
+export default function MealPreface() {
+    API.configure();
     const history = useHistory();
+    const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
     useEffect(() => {
         onLoad();
-      }, []);
+    }, []);
 
-      async function getData(){
+    async function getData(){
         let apiName= "production-DynamoAccess-api";
         let path = "/getSingleUser"; 
         let data =  {message:"empty"}
-       try{
-         data =  await API.get(apiName, path, null);
-       }catch(error){
-        data.message = error.message;
-       }
-        console.log(data);
-         return data;
-      }
-      
-       async function onLoad() {
+        let init ={ body: {userId: localStorage.getItem("userID")}}
         
-       let data1 = await getData();
-       console.log(data1.Item);
-       setUserData(data1.Item);
+       
+        console.log(init);
+        try{
+            console.log(localStorage.getItem("userID"));
+
+            data =  await API.get(apiName, path,init);
+           console.log(data);
+
+        }catch(error){
+            data.message = error.message;
+        }
+        return data;
+    }
+      
+    async function onLoad() {
+        
+        let data1 = await getData();
+        console.log(data1.Item);
+        setUserData(data1.Item);
     //    if(userdata.email.empty){
     //     const Reqstate = "Disabled";
     //    }
@@ -49,18 +59,19 @@ export default function AdminUserData() {
     //        const Reqstate = "";
     //    }
 
-      }
+    }
    
     
-    
-    let key = 0;
+    //   console.log(localStorage.getItem("userId"));
+      let key = 0;
+
       
     return ((userData &&
         <div>
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
                 <Card.Body>
-                <Card.Title><span class="userinfoHead">{userData.clientName.S}</span></Card.Title>
+                <Card.Title>  <span class="userinfoHead">{userData.clientName.S}</span></Card.Title>
                 <Card.Text class = "cardText">
                     <span class="userinfoHead">Address: </span>{userData.address.S}<br></br>
                     <span class="userinfoHead">City: </span>{userData.clientCity.S}<br></br>

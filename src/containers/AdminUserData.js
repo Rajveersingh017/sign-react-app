@@ -13,7 +13,7 @@ export default function AdminUserData() {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
-    useEffect(() => {
+    useEffect(() => {   
         onLoad();
       }, []);
 
