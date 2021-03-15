@@ -26,7 +26,7 @@ export default function AdminUserData() {
 
       async function getData(){
         let apiName= "production-DynamoAccess-api";
-        let path = "/users"; 
+        let path = "/getSingleUser"; 
         let data =  {message:"empty"}
        try{
          data =  await API.get(apiName, path, null);
