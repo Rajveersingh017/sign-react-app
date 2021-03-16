@@ -30,14 +30,12 @@ export default function UserInfo() {
     //        "Authorization":authenticationToken
     //   };
       let init = {
-        
-        user,
+        body: user,
         // headers:headers
       }
       let apiName= "production-DynamoAccess-api";
-      let path = "/userupdate";
+      let path = "/edituserdetails";
       console.log(user);
-      console.log(API.put(apiName, path, init));
      
     return API.put(apiName, path, init);
 
@@ -81,8 +79,7 @@ export default function UserInfo() {
     try {
       let user = {
         // userID : localStorage.getItem("userID"),
-        // email: localStorage.getItem("email"),
-        body:{email: "beboh96373@gameqo.com",
+        email: localStorage.getItem("email"),
         role: "CLI",
         address:fields.address,
         phoneNumber:fields.phoneNumber,
@@ -92,7 +89,6 @@ export default function UserInfo() {
         adultsHome:fields.adultsHome,
         childrenHome:fields.childrenHome,
         clientAllergies:fields.clientAllergies,
-        }
       }
       let retUser = await updateUser(user);
       // swal("Profile successfully updated.");
@@ -192,17 +188,14 @@ export default function UserInfo() {
           />
         </Form.Group>
 
-      
         <Form.Group controlId="clientCity" size="lg">
-            <Form.Label>City:</Form.Label>
-            <Form.Control 
-                as="select" 
-                type="clientCity"
-                value={fields.clientCity}
-                onChange={handleFieldChange}            
-            >
-                <option value="Winnipeg" >Winnipeg</option> 
-            </Form.Control>
+          <Form.Label>City</Form.Label>
+          <Form.Control
+            type="clientCity"
+            placeholder="Your City"
+            value={fields.clientCity}
+            onChange={handleFieldChange}
+          />
         </Form.Group>
 
         {/* <Form.Group controlId="clientProvince" size="lg">
@@ -223,7 +216,7 @@ export default function UserInfo() {
                 value={fields.neighbourhood}
                 onChange={handleFieldChange}            
             >
-                <option value="0">Select your neighbourhood</option>
+                <option value="0" >Select your neighbourhood</option>
                 <option value="I'm not sure">I'm not sure</option>
                 <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
@@ -253,7 +246,7 @@ export default function UserInfo() {
                 value={fields.adultsHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" >Select the number of adults in the home</option>
+                <option value="0">Select the number of adults in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -270,7 +263,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="-0" >Select the number of children in the home</option>
+                <option value="-0">Select the number of children in the home</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
