@@ -29,7 +29,7 @@ export default function MealPreface() {
 
     async function getData(){
         let apiName= "production-DynamoAccess-api";
-        let path = "/users"; 
+        let path = "/getSingleUser"; 
         let data =  {message:"empty"}
         let init ={ body: {userId: localStorage.getItem("userID")}}
         

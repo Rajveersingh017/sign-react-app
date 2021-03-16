@@ -94,8 +94,9 @@ export default function UserInfo() {
         clientAllergies:fields.clientAllergies,
         }
       }
-      await updateUser(user);
-      swal("Profile successfully updated.");
+      let retUser = await updateUser(user);
+      // swal("Profile successfully updated.");
+      swal(retUser);
       setIsLoading(false);
       // const JSON_SETINGS = {
       //   // *GET, POST, PUT, DELETE, etc.
