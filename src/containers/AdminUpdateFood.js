@@ -9,7 +9,7 @@ import "./Settings.css";
 import Table from 'react-bootstrap/Table';
 import swal from "sweetalert";
 
-export default function AdminUserData() {
+export default function AdminUpdateFood() {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -18,16 +18,12 @@ export default function AdminUserData() {
       }, []);
 
       
-     
-                
-      
-   
    
 
     return (
        
         <div>
-           
+           <h1>Admin Food Update</h1>
         </div>
       );
     }

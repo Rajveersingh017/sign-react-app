@@ -71,6 +71,7 @@ export default function AdminHome() {
       <Card.Text>
         Here you can update food information. Eg, Ingredients, pictures and so forth.{' '}
       </Card.Text>
+      <Button variant="primary" onClick={() => history.push('/AdminUpdateFood')} >Update Food</Button>
     </Card.Body>
   </Card>
 </CardDeck>

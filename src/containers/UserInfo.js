@@ -90,8 +90,9 @@ export default function UserInfo() {
         childrenHome:fields.childrenHome,
         clientAllergies:fields.clientAllergies,
       }
-      await updateUser(user);
-      swal("Profile successfully updated.");
+      let retUser = await updateUser(user);
+      // swal("Profile successfully updated.");
+      swal(retUser);
       setIsLoading(false);
       // const JSON_SETINGS = {
       //   // *GET, POST, PUT, DELETE, etc.
