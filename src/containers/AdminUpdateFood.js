@@ -17,19 +17,54 @@ import Alert from 'react-bootstrap/Alert'
 
 
 
-export default function UpdateFood() {
+export default function FoodInfo() {
 
-//   const history = useHistory();
-//   // const [newUser, setNewUser] = useState(null);
-//   const { userHasAuthenticated } = useAppContext();
+    function updateFood(food) {
+  
+        API.configure();
+        
+          let init = {
+            body: food,   
+          }
+          let apiName= "production-DynamoAccess-api";
+          let path = "/edituserdetails";        //**CHANGE THIS**
+          console.log(food);
+         
+        return API.put(apiName, path, init);
+      }
+
+  const [fields, handleFieldChange] = useFormFields({
+    foodDescription:"",
+  });
+
   const [isLoading, setIsLoading] = useState(false);
+  const { userHasAuthenticated } = useAppContext();
+  const history = useHistory();
+  //const [newUser, setNewUser] = useState(null);
+
+  async function handleSubmit(event) {
+      event.preventDefault();
+      setIsLoading(true);
+
+      try{
+          let food = {
+            foodDescription:fields.foodDescription,
+          }
+          let retFood = await updateFood(food);
+          swal(retFood);
+          setIsLoading(false);
+      } catch (e) {
+          onError(e);
+          setIsLoading(false);
+      }
+  }
 
 
   function renderForm() {
     return (
       
-      <Form >
-{/* onSubmit={handleSubmit} */}
+      <Form onSubmit={handleSubmit} >
+
         <Form.Group>
             <Form.Label>Please upload a picture of the food</Form.Label>
             <Form.File 
@@ -45,8 +80,8 @@ export default function UpdateFood() {
             as="textarea" rows={5} 
             type="foodDescription"
             placeholder="Eg. Pumpkin pie, with lentil soup"
-            // value={fields.clientAllergies}
-            // onChange={handleFieldChange}
+            value={fields.foodDescription}
+            onChange={handleFieldChange}
             />
         </Form.Group>
 

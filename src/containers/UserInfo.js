@@ -17,40 +17,17 @@ import Alert from 'react-bootstrap/Alert'
 export default function UserInfo() {
 
   function updateUser(user) {
-    //
+  
     API.configure();
-    // return API.put("DynamoAccess", "/updateUser", {
-    //   body: user,
-     
-    // });
-   
-    // let authenticationToken = localStorage.getItem("authenticationToken");
-    // let headers = {
-    //       "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    //        "Authorization":authenticationToken
-    //   };
+    
       let init = {
-        body: user,
-        // headers:headers
+        body: user,   
       }
       let apiName= "production-DynamoAccess-api";
       let path = "/edituserdetails";
       console.log(user);
      
     return API.put(apiName, path, init);
-
-    
-    // headers:{
-    //   "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    //   "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
-    // }
-
-    // return API.put("client-portal-api", "/updateUser", {
-    //   body: user,
-    //   "x-api-key": "zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    // }); 
-    //"x-authorization-token": "",DynamoAccess
-
   }
 
   const [fields, handleFieldChange] = useFormFields({
@@ -94,47 +71,7 @@ export default function UserInfo() {
       // swal("Profile successfully updated.");
       swal(retUser);
       setIsLoading(false);
-      // const JSON_SETINGS = {
-      //   // *GET, POST, PUT, DELETE, etc.
-      //   method: "PUT",
-      //   // no-cors, *cors, same-origin,cors
-      //   mode: "cors",
-      //   // *default, no-cache, reload, force-cache, only-if-cached
-      //   cache: "no-cache",
-      //   // include, *same-origin, omit
-      //   credentials: "omit",
-      //   // manual, *follow, error
-      //   redirect: "follow",
-      //   // no-referrer, *client
-      //   referrer: "no-referrer",
-      //   // 'application/json' 'Content-Type': 'application/x-www-form-urlencoded',
-      //   headers: {
-      //     "Content-Type": "text/plain"
-      //   },
-      //   body: null
-      // };
-      // let json_setings = JSON_SETINGS;
-      // json_setings.body = JSON.stringify(user);
-      // let url = "https://8pysyfg5ce.execute-api.us-east-2.amazonaws.com/dev/updateUser";
-      // setIsLoading(true);
-      // // ******************************
-      // fetch(url, json_setings)
-      // .then(response => response.json())
-      // .then(result => {
-      //   if(result.status){
-      //     alert("UPDATED");
-      //   }else{
-      //     alert("UPDATE FAILED");
-      //   }
-      //   setIsLoading(false);
-      // })
-      // .catch(error => {
-      //   alert("ERROR "+error.message);
-      //   setIsLoading(false);
-      // });
-      //****************************************************** 
-      // alert("call lambda function "+JSON.stringify(user));
-      
+
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -197,16 +134,6 @@ export default function UserInfo() {
             onChange={handleFieldChange}
           />
         </Form.Group>
-
-        {/* <Form.Group controlId="clientProvince" size="lg">
-          <Form.Label>Province</Form.Label>
-          <Form.Control
-            type="clientProvince"
-            placeholder="Your Province"
-            value={fields.clientProvince}
-            onChange={handleFieldChange}
-          />
-        </Form.Group> */}
 
         <Form.Group controlId="neighbourhood" size="lg">
             <Form.Label>Neighbourhood:</Form.Label>
