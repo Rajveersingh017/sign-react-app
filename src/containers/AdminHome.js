@@ -46,12 +46,14 @@ export default function AdminHome() {
   <Card style={styles.card}>
     <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" alt=""/>
     <Card.Body>
-      <Card.Title>Volunteer Information</Card.Title>
+      <Card.Title>Food Information</Card.Title>
       <Card.Text>
-        Here you can view information related to registered volunteers.{' '}
+        Here you can update food information. Eg, Ingredients, pictures and so forth.{' '}
       </Card.Text>
+      <Button variant="primary" onClick={() => history.push('/AdminUpdateFood')} >Update Food</Button>
     </Card.Body>
   </Card>
+  
 </CardDeck>
 <br />
 <CardDeck >
@@ -67,11 +69,10 @@ export default function AdminHome() {
   <Card style={styles.card}>
     <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" alt=""/>
     <Card.Body>
-      <Card.Title>Food Information</Card.Title>
+      <Card.Title>Volunteer Information</Card.Title>
       <Card.Text>
-        Here you can update food information. Eg, Ingredients, pictures and so forth.{' '}
+        Here you can view information related to registered volunteers.{' '}
       </Card.Text>
-      <Button variant="primary" onClick={() => history.push('/AdminUpdateFood')} >Update Food</Button>
     </Card.Body>
   </Card>
 </CardDeck>

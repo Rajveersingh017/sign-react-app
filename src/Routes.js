@@ -18,12 +18,16 @@ import UserInfo from "./containers/UserInfo";
 
 import AdminUserData from "./containers/AdminUserData";
 import AdminHome from "./containers/AdminHome";
+import AdminUpdateFood from "./containers/AdminUpdateFood";
 
 
 export default function Routes() {
   return (
     <Switch>
 
+     <UnauthenticatedRoute exact path="/AdminUpdateFood">
+            <AdminUpdateFood />
+      </UnauthenticatedRoute>
 
       <UnauthenticatedRoute exact path="/AdminUserData">
             <AdminUserData />
@@ -50,6 +54,7 @@ export default function Routes() {
       <AuthenticatedRoute  exact path="/userinfo">
         <UserInfo />
       </AuthenticatedRoute >
+
       <AuthenticatedRoute exact path="/Edit_Profile">
         <Edit_Profile />
       </AuthenticatedRoute>
