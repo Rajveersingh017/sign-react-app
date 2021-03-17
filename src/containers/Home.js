@@ -49,7 +49,7 @@ export default function Home() {
             <Card.Text>
               With your support, together we can make a difference to those less fortunate
             </Card.Text>
-            <Button variant="primary" href="https://www.paypal.com/donate?token=A16cJxDeAj3qmyY6pTO4WobvmA_egj5Keo8w0THOYweEkSF9j1R4Exzu1gEs0JTcDuL8wMxlGwXZdxTx" target="_blank">Donate through PayPal</Button>{' '}
+            <Button variant="primary" href="https://www.paypal.com/ca/fundraiser/charity/3556917" target="_blank">Donate through PayPal</Button>{' '}
             
             <Button variant="secondary" href="https://www.canadahelps.org/en/charities/the-sign-foundation-the-strength-in-greater-numbers-fou/" target="_blank" >Donate through our Website</Button>
           </Card.Body>

@@ -13,10 +13,6 @@ import { API } from "aws-amplify";
 // import { Grid, Row, Col, Image } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert'
 
-
-
-
-
 export default function FoodInfo() {
 
     function updateFood(food) {
@@ -27,7 +23,7 @@ export default function FoodInfo() {
             body: food,   
           }
           let apiName= "production-DynamoAccess-api";
-          let path = "/edituserdetails";        //**CHANGE THIS**
+          let path = "/updatefood";        //**CHANGE THIS**
           console.log(food);
          
         return API.put(apiName, path, init);
@@ -48,6 +44,7 @@ export default function FoodInfo() {
 
       try{
           let food = {
+            email: localStorage.getItem("email"),  
             foodDescription:fields.foodDescription,
           }
           let retFood = await updateFood(food);
@@ -96,11 +93,7 @@ export default function FoodInfo() {
             >
             Update Food
             </LoaderButton>
-
-            
-
         </Form.Group>
-
       </Form>
     );
   }
