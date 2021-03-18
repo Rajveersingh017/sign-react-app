@@ -18,8 +18,28 @@ import { Col } from "react-bootstrap";
 
 
 export default function MealPreface() {
-    function updateOrder(){
-        console.log("sdfdsf")
+    async function updateOrder(){
+        let apiName= "production-DynamoAccess-api";
+        let path = "/generateorderid"; 
+        let data =  {message:"empty"}
+        
+            
+        let user = {
+            email: localStorage.getItem("email"),
+            role: "CLI"
+        }
+        let init ={body:user,}
+       
+        console.log(init);
+        try{
+            console.log(localStorage.getItem("email"));
+
+            data =  await API.put(apiName, path,init);
+           console.log(data);
+
+        }catch(error){
+            data.message = error.message;
+        }
     }
     API.configure();
     var [isTrue, isFalse] = useState(false);
@@ -54,12 +74,20 @@ export default function MealPreface() {
             data.message = error.message;
         }
         if(data.Item.address==null){    
-            console.log('null found');
+            // console.log('null found');
+            // swal("hi");
             isFalse(false);
+            swal({
+                title: "Oh bummer!",
+                text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
+                icon: "warning",
+                
+                dangerMode: true,
+              });
 
         }
         if(data.Item.address!=null){    
-            console.log('not null found');
+            // console.log('not null found');
             isFalse(true);
 
         }
@@ -127,8 +155,9 @@ export default function MealPreface() {
                         
                         />
                         </Form.Group>
+                    
+                    <Button variant="dark" id="reqs"  onClick={()=>updateOrder()} disabled={!isTrue}>Request Meal!</Button>
                     </form>
-                    <Button variant="dark" id="reqs"  onClick={updateOrder()} disabled={!isTrue}>Request Meal!</Button>
                 </Col>
                 
                 <Col sm={4} class="reqFriend">
