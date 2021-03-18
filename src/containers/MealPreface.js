@@ -11,14 +11,18 @@ import { useAppContext } from "../libs/contextLib";
 import swal from "sweetalert";
 import Card from 'react-bootstrap/Card';
 import Form from "react-bootstrap/Form";
-import Row from 'react-bootstrap/Row'
+import Row from 'react-bootstrap/Row';
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import { Col } from "react-bootstrap";
 
 
 export default function MealPreface() {
+    function updateOrder(){
+        console.log("sdfdsf")
+    }
     API.configure();
+    var [isTrue, isFalse] = useState(false);
     const history = useHistory();
     const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
@@ -49,9 +53,25 @@ export default function MealPreface() {
         }catch(error){
             data.message = error.message;
         }
+        if(data.Item.address==null){    
+            console.log('null found');
+            isFalse(false);
+
+        }
+        if(data.Item.address!=null){    
+            console.log('not null found');
+            isFalse(true);
+
+        }
         return data;
     }
-      
+    function validateForm() {
+        //  alert(JSON.stringify(fields));
+         return (
+           
+            false
+         );
+    }
     async function onLoad() {
         
         let data1 = await getData();
@@ -65,12 +85,11 @@ export default function MealPreface() {
     //    }
 
     }
-   
     
     //   console.log(localStorage.getItem("userId"));
       let key = 0;
 
-      
+      console.log("this is", isTrue);
     return ((userData &&
         <div>
             <Card>
@@ -85,7 +104,6 @@ export default function MealPreface() {
                     <span class="userinfoHead">Number Of Adults: </span>{userData.adultsHome}<br></br>
                     <span class="userinfoHead">Number Of Children Home: </span>{userData.childrenHome}<br></br>
                     <span class="userinfoHead">Alergies: </span>{userData.clientAllergies}<br></br>
-                    
                 </Card.Text>
                 <Button variant="primary" href="/userinfo">Click Here to Edit/Update!</Button>
                 </Card.Body>
@@ -110,12 +128,12 @@ export default function MealPreface() {
                         />
                         </Form.Group>
                     </form>
-                    <Button variant="dark" id="reqs">Request Meal!</Button>
+                    <Button variant="dark" id="reqs"  onClick={updateOrder()} disabled={!isTrue}>Request Meal!</Button>
                 </Col>
                 
                 <Col sm={4} class="reqFriend">
                  <Card.Title>Requesting For a friend?</Card.Title>
-                 <Button variant="dark" id="reqs">Click here!</Button>
+                 <Button variant="dark" id="reqsfre">Click here!</Button>
                 </Col>
                 </Row>
                 </Card.Body>

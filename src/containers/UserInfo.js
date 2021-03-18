@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -7,67 +7,88 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
 import swal from "sweetalert";
-// import { Auth } from "aws-amplify";
 import { API } from "aws-amplify";
-// import { useFormik } from 'formik';
-// import { Grid, Row, Col, Image } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert'
 
 
-export default function UserInfo() {
 
-  function updateUser(user) {
-    //
-    API.configure();
-    // return API.put("DynamoAccess", "/updateUser", {
-    //   body: user,
-     
-    // });
+ export default  function UserInfo() {
+
+  API.configure();
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
+
+  async function getData(){
+    let apiName= "production-DynamoAccess-api";
+    let path = "/users"; 
+    let data =  {message:"empty"}
+
+
+    let user = {
+    
+      email: localStorage.getItem("email"),
+      role: "CLI"
+    
+    }
+    
+    let init ={body:user,}
    
-    // let authenticationToken = localStorage.getItem("authenticationToken");
-    // let headers = {
-    //       "X-Api-Key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    //        "Authorization":authenticationToken
-    //   };
+
+    try{
+      data =  await API.put(apiName, path,init);
+    }catch(error){
+
+      data.message = error.message;
+    }
+    return data;
+  }
+  async function populateData() {
+        
+    let data1 = await getData();
+
+    setUserData(data1.Item);
+
+  }
+  function updateUser(user) {
+
+    API.configure();
+
       let init = {
         body: user,
-        // headers:headers
       }
       let apiName= "production-DynamoAccess-api";
       let path = "/edituserdetails";
-      console.log(user);
-     
+      
+     console.log( API.put(apiName, path, init));
     return API.put(apiName, path, init);
 
     
-    // headers:{
-    //   "x-api-key":"zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    //   "x-authorization-token":"6d24ead7-8b05-4b98-80e7-2acc12df9bea"
-    // }
 
-    // return API.put("client-portal-api", "/updateUser", {
-    //   body: user,
-    //   "x-api-key": "zbn0eGjhvYxtFZWWdSHL4BFREdBIAhI6k6aaZHRd",
-    // }); 
-    //"x-authorization-token": "",DynamoAccess
 
   }
 
-  const [fields, handleFieldChange] = useFormFields({
-    address:"",
-    phoneNumber:"",
-    clientName:"",
-    clientCity:"",
-    neighbourhood:"",
-    adultsHome:"",
-    childrenHome:"",
-    clientAllergies:"",
-});
-
+   
+  const [fields, handleFieldChange] = useFormFields(async ()=> {
+    const data1 = await getData();
+    console.log(JSON.stringify(data1.Item.address)); 
+    return({
+      address:"JSON.stringify(data1.Item.address)",
+      phoneNumber: data1.Item.phoneNumber,
+      clientName: data1.Item.clientName,
+      clientCity: data1.Item.clientCity,
+      neighbourhood: data1.Item.neighbourhood,
+      adultsHome: data1.Item.adultsHome,
+      childrenHome: data1.Item.childrenHome,
+      clientAllergies: data1.Item.clientAllergies
+    })
+  });
+  // const [fields, handleFieldChange] = useFormFields();
+  
+  console.log(fields);
+  
   const history = useHistory();
-  // const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
 
 
   async function handleSubmit(event) {
@@ -78,7 +99,6 @@ export default function UserInfo() {
   
     try {
       let user = {
-        // userID : localStorage.getItem("userID"),
         email: localStorage.getItem("email"),
         role: "CLI",
         address:fields.address,
@@ -91,61 +111,19 @@ export default function UserInfo() {
         clientAllergies:fields.clientAllergies,
       }
       let retUser = await updateUser(user);
-      // swal("Profile successfully updated.");
       swal(retUser);
       setIsLoading(false);
-      // const JSON_SETINGS = {
-      //   // *GET, POST, PUT, DELETE, etc.
-      //   method: "PUT",
-      //   // no-cors, *cors, same-origin,cors
-      //   mode: "cors",
-      //   // *default, no-cache, reload, force-cache, only-if-cached
-      //   cache: "no-cache",
-      //   // include, *same-origin, omit
-      //   credentials: "omit",
-      //   // manual, *follow, error
-      //   redirect: "follow",
-      //   // no-referrer, *client
-      //   referrer: "no-referrer",
-      //   // 'application/json' 'Content-Type': 'application/x-www-form-urlencoded',
-      //   headers: {
-      //     "Content-Type": "text/plain"
-      //   },
-      //   body: null
-      // };
-      // let json_setings = JSON_SETINGS;
-      // json_setings.body = JSON.stringify(user);
-      // let url = "https://8pysyfg5ce.execute-api.us-east-2.amazonaws.com/dev/updateUser";
-      // setIsLoading(true);
-      // // ******************************
-      // fetch(url, json_setings)
-      // .then(response => response.json())
-      // .then(result => {
-      //   if(result.status){
-      //     alert("UPDATED");
-      //   }else{
-      //     alert("UPDATE FAILED");
-      //   }
-      //   setIsLoading(false);
-      // })
-      // .catch(error => {
-      //   alert("ERROR "+error.message);
-      //   setIsLoading(false);
-      // });
-      //****************************************************** 
-      // alert("call lambda function "+JSON.stringify(user));
-      
+           
     } catch (e) {
       onError(e);
       setIsLoading(false);
    }
   }
-  
+
  
 
-  function renderForm() {
-    return (
-      
+function renderForm() { 
+    return (fields && 
       <Form onSubmit={handleSubmit}>
 
 <Alert variant="success">
@@ -153,16 +131,12 @@ export default function UserInfo() {
   <p>
   Please complete or update your information.
   </p>
-</Alert>
-
-
-        
-        
+</Alert>        
         <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
           <Form.Control
             type="address"
-            placeholder="Your home address"
+            placeholder=""
             value={fields.address}
             onChange={handleFieldChange}
           />
