@@ -111,7 +111,14 @@ import Alert from 'react-bootstrap/Alert'
         clientAllergies:fields.clientAllergies,
       }
       let retUser = await updateUser(user);
-      swal(retUser);
+      // swal(retUser);
+      swal({
+        title: "Thank You!",
+        text: retUser,
+        icon: "success",
+        
+        dangerMode: true,
+      });
       setIsLoading(false);
            
     } catch (e) {
