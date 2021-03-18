@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -7,44 +7,88 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./UserInfo.css";
 import swal from "sweetalert";
-// import { Auth } from "aws-amplify";
 import { API } from "aws-amplify";
-// import { useFormik } from 'formik';
-// import { Grid, Row, Col, Image } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert'
 
 
-export default function UserInfo() {
 
-  function updateUser(user) {
+ export default  function UserInfo() {
+
+  API.configure();
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   
-    API.configure();
+
+  async function getData(){
+    let apiName= "production-DynamoAccess-api";
+    let path = "/users"; 
+    let data =  {message:"empty"}
+
+
+    let user = {
     
+      email: localStorage.getItem("email"),
+      role: "CLI"
+    
+    }
+    
+    let init ={body:user,}
+   
+
+    try{
+      data =  await API.put(apiName, path,init);
+    }catch(error){
+
+      data.message = error.message;
+    }
+    return data;
+  }
+  async function populateData() {
+        
+    let data1 = await getData();
+
+    setUserData(data1.Item);
+
+  }
+  function updateUser(user) {
+
+    API.configure();
+
       let init = {
-        body: user,   
+        body: user,
       }
       let apiName= "production-DynamoAccess-api";
       let path = "/edituserdetails";
-      console.log(user);
-     
+      
+     console.log( API.put(apiName, path, init));
     return API.put(apiName, path, init);
+
+    
+
+
   }
 
-  const [fields, handleFieldChange] = useFormFields({
-    address:"",
-    phoneNumber:"",
-    clientName:"",
-    clientCity:"",
-    neighbourhood:"",
-    adultsHome:"",
-    childrenHome:"",
-    clientAllergies:"",
-});
-
+   
+  const [fields, handleFieldChange] = useFormFields(async ()=> {
+    const data1 = await getData();
+    console.log(JSON.stringify(data1.Item.address)); 
+    return({
+      address:"JSON.stringify(data1.Item.address)",
+      phoneNumber: data1.Item.phoneNumber,
+      clientName: data1.Item.clientName,
+      clientCity: data1.Item.clientCity,
+      neighbourhood: data1.Item.neighbourhood,
+      adultsHome: data1.Item.adultsHome,
+      childrenHome: data1.Item.childrenHome,
+      clientAllergies: data1.Item.clientAllergies
+    })
+  });
+  // const [fields, handleFieldChange] = useFormFields();
+  
+  console.log(fields);
+  
   const history = useHistory();
-  // const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
 
 
   async function handleSubmit(event) {
@@ -55,7 +99,6 @@ export default function UserInfo() {
   
     try {
       let user = {
-        // userID : localStorage.getItem("userID"),
         email: localStorage.getItem("email"),
         role: "CLI",
         address:fields.address,
@@ -68,21 +111,26 @@ export default function UserInfo() {
         clientAllergies:fields.clientAllergies,
       }
       let retUser = await updateUser(user);
-      // swal("Profile successfully updated.");
-      swal(retUser);
+      // swal(retUser);
+      swal({
+        title: "Thank You!",
+        text: retUser,
+        icon: "success",
+        
+        dangerMode: true,
+      });
       setIsLoading(false);
-
+           
     } catch (e) {
       onError(e);
       setIsLoading(false);
    }
   }
-  
+
  
 
-  function renderForm() {
-    return (
-      
+function renderForm() { 
+    return (fields && 
       <Form onSubmit={handleSubmit}>
 
 <Alert variant="success">
@@ -90,16 +138,12 @@ export default function UserInfo() {
   <p>
   Please complete or update your information.
   </p>
-</Alert>
-
-
-        
-        
+</Alert>        
         <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
           <Form.Control
             type="address"
-            placeholder="Your home address"
+            placeholder=""
             value={fields.address}
             onChange={handleFieldChange}
           />
@@ -143,7 +187,7 @@ export default function UserInfo() {
                 value={fields.neighbourhood}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select your neighbourhood</option>
+                <option value="0" >Select your neighbourhood</option>
                 <option value="I'm not sure">I'm not sure</option>
                 <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
@@ -173,7 +217,7 @@ export default function UserInfo() {
                 value={fields.adultsHome}
                 onChange={handleFieldChange}            
             >
-                <option value="0" selected>Select the number of adults in the home</option>
+                <option value="0">Select the number of adults in the home</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -190,7 +234,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="-0" selected>Select the number of children in the home</option>
+                <option value="-0">Select the number of children in the home</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
