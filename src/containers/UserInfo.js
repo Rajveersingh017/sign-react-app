@@ -12,7 +12,7 @@ import Alert from 'react-bootstrap/Alert'
 
 
 
- export default  function UserInfo() {
+ export default function UserInfo() {
 
   API.configure();
   const [userData, setUserData] = useState(null);
@@ -25,35 +25,28 @@ import Alert from 'react-bootstrap/Alert'
     let data =  {message:"empty"}
 
 
-    let user = {
-    
+    let user = { 
       email: localStorage.getItem("email"),
       role: "CLI"
-    
     }
     
     let init ={body:user,}
-   
-
+  
     try{
       data =  await API.put(apiName, path,init);
     }catch(error){
-
       data.message = error.message;
     }
     return data;
   }
-  async function populateData() {
-        
+
+  async function populateData() {      
     let data1 = await getData();
-
     setUserData(data1.Item);
-
   }
+
   function updateUser(user) {
-
     API.configure();
-
       let init = {
         body: user,
       }
@@ -62,10 +55,6 @@ import Alert from 'react-bootstrap/Alert'
       
      console.log( API.put(apiName, path, init));
     return API.put(apiName, path, init);
-
-    
-
-
   }
 
    
@@ -91,12 +80,9 @@ import Alert from 'react-bootstrap/Alert'
   const { userHasAuthenticated } = useAppContext();
 
 
-  async function handleSubmit(event) {
-    
+  async function handleSubmit(event) { 
     event.preventDefault();
-  
     setIsLoading(true);
-  
     try {
       let user = {
         email: localStorage.getItem("email"),
@@ -110,15 +96,16 @@ import Alert from 'react-bootstrap/Alert'
         childrenHome:fields.childrenHome,
         clientAllergies:fields.clientAllergies,
       }
+
       let retUser = await updateUser(user);
       // swal(retUser);
       swal({
         title: "Thank You!",
         text: retUser,
-        icon: "success",
-        
+        icon: "success",  
         dangerMode: true,
       });
+      
       setIsLoading(false);
            
     } catch (e) {
@@ -127,18 +114,20 @@ import Alert from 'react-bootstrap/Alert'
    }
   }
 
- 
+  // alert("render form");
 
 function renderForm() { 
+  
     return (fields && 
       <Form onSubmit={handleSubmit}>
 
-<Alert variant="success">
-  <Alert.Heading>Hey, nice to see you</Alert.Heading>
-  <p>
-  Please complete or update your information.
-  </p>
-</Alert>        
+        <Alert variant="success">
+          <Alert.Heading>Hey, nice to see you</Alert.Heading>
+          <p>
+          Please complete or update your information.
+          </p>
+        </Alert>
+                
         <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
           <Form.Control

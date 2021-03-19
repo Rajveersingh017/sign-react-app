@@ -20,7 +20,6 @@ function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
-
   useEffect(() => {
     onLoad();
   }, []);
