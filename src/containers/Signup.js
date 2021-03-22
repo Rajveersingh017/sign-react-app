@@ -26,6 +26,7 @@ export default function Signup() {
   const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [userType, setUserType] = useState("CLI");
 
   // function checkChanged(e){
   //   alert(e.target.id)
@@ -70,7 +71,7 @@ export default function Signup() {
           'custom:license': "0",
           'custom:hasVehicle': "0",
           'custom:kitchen': "0",
-          'custom:UserType': "CLI"
+          'custom:UserType': userType
         }
       });
       setIsLoading(false);

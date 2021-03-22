@@ -137,46 +137,7 @@ export default function Edit_Profile() {
       // swal("Profile successfully updated.");
       swal(retUser);
       setIsLoading(false);
-      // const JSON_SETINGS = {
-      //   // *GET, POST, PUT, DELETE, etc.
-      //   method: "PUT",
-      //   // no-cors, *cors, same-origin,cors
-      //   mode: "cors",
-      //   // *default, no-cache, reload, force-cache, only-if-cached
-      //   cache: "no-cache",
-      //   // include, *same-origin, omit
-      //   credentials: "omit",
-      //   // manual, *follow, error
-      //   redirect: "follow",
-      //   // no-referrer, *client
-      //   referrer: "no-referrer",
-      //   // 'application/json' 'Content-Type': 'application/x-www-form-urlencoded',
-      //   headers: {
-      //     "Content-Type": "text/plain"
-      //   },
-      //   body: null
-      // };
-      // let json_setings = JSON_SETINGS;
-      // json_setings.body = JSON.stringify(user);
-      // let url = "https://8pysyfg5ce.execute-api.us-east-2.amazonaws.com/dev/updateUser";
-      // setIsLoading(true);
-      // // ******************************
-      // fetch(url, json_setings)
-      // .then(response => response.json())
-      // .then(result => {
-      //   if(result.status){
-      //     alert("UPDATED");
-      //   }else{
-      //     alert("UPDATE FAILED");
-      //   }
-      //   setIsLoading(false);
-      // })
-      // .catch(error => {
-      //   alert("ERROR "+error.message);
-      //   setIsLoading(false);
-      // });
-      //****************************************************** 
-      // alert("call lambda function "+JSON.stringify(user));
+      
       
     } catch (e) {
       onError(e);
