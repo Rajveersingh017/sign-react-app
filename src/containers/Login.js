@@ -54,7 +54,7 @@ export default function Login() {
      //loggedUserTmp.signInUserSession.idToken.payload.custom:UserType
     
 
-      localStorage.setItem("email",fields.email);
+      // localStorage.setItem("email",fields.email);
       console.log(JSON.stringify(isAuthenticated));
 
       

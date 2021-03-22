@@ -18,6 +18,9 @@ import { Col } from "react-bootstrap";
 
 
 export default function MealPreface() {
+
+    const { isAuthenticated } = useAppContext();
+
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
         let path = "/generateorderid"; 
@@ -25,14 +28,16 @@ export default function MealPreface() {
         
             
         let user = {
-            email: localStorage.getItem("email"),
-            role: "CLI"
+            // email: localStorage.getItem("email"),
+            // role: "CLI"
+            email: isAuthenticated.email,
+            role: isAuthenticated.userType,
         }
         let init ={body:user,}
        
         console.log(init);
         try{
-            console.log(localStorage.getItem("email"));
+            // console.log(localStorage.getItem("email"));
 
             data =  await API.put(apiName, path,init);
            console.log(data);
@@ -58,14 +63,16 @@ export default function MealPreface() {
         
             
         let user = {
-            email: localStorage.getItem("email"),
-            role: "CLI"
+            // email: localStorage.getItem("email"),
+            // role: "CLI"
+            email: isAuthenticated.email,
+            role: isAuthenticated.userType,
         }
         let init ={body:user,}
        
         console.log(init);
         try{
-            console.log(localStorage.getItem("email"));
+            // console.log(localStorage.getItem("email"));
 
             data =  await API.put(apiName, path,init);
            console.log(data);

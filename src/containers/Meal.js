@@ -104,7 +104,7 @@ function Meal() {
             <h1>Request A Meal!</h1>
             <hr></hr>
             <form onSubmit={handleSubmit}>
-                {console.log(localStorage.getItem("email"))}
+                {/* {console.log(localStorage.getItem("email"))} */}
                 <label htmlFor = "email">Email/Phone</label>
                 <input type="text" value={fields.email} onChange={handleFieldChange} id="email" placeholder = "example@example.com"></input>
 

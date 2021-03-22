@@ -35,7 +35,9 @@ export default function FoodInfo() {
 
   const [isLoading, setIsLoading] = useState(false);
   const { userHasAuthenticated } = useAppContext();
+  const { isAuthenticated } = useAppContext();
   const history = useHistory();
+  
   //const [newUser, setNewUser] = useState(null);
 
   async function handleSubmit(event) {
@@ -44,7 +46,7 @@ export default function FoodInfo() {
 
       try{
           let food = {
-            email: localStorage.getItem("email"),  
+            email: isAuthenticated.email,
             foodDescription:fields.foodDescription,
           }
           let retFood = await updateFood(food);

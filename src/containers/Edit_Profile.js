@@ -21,6 +21,8 @@ export default function Edit_Profile() {
   API.configure();
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated } = useAppContext();
+
   const [fields, handleFieldChange] = useFormFields({
     address:"",
     phoneNumber:"",
@@ -37,11 +39,13 @@ export default function Edit_Profile() {
     let path = "/users"; 
     let data =  {message:"empty"}
 
-
+    
     let user = {
     
-      email: localStorage.getItem("email"),
-      role: "CLI"
+      email: isAuthenticated.email,
+      role: isAuthenticated.userType,
+      // email: localStorage.getItem("email"),
+      // role: "CLI"
     
     }
     
@@ -50,7 +54,7 @@ export default function Edit_Profile() {
 
     try{
       
-      console.log(localStorage.getItem("email"));
+      // console.log(localStorage.getItem("email"));
       data =  await API.put(apiName, path,init);
       console.log(data);
     
@@ -122,8 +126,10 @@ export default function Edit_Profile() {
     try {
       let user = {
         // userID : localStorage.getItem("userID"),
-        email: localStorage.getItem("email"),
-        role: "CLI",
+        // email: localStorage.getItem("email"),
+        // role: "CLI",
+        email: isAuthenticated.email,
+        role: isAuthenticated.userType,
         address:fields.address,
         phoneNumber:fields.phoneNumber,
         clientName:fields.clientName,
