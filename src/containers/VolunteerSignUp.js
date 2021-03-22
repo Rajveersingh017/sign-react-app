@@ -21,13 +21,16 @@ export default function VolunteerSignUp() {
       license:"-1",
       hasVehicle:"2",
       kitchen:"-1",
-      UserType: "",
+      'custom:UserType': userType,
       confirmationCode: "",
     });
+
     const history = useHistory();
     const [newUser, setNewUser] = useState(null);
     const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
+    const [userType, setUserType] = useState("VOL");
+
   
     function validateForm() {
       return (

@@ -18,7 +18,10 @@ function App() {
   const history = useHistory();
 
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  // const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [isAuthenticated, userHasAuthenticated] = useState({isAuthenticated:false,userType:null,email:null});
+  
+  const [loggedUser, setLoggedUser] = useState(null);
 
   useEffect(() => {
     onLoad();
@@ -27,7 +30,7 @@ function App() {
   async function onLoad() {
     try {
       await Auth.currentSession();
-      userHasAuthenticated(true);
+      userHasAuthenticated({isAuthenticated:true,userType:null,email:null});
     }
     catch(e) {
       if (e !== 'No current user') {
@@ -41,7 +44,7 @@ function App() {
   async function handleLogout() {
     await Auth.signOut();
   
-    userHasAuthenticated(false);
+    userHasAuthenticated({isAuthenticated:false,userType:null,email:null});
     
     history.push("/login");
   }
@@ -58,7 +61,7 @@ function App() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
-              {isAuthenticated ? (
+              {isAuthenticated.isAuthenticated? (
                 <>
                   <LinkContainer to="/userinfo">
                   <Nav.Link>User Information</Nav.Link>

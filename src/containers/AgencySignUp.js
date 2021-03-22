@@ -21,13 +21,15 @@ function AgencySignUp() {
       service:"0",
       hasVehicle:"0",
       kitchen:"-0",
-      UserType: "AGE",
+      'custom:UserType': userType,
       confirmationCode: "",
     });
     const history = useHistory();
     const [newUser, setNewUser] = useState(null);
     const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
+    const [userType, setUserType] = useState("AGN");
+
   
     function validateForm() {
       return (

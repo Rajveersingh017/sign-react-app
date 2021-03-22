@@ -13,11 +13,22 @@ import { Link } from "react-router-dom";
 export default function Login() {
   
   const { userHasAuthenticated } = useAppContext();
+  // const { setLoggedUser } = useAppContext();
+
+  // const { value } = useAppContext();
+  // alert(JSON.stringify(value))
+  
+  
+
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: ""
   });
+  
+  // const { loggedUser } = useAppContext();
+
+
 
 
   function validateForm() {
@@ -30,16 +41,23 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
-      let authenticationToken = (await Auth.currentSession()).getIdToken().getJwtToken();
-//let tst = (await Auth.currentSession()).getIdToken();
-//alert(JSON.stringify(tst))
-//console.log(authenticationToken)
-      // let userID = (await Auth.currentUserInfo()).attributes.sub;
+
+      let loggedUserTmp = await Auth.signIn(fields.email, fields.password);
+        let isAuthenticated = {
+          isAuthenticated:true,
+          userType:"ADM",
+          email:fields.email
+        }
+
+        userHasAuthenticated(isAuthenticated);
+
+     //loggedUserTmp.signInUserSession.idToken.payload.custom:UserType
+    
+
       localStorage.setItem("email",fields.email);
-      // localStorage.setItem("authenticationToken",authenticationToken);
-      // localStorage.setItem("userID",userID);
+      console.log(JSON.stringify(isAuthenticated));
+
+      
       
     } catch (e) {
       onError(e);
@@ -90,3 +108,7 @@ export default function Login() {
     </div>
   );
 }
+
+// const { value, value2 } = React.useContext(MyContext);
+//   const [stateValue, setStateValue] = value;
+//   const [stateValue2, setStateValue2] = value2;
