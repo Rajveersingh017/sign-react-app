@@ -46,7 +46,7 @@ export default function Login() {
         let isAuthenticated = {
           isAuthenticated:true,
           userType:loggedUserTmp.signInUserSession.idToken.payload["custom:UserType"],
-          email:fields.email
+          email:loggedUserTmp.signInUserSession.idToken.payload.email
         }
 
         userHasAuthenticated(isAuthenticated);
