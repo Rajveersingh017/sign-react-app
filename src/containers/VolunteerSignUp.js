@@ -10,6 +10,11 @@ import { Auth } from "aws-amplify";
 
 export default function VolunteerSignUp() {
     const options=[{value: 'yes'}, {value: 'no'}];
+    const history = useHistory();
+    const [newUser, setNewUser] = useState(null);
+    const { userHasAuthenticated } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const [userType, setUserType] = useState("VOL");
 
     const [fields, handleFieldChange] = useFormFields({
       name:"",
@@ -25,11 +30,7 @@ export default function VolunteerSignUp() {
       confirmationCode: "",
     });
 
-    const history = useHistory();
-    const [newUser, setNewUser] = useState(null);
-    const { userHasAuthenticated } = useAppContext();
-    const [isLoading, setIsLoading] = useState(false);
-    const [userType, setUserType] = useState("VOL");
+
 
   
     function validateForm() {

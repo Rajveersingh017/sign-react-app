@@ -25,27 +25,33 @@ export default function Routes() {
   return (
     <Switch>
 
-     <UnauthenticatedRoute exact path="/AdminUpdateFood">
+      <AuthenticatedRoute exact path="/settings/email">
+        <ChangeEmail />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/settings/password">
+        <ChangePassword />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/login/reset">
+       <ResetPassword />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/AdminUpdateFood">
             <AdminUpdateFood />
-      </UnauthenticatedRoute>
+      </AuthenticatedRoute>
 
-      <UnauthenticatedRoute exact path="/AdminUserData">
+      <AuthenticatedRoute exact path="/AdminUserData">
             <AdminUserData />
-      </UnauthenticatedRoute>
+      </AuthenticatedRoute>
 
-      <UnauthenticatedRoute exact path="/AdminHome">
+      {/* <UnauthenticatedRoute exact path="/AdminHome">
             <AdminHome />
-      </UnauthenticatedRoute>
+      </UnauthenticatedRoute> */}
 
-
-
-      <UnauthenticatedRoute exact path="/Volunteer_Registration">
-        <VolunteerSignUp />
-      </UnauthenticatedRoute>
-
-      <UnauthenticatedRoute exact path="/Agency_Registration">
-        <AgencySignUp></AgencySignUp>
-      </UnauthenticatedRoute>
+      <AuthenticatedRoute exact path="/AdminHome">
+            <AdminHome />
+      </AuthenticatedRoute>
 
       <AuthenticatedRoute  exact path="/Request_Meal">
         <Meal />
@@ -59,33 +65,35 @@ export default function Routes() {
         <Edit_Profile />
       </AuthenticatedRoute>
 
-      <Route exact path="/settings/email">
-        <ChangeEmail />
-      </Route>
-
-      <Route exact path="/settings/password">
-        <ChangePassword />
-      </Route>
-
-      <Route exact path="/login/reset">
-       <ResetPassword />
-      </Route>
+      <AuthenticatedRoute  exact path="/settings">
+        <Settings />
+      </AuthenticatedRoute>  
 
       <UnauthenticatedRoute exact path="/signup">
         <Signup />
       </UnauthenticatedRoute>
 
-      <AuthenticatedRoute  exact path="/settings">
-        <Settings />
-      </AuthenticatedRoute>  
-
       <UnauthenticatedRoute exact path="/login">
        <Login />
       </UnauthenticatedRoute>
 
+      <UnauthenticatedRoute exact path="/Volunteer_Registration">
+        <VolunteerSignUp />
+      </UnauthenticatedRoute>
+
+      <UnauthenticatedRoute exact path="/Agency_Registration">
+        <AgencySignUp></AgencySignUp>
+      </UnauthenticatedRoute>
+
+      
+
       <Route exact path="/">
         <Home />
       </Route>
+
+      {/* <Route exact path="/AdminHome">
+        <AdminHome />
+      </Route> */}
       
       {/* Finally, catch all unmatched routes */}
       <Route>

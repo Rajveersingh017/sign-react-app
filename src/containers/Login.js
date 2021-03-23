@@ -45,7 +45,7 @@ export default function Login() {
       let loggedUserTmp = await Auth.signIn(fields.email, fields.password);
         let isAuthenticated = {
           isAuthenticated:true,
-          userType:"ADM",
+          userType:loggedUserTmp.signInUserSession.idToken.payload["custom:UserType"],
           email:fields.email
         }
 
@@ -55,7 +55,7 @@ export default function Login() {
     
 
       // localStorage.setItem("email",fields.email);
-      console.log(JSON.stringify(isAuthenticated));
+      // console.log(JSON.stringify(isAuthenticated));
 
       
       

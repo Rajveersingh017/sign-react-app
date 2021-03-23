@@ -75,9 +75,9 @@ function App() {
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/Request_Meal">
+                  {("CLI" === isAuthenticated.userType && <LinkContainer to="/Request_Meal">
                     <Nav.Link>Request Meal</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer>)}
                   
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
@@ -88,9 +88,9 @@ function App() {
                     <Nav.Link>Admin User Data</Nav.Link>
                   </LinkContainer> */}
 
-                  <LinkContainer to="/AdminHome">
+                  {/* <LinkContainer to="/AdminHome">
                     <Nav.Link>AdminHome</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
 
                   <LinkContainer to="/Volunteer_Registration">

@@ -75,7 +75,7 @@ export default function MealPreface() {
             // console.log(localStorage.getItem("email"));
 
             data =  await API.put(apiName, path,init);
-           console.log(data);
+           console.log(JSON.stringify(data));
 
         }catch(error){
             data.message = error.message;
@@ -109,9 +109,9 @@ export default function MealPreface() {
     }
     async function onLoad() {
         
-        let data1 = await getData();
-        console.log(data1.Item);
-        setUserData(data1.Item);
+        let data = await getData();
+        console.log(JSON.stringify(data));
+        setUserData(data);
     //    if(userdata.email.empty){
     //     const Reqstate = "Disabled";
     //    }
