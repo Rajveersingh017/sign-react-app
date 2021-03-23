@@ -4,7 +4,7 @@ import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
-import Meal from "./containers/MealPreface";
+import MealPreface from "./containers/MealPreface";
 import VolunteerSignUp from "./containers/VolunteerSignUp";
 import ResetPassword from "./containers/ResetPassword";
 import Settings from "./containers/Settings";
@@ -54,7 +54,7 @@ export default function Routes() {
       </AuthenticatedRoute>
 
       <AuthenticatedRoute  exact path="/Request_Meal">
-        <Meal />
+        <MealPreface />
       </AuthenticatedRoute >
 
       <AuthenticatedRoute  exact path="/userinfo">

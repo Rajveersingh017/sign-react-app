@@ -111,7 +111,7 @@ export default function MealPreface() {
         
         let data = await getData();
         console.log(JSON.stringify(data));
-        setUserData(data);
+        setUserData(data.Item);
     //    if(userdata.email.empty){
     //     const Reqstate = "Disabled";
     //    }
