@@ -51,51 +51,7 @@ export default function AdminUserData() {
            data.users = usrs;
        }
        setUserData(data);
-    //    if(users){
-        //    let strUsers = JSON.stringify(users);
-    //        console.log(strUsers);
-        //    alert(strUsers)
-    //    }
-
-        //  let data = {
-        //         users:[
-        //             {
-        //                 name:"Haris Saran",
-        //                 email:"Test@hotmail.com",
-        //                 address:"123 Test st",
-        //                 neighbourhood:"St vital",
-        //                 city:"Winnipeg",
-        //                 phone_number:"2041234567",
-        //                 numberAdults:2,
-        //                 numberChildren:4,
-        //                 alergies:"none"
-            
-        //             },
-        //             {
-        //                 name:"Haris Saran",
-        //             email:"Test@hotmail.com",
-        //             address:"123 Test st",
-        //             neighbourhood:"St vital",
-        //             city:"Winnipeg",
-        //             phone_number:"2041234567",
-        //             numberAdults:2,
-        //             numberChildren:4,
-        //             alergies:"none"
-        //         },
-        //             {
-        //                 name:"Haris Saran",
-        //             email:"Test@hotmail.com",
-        //             address:"123 Test st",
-        //             neighbourhood:"St vital",
-        //             city:"Winnipeg",
-        //             phone_number:"2041234567",
-        //             numberAdults:2,
-        //             numberChildren:4,
-        //             alergies:"none"
-        //         }
-        //         ]
-        //     }
-                
+  
       }
    
     const headerData = {
