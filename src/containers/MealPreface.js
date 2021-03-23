@@ -32,8 +32,6 @@ export default function MealPreface() {
     }, []);
 
     function goToPage(page){
-        alert("GOING TO "+page)
-        // 
         setRedirectTo(page);
     }
 
