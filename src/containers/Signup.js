@@ -84,14 +84,18 @@ export default function Signup() {
   
   async function handleConfirmationSubmit(event) {
     event.preventDefault();
-  
+    
     setIsLoading(true);
   
     try {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
-  
-      userHasAuthenticated(true);
+      let isAuthenticated = {
+        isAuthenticated:true,
+        userType:userType,
+        email:fields.email
+      };
+      userHasAuthenticated(isAuthenticated);
       history.push("/UserInfo");
     } catch (e) {
       onError(e);

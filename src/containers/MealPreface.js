@@ -15,11 +15,29 @@ import Row from 'react-bootstrap/Row';
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import { Col } from "react-bootstrap";
-
+import { Redirect } from 'react-router-dom';
 
 export default function MealPreface() {
 
+    var [isTrue, isFalse] = useState(false);
+    const history = useHistory();
+    const { userHasAuthenticated } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const [userData, setUserData] = useState(null);
     const { isAuthenticated } = useAppContext();
+    const [redirectTo, setRedirectTo] = useState(null);
+
+    useEffect(() => {
+        onLoad();
+    }, []);
+
+    function goToPage(page){
+        alert("GOING TO "+page)
+        // 
+        setRedirectTo(page);
+    }
+
+    
 
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
@@ -47,19 +65,12 @@ export default function MealPreface() {
         }
     }
     API.configure();
-    var [isTrue, isFalse] = useState(false);
-    const history = useHistory();
-    const { userHasAuthenticated } = useAppContext();
-    const [isLoading, setIsLoading] = useState(false);
-    const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        onLoad();
-    }, []);
+    
 
     async function getData(){
         let apiName= "production-DynamoAccess-api";
         let path = "/users"; 
-        let data =  {message:"empty"}
+        let data =  {message:"empty","Item":{address:""}}
         
             
         let user = {
@@ -74,13 +85,16 @@ export default function MealPreface() {
         try{
             // console.log(localStorage.getItem("email"));
 
-            data =  await API.put(apiName, path,init);
+            let ret_data =  await API.put(apiName, path,init);
+            if(ret_data.Item){
+                data = ret_data;
+            }
            console.log(JSON.stringify(data));
 
         }catch(error){
             data.message = error.message;
         }
-        if(data.Item.address==null){    
+        if(data.Item.address==null || data.Item.address==""){    
             // console.log('null found');
             // swal("hi");
             isFalse(false);
@@ -125,22 +139,25 @@ export default function MealPreface() {
       let key = 0;
 
       console.log("this is", isTrue);
-    return ((userData &&
+//(userData && 
+    return (
+        (userData && redirectTo == null)?(
         <div>
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
                 <Card.Body>
-                <Card.Title>  <span class="userinfoHead">{userData.clientName}</span></Card.Title>
-                <Card.Text class = "cardText">
-                    <span class="userinfoHead">Address: </span>{userData.address}<br></br>
-                    <span class="userinfoHead">City: </span>{userData.clientCity}<br></br>
-                    <span class="userinfoHead">Email: </span>{userData.email}<br></br>
-                    <span class="userinfoHead">Phone: </span>{userData.phoneNumber}<br></br>
-                    <span class="userinfoHead">Number Of Adults: </span>{userData.adultsHome}<br></br>
-                    <span class="userinfoHead">Number Of Children Home: </span>{userData.childrenHome}<br></br>
-                    <span class="userinfoHead">Alergies: </span>{userData.clientAllergies}<br></br>
-                </Card.Text>
-                <Button variant="primary" href="/userinfo">Click Here to Edit/Update!</Button>
+                <Card.Title>  <span className="userinfoHead">{userData.clientName || ""}</span></Card.Title>
+                <Card.Text className= "cardText">
+                    <span className="userinfoHead">Address: </span>{userData.address || ""}<br></br>
+                    <span className="userinfoHead">City: </span>{userData.clientCity || ""}<br></br>
+                    <span className="userinfoHead">Email: </span>{userData.email || ""}<br></br>
+                    <span className="userinfoHead">Phone: </span>{userData.phoneNumber || ""}<br></br>
+                    <span className="userinfoHead">Number Of Adults: </span>{userData.adultsHome || ""}<br></br>
+                    <span className="userinfoHead">Number Of Children Home: </span>{userData.childrenHome || ""}<br></br>
+                    <span className="userinfoHead">Alergies: </span>{userData.clientAllergies || ""}<br></br>
+                </Card.Text>goToPage
+                {/* <Button variant="primary" href="/userinfo">Click Here to Edit/Update!</Button> */}
+                <Button variant="primary" onClick={()=>goToPage('/userinfo')} >Click Here to Edit/Update!</Button>
                 </Card.Body>
             </Card>
             <Card>
@@ -167,7 +184,7 @@ export default function MealPreface() {
                     </form>
                 </Col>
                 
-                <Col sm={4} class="reqFriend">
+                <Col sm={4} className="reqFriend">
                  <Card.Title>Requesting For a friend?</Card.Title>
                  <Button variant="dark" id="reqsfre">Click here!</Button>
                 </Col>
@@ -176,6 +193,9 @@ export default function MealPreface() {
 
 
             </Card>
-        </div>
-    ));
+        </div>):
+        (redirectTo)?(
+            <Redirect to={redirectTo} />
+        ):(null)
+    );
     }
