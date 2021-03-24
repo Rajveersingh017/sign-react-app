@@ -27,6 +27,7 @@ export default function AdminUserData() {
         data.message = error.message;
        }
          return data;
+         alert(JSON.stringify(data))
       }
       
        async function onLoad() {

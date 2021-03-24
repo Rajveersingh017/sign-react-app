@@ -193,7 +193,7 @@ export default function UserInfo() {
                 value={fields.childrenHome}
                 onChange={handleFieldChange}            
             >
-                <option value="-0" selected>Select the number of children in the home</option>
+                <option value="-0" selected>Select the number of children</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
