@@ -61,7 +61,7 @@ function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
-                  <LinkContainer to="/userinfo">
+                  <LinkContainer to="/EditUserInfo">
                   <Nav.Link>User Information</Nav.Link>
                   </LinkContainer>
  

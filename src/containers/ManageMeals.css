@@ -1,0 +1,45 @@
+.swal-text {
+    background-color: #FEFAE3;
+    padding: 17px;
+    border: 1px solid #F0E1A1;
+    display: block;
+    margin: 22px;
+    text-align: center;
+    color: #61534e;
+  }
+.ManageMeals form{
+    width: 55%;
+    margin: 0 auto;
+    margin-bottom: 5%;
+}
+.ManageMeals form label{
+    display: block;
+    font-size: 1.4rem;
+    padding-top: 3%;
+}
+/* .ManageMeals form input,textarea{
+    padding: 10px;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 2px slateblue solid;
+    transition: 1s;
+} */
+
+.ManageMeals button{
+    display: block;
+    margin:0 auto;
+    padding: 10px;
+    margin-top: 3%;
+    background-color:black;
+    color: whitesmoke;
+    border: none;
+    font-size: 1.4rem;
+    box-shadow: 6px 5px gray;
+    transition: 1s;
+}
+.ManageMeals button:hover{
+    background-color: firebrick;
+  
+}

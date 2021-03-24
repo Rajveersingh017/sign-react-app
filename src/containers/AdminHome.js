@@ -3,9 +3,8 @@ import "./Home.css";
 // import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button';
 import CardDeck from 'react-bootstrap/CardDeck'
-import { Container, CardGroup, Card, Row, Col } from 'react-bootstrap';
+import {  Card } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
-import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 
 const styles = {
@@ -64,6 +63,7 @@ export default function AdminHome() {
       <Card.Text>
         Here you can view information about the agencies that have signed up.
       </Card.Text>
+      <Button variant="primary" onClick={() => history.push('/ManageMeals')} >Manage Meals</Button>
     </Card.Body>
   </Card>
   <Card style={styles.card}>

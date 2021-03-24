@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { API } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { onError } from "../libs/errorLib";
@@ -15,9 +15,36 @@ import Row from 'react-bootstrap/Row';
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import { Col } from "react-bootstrap";
+import UserData from '../contextData/UserData';
 
 
 export default function MealPreface() {
+    const userInfo = useContext(UserData);
+    console.log(useContext(UserData))
+    const [user,setUser] = useState({});
+    useEffect(() => {
+        onLoad();
+        
+    }, []);
+    setUser(useContext(UserData));
+    console.log(user)
+    function onLoad() {
+
+        // userInfo = useContext(UserData);
+
+        if(userInfo.userInfo.address==""){    
+            console.log(userInfo.userInfo.address)
+            isFalse(false);
+            swal({
+                title: "Oh bummer!",
+                text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
+                icon: "warning",
+                
+                dangerMode: true,
+            });
+        }
+    }
+
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
         let path = "/generateorderid"; 
@@ -47,9 +74,7 @@ export default function MealPreface() {
     const { userHasAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        onLoad();
-    }, []);
+    
 
     async function getData(){
         let apiName= "production-DynamoAccess-api";
@@ -73,7 +98,7 @@ export default function MealPreface() {
         }catch(error){
             data.message = error.message;
         }
-        if(data.Item.address==null){    
+        if(userInfo.userInfo.address==""){    
             // console.log('null found');
             // swal("hi");
             isFalse(false);
@@ -100,38 +125,28 @@ export default function MealPreface() {
             false
          );
     }
-    async function onLoad() {
-        
-        let data1 = await getData();
-        console.log(data1.Item);
-        setUserData(data1.Item);
-    //    if(userdata.email.empty){
-    //     const Reqstate = "Disabled";
-    //    }
-    //    else{
-    //        const Reqstate = "";
-    //    }
-
-    }
+    
     
     //   console.log(localStorage.getItem("userId"));
-      let key = 0;
+    //   let key = 0;
 
-      console.log("this is", isTrue);
-    return ((userData &&
+      
+    return (({userInfo} &&
         <div>
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
                 <Card.Body>
-                <Card.Title>  <span class="userinfoHead">{userData.clientName}</span></Card.Title>
-                <Card.Text class = "cardText">
-                    <span class="userinfoHead">Address: </span>{userData.address}<br></br>
-                    <span class="userinfoHead">City: </span>{userData.clientCity}<br></br>
-                    <span class="userinfoHead">Email: </span>{userData.email}<br></br>
-                    <span class="userinfoHead">Phone: </span>{userData.phoneNumber}<br></br>
-                    <span class="userinfoHead">Number Of Adults: </span>{userData.adultsHome}<br></br>
-                    <span class="userinfoHead">Number Of Children Home: </span>{userData.childrenHome}<br></br>
-                    <span class="userinfoHead">Alergies: </span>{userData.clientAllergies}<br></br>
+                <Card.Title>  <span className="userinfoHead">{userInfo.userInfo.clientName}</span></Card.Title>
+                <Card.Text className = "cardText">
+
+
+                    <span className="userinfoHead">Address: </span>{userInfo.userInfo.address}<br></br>
+                    <span className="userinfoHead">City: </span>{userInfo.userInfo.clientCity}<br></br>
+                    <span className="userinfoHead">Email: </span>{userInfo.userInfo.email}<br></br>
+                    <span className="userinfoHead">Phone: </span>{userInfo.userInfo.phoneNumber}<br></br>
+                    <span className="userinfoHead">Number Of Adults: </span>{userInfo.userInfo.adultsHome}<br></br>
+                    <span className="userinfoHead">Number Of Children Home: </span>{userInfo.userInfo.childrenHome}<br></br>
+                    <span className="userinfoHead">Alergies: </span>{userInfo.userInfo.clientAllergies}<br></br>
                 </Card.Text>
                 <Button variant="primary" href="/userinfo">Click Here to Edit/Update!</Button>
                 </Card.Body>
@@ -160,7 +175,7 @@ export default function MealPreface() {
                     </form>
                 </Col>
                 
-                <Col sm={4} class="reqFriend">
+                <Col sm={4} className="reqFriend">
                  <Card.Title>Requesting For a friend?</Card.Title>
                  <Button variant="dark" id="reqsfre">Click here!</Button>
                 </Col>

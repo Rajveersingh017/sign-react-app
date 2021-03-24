@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Router, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
@@ -14,18 +14,34 @@ import Edit_Profile from "./containers/Edit_Profile";
 import AgencySignUp from "./containers/AgencySignUp";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import UserInfo from "./containers/UserInfo";
+import ManageMeals from "./containers/ManageMeals";
+import EditUserInfo from "./containers/EditUserInfo";
 
 import AdminUserData from "./containers/AdminUserData";
 import AdminHome from "./containers/AdminHome";
 import AdminUpdateFood from "./containers/AdminUpdateFood";
+import   UserData  from "./contextData/UserData";
 
 
 export default function Routes() {
+  const [userInfo,setUserInfo] = useState({
+      address: "",
+      phoneNumber: "",
+      clientName: "",
+      clientCity: "",
+      neighbourhood: "",
+      adultsHome: "",
+      childrenHome: "",
+      clientAllergies: ""
+  });
   return (
     <Switch>
+      <UserData.Provider value={{userInfo,setUserInfo}}>
+      <UnauthenticatedRoute exact path="/ManageMeals">
+            <ManageMeals />
+      </UnauthenticatedRoute>
 
-     <UnauthenticatedRoute exact path="/AdminUpdateFood">
+      <UnauthenticatedRoute exact path="/AdminUpdateFood">
             <AdminUpdateFood />
       </UnauthenticatedRoute>
 
@@ -47,17 +63,19 @@ export default function Routes() {
         <AgencySignUp></AgencySignUp>
       </UnauthenticatedRoute>
 
-      <AuthenticatedRoute  exact path="/Request_Meal">
-        <Meal />
-      </AuthenticatedRoute >
+      
+        <AuthenticatedRoute  exact path="/Request_Meal">
+          <Meal />
+        </AuthenticatedRoute >
 
-      <AuthenticatedRoute  exact path="/userinfo">
-        <UserInfo />
-      </AuthenticatedRoute >
+        <AuthenticatedRoute  exact path="/EditUserInfo">
+          <EditUserInfo />
+        </AuthenticatedRoute >
 
-      <AuthenticatedRoute exact path="/Edit_Profile">
-        <Edit_Profile />
-      </AuthenticatedRoute>
+        <AuthenticatedRoute exact path="/Edit_Profile">
+          <Edit_Profile />
+        </AuthenticatedRoute>
+      
 
       <Route exact path="/settings/email">
         <ChangeEmail />
@@ -86,7 +104,7 @@ export default function Routes() {
       <Route exact path="/">
         <Home />
       </Route>
-      
+      </UserData.Provider>
       {/* Finally, catch all unmatched routes */}
       <Route>
         <NotFound />

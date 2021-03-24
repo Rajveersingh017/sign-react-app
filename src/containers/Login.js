@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Auth } from "aws-amplify";
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../components/LoaderButton";
@@ -7,7 +7,8 @@ import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./Login.css";
 import { Link } from "react-router-dom";
-
+import UserData from '../contextData/UserData';
+import { API } from "aws-amplify";
 
 
 export default function Login() {
@@ -18,12 +19,45 @@ export default function Login() {
     email: "",
     password: ""
   });
-
+  const {setUserInfo} = useContext(UserData);
 
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
   }
 
+  async function getUserInfo(){
+    let apiName= "production-DynamoAccess-api";
+        let path = "/users"; 
+        let data =  {message:"empty"}
+        
+            
+        let user = {
+            email: localStorage.getItem("email"),
+            role: "CLI"
+        }
+        let init ={body:user,}
+       
+        // console.log(init);
+        try{
+            console.log(localStorage.getItem("email"));
+
+            data =  await API.put(apiName, path,init);
+          //  console.log(data);
+            setUserInfo({
+              email: fields.email,
+              address: data.Item.address || null,
+              phoneNumber: data.Item.phoneNumber || null,
+              clientName: data.Item.clientName || null,
+              clientCity: data.Item.clientCity || null,
+              neighbourhood: data.Item.neighbourhood || null,
+              adultsHome: data.Item.adultsHome || null,
+              childrenHome: data.Item.childrenHome || null,
+              clientAllergies: data.Item.clientAllergies || null
+            });
+        }catch(error){
+            data.message = error.message;
+        }
+  }
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -40,6 +74,8 @@ export default function Login() {
       localStorage.setItem("email",fields.email);
       // localStorage.setItem("authenticationToken",authenticationToken);
       // localStorage.setItem("userID",userID);
+      let fetchUserFromDb = await getUserInfo();
+        
       
     } catch (e) {
       onError(e);

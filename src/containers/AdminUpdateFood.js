@@ -1,4 +1,4 @@
-import React, { useState,Component } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -9,9 +9,9 @@ import "./AdminUpdateFood.css";
 import swal from "sweetalert";
 // import { Auth } from "aws-amplify";
 import { API } from "aws-amplify";
-// import { useFormik } from 'formik';
-// import { Grid, Row, Col, Image } from 'react-bootstrap';
-import Alert from 'react-bootstrap/Alert'
+// // import { useFormik } from 'formik';
+// // import { Grid, Row, Col, Image } from 'react-bootstrap';
+// import Alert from 'react-bootstrap/Alert'
 
 export default function FoodInfo() {
 
