@@ -4,7 +4,7 @@ import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
-import Meal from "./containers/MealPreface";
+import MealPreface from "./containers/MealPreface";
 import VolunteerSignUp from "./containers/VolunteerSignUp";
 import ResetPassword from "./containers/ResetPassword";
 import Settings from "./containers/Settings";
@@ -41,32 +41,37 @@ export default function Routes() {
             <ManageMeals />
       </UnauthenticatedRoute>
 
-      <UnauthenticatedRoute exact path="/AdminUpdateFood">
+      <AuthenticatedRoute exact path="/settings/email">
+        <ChangeEmail />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/settings/password">
+        <ChangePassword />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/login/reset">
+       <ResetPassword />
+      </AuthenticatedRoute>
+
+      <AuthenticatedRoute exact path="/AdminUpdateFood">
             <AdminUpdateFood />
-      </UnauthenticatedRoute>
+      </AuthenticatedRoute>
 
-      <UnauthenticatedRoute exact path="/AdminUserData">
+      <AuthenticatedRoute exact path="/AdminUserData">
             <AdminUserData />
-      </UnauthenticatedRoute>
+      </AuthenticatedRoute>
 
-      <UnauthenticatedRoute exact path="/AdminHome">
+      {/* <UnauthenticatedRoute exact path="/AdminHome">
             <AdminHome />
-      </UnauthenticatedRoute>
+      </UnauthenticatedRoute> */}
 
+      <AuthenticatedRoute exact path="/AdminHome">
+            <AdminHome />
+      </AuthenticatedRoute>
 
-
-      <UnauthenticatedRoute exact path="/Volunteer_Registration">
-        <VolunteerSignUp />
-      </UnauthenticatedRoute>
-
-      <UnauthenticatedRoute exact path="/Agency_Registration">
-        <AgencySignUp></AgencySignUp>
-      </UnauthenticatedRoute>
-
-      
-        <AuthenticatedRoute  exact path="/Request_Meal">
-          <Meal />
-        </AuthenticatedRoute >
+      <AuthenticatedRoute  exact path="/Request_Meal">
+        <MealPreface />
+      </AuthenticatedRoute >
 
         <AuthenticatedRoute  exact path="/EditUserInfo">
           <EditUserInfo />
@@ -77,34 +82,34 @@ export default function Routes() {
         </AuthenticatedRoute>
       
 
-      <Route exact path="/settings/email">
-        <ChangeEmail />
-      </Route>
-
-      <Route exact path="/settings/password">
-        <ChangePassword />
-      </Route>
-
-      <Route exact path="/login/reset">
-       <ResetPassword />
-      </Route>
+      <AuthenticatedRoute  exact path="/settings">
+        <Settings />
+      </AuthenticatedRoute>  
 
       <UnauthenticatedRoute exact path="/signup">
         <Signup />
       </UnauthenticatedRoute>
 
-      <AuthenticatedRoute  exact path="/settings">
-        <Settings />
-      </AuthenticatedRoute>  
-
       <UnauthenticatedRoute exact path="/login">
        <Login />
       </UnauthenticatedRoute>
+
+      <UnauthenticatedRoute exact path="/Volunteer_Registration">
+        <VolunteerSignUp />
+      </UnauthenticatedRoute>
+
+      <UnauthenticatedRoute exact path="/Agency_Registration">
+        <AgencySignUp></AgencySignUp>
+      </UnauthenticatedRoute>
+
+      
 
       <Route exact path="/">
         <Home />
       </Route>
       </UserData.Provider>
+
+      
       {/* Finally, catch all unmatched routes */}
       <Route>
         <NotFound />

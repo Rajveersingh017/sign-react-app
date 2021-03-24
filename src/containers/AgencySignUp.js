@@ -10,6 +10,11 @@ import { Auth } from "aws-amplify";
 
 function AgencySignUp() {
     const options=[{value: 'yes'}, {value: 'no'}];
+    const history = useHistory();
+    const [newUser, setNewUser] = useState(null);
+    const { userHasAuthenticated } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const [userType, setUserType] = useState("AGN");
 
     const [fields, handleFieldChange] = useFormFields({
       name:"",
@@ -21,13 +26,11 @@ function AgencySignUp() {
       service:"0",
       hasVehicle:"0",
       kitchen:"-0",
-      UserType: "AGE",
+      'custom:UserType': userType,
       confirmationCode: "",
     });
-    const history = useHistory();
-    const [newUser, setNewUser] = useState(null);
-    const { userHasAuthenticated } = useAppContext();
-    const [isLoading, setIsLoading] = useState(false);
+    
+
   
     function validateForm() {
       return (

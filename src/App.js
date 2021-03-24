@@ -18,8 +18,10 @@ function App() {
   const history = useHistory();
 
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
-
+  // const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [isAuthenticated, userHasAuthenticated] = useState({isAuthenticated:false,userType:null,email:null});
+  
+  const [loggedUser, setLoggedUser] = useState(null);
 
   useEffect(() => {
     onLoad();
@@ -28,7 +30,7 @@ function App() {
   async function onLoad() {
     try {
       await Auth.currentSession();
-      userHasAuthenticated(true);
+      userHasAuthenticated({isAuthenticated:true,userType:null,email:null});
     }
     catch(e) {
       if (e !== 'No current user') {
@@ -42,7 +44,7 @@ function App() {
   async function handleLogout() {
     await Auth.signOut();
   
-    userHasAuthenticated(false);
+    userHasAuthenticated({isAuthenticated:false,userType:null,email:null});
     
     history.push("/login");
   }
@@ -59,7 +61,7 @@ function App() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
-              {isAuthenticated ? (
+              {isAuthenticated.isAuthenticated? (
                 <>
                   <LinkContainer to="/EditUserInfo">
                   <Nav.Link>User Information</Nav.Link>
@@ -73,9 +75,9 @@ function App() {
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/Request_Meal">
+                  {("CLI" === isAuthenticated.userType && <LinkContainer to="/Request_Meal">
                     <Nav.Link>Request Meal</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer>)}
                   
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
@@ -86,9 +88,9 @@ function App() {
                     <Nav.Link>Admin User Data</Nav.Link>
                   </LinkContainer> */}
 
-                  <LinkContainer to="/AdminHome">
+                  {/* <LinkContainer to="/AdminHome">
                     <Nav.Link>AdminHome</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
 
                   <LinkContainer to="/Volunteer_Registration">

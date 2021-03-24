@@ -21,6 +21,8 @@ export default function Edit_Profile() {
   API.configure();
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated } = useAppContext();
+
   const [fields, handleFieldChange] = useFormFields({
     address:"",
     phoneNumber:"",
@@ -37,11 +39,13 @@ export default function Edit_Profile() {
     let path = "/users"; 
     let data =  {message:"empty"}
 
-
+    
     let user = {
     
-      email: localStorage.getItem("email"),
-      role: "CLI"
+      email: isAuthenticated.email,
+      role: isAuthenticated.userType,
+      // email: localStorage.getItem("email"),
+      // role: "CLI"
     
     }
     
@@ -50,7 +54,7 @@ export default function Edit_Profile() {
 
     try{
       
-      console.log(localStorage.getItem("email"));
+      // console.log(localStorage.getItem("email"));
       data =  await API.put(apiName, path,init);
       console.log(data);
     
@@ -122,8 +126,10 @@ export default function Edit_Profile() {
     try {
       let user = {
         // userID : localStorage.getItem("userID"),
-        email: localStorage.getItem("email"),
-        role: "CLI",
+        // email: localStorage.getItem("email"),
+        // role: "CLI",
+        email: isAuthenticated.email,
+        role: isAuthenticated.userType,
         address:fields.address,
         phoneNumber:fields.phoneNumber,
         clientName:fields.clientName,
@@ -137,46 +143,7 @@ export default function Edit_Profile() {
       // swal("Profile successfully updated.");
       swal(retUser);
       setIsLoading(false);
-      // const JSON_SETINGS = {
-      //   // *GET, POST, PUT, DELETE, etc.
-      //   method: "PUT",
-      //   // no-cors, *cors, same-origin,cors
-      //   mode: "cors",
-      //   // *default, no-cache, reload, force-cache, only-if-cached
-      //   cache: "no-cache",
-      //   // include, *same-origin, omit
-      //   credentials: "omit",
-      //   // manual, *follow, error
-      //   redirect: "follow",
-      //   // no-referrer, *client
-      //   referrer: "no-referrer",
-      //   // 'application/json' 'Content-Type': 'application/x-www-form-urlencoded',
-      //   headers: {
-      //     "Content-Type": "text/plain"
-      //   },
-      //   body: null
-      // };
-      // let json_setings = JSON_SETINGS;
-      // json_setings.body = JSON.stringify(user);
-      // let url = "https://8pysyfg5ce.execute-api.us-east-2.amazonaws.com/dev/updateUser";
-      // setIsLoading(true);
-      // // ******************************
-      // fetch(url, json_setings)
-      // .then(response => response.json())
-      // .then(result => {
-      //   if(result.status){
-      //     alert("UPDATED");
-      //   }else{
-      //     alert("UPDATE FAILED");
-      //   }
-      //   setIsLoading(false);
-      // })
-      // .catch(error => {
-      //   alert("ERROR "+error.message);
-      //   setIsLoading(false);
-      // });
-      //****************************************************** 
-      // alert("call lambda function "+JSON.stringify(user));
+      
       
     } catch (e) {
       onError(e);

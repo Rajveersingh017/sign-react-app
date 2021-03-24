@@ -16,18 +16,26 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'
 import { Col } from "react-bootstrap";
 import UserData from '../contextData/UserData';
-
-
+import { Redirect } from 'react-router-dom';
+    
 export default function MealPreface() {
-    const userInfo = useContext(UserData);
-    console.log(useContext(UserData))
-    const [user,setUser] = useState({});
+
+    var [isTrue, isFalse] = useState(false);
+    const history = useHistory();
+    const { userHasAuthenticated } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const { isAuthenticated } = useAppContext();
+    const [redirectTo, setRedirectTo] = useState(null);
+
     useEffect(() => {
         onLoad();
-        
     }, []);
-    setUser(useContext(UserData));
-    console.log(user)
+
+    function goToPage(page){
+        setRedirectTo(page);
+    }
+
     function onLoad() {
 
         // userInfo = useContext(UserData);
@@ -43,7 +51,7 @@ export default function MealPreface() {
                 dangerMode: true,
             });
         }
-    }
+    }    
 
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
@@ -52,14 +60,16 @@ export default function MealPreface() {
         
             
         let user = {
-            email: localStorage.getItem("email"),
-            role: "CLI"
+            // email: localStorage.getItem("email"),
+            // role: "CLI"
+            email: isAuthenticated.email,
+            role: isAuthenticated.userType,
         }
         let init ={body:user,}
        
         console.log(init);
         try{
-            console.log(localStorage.getItem("email"));
+            // console.log(localStorage.getItem("email"));
 
             data =  await API.put(apiName, path,init);
            console.log(data);
@@ -69,31 +79,36 @@ export default function MealPreface() {
         }
     }
     API.configure();
-    var [isTrue, isFalse] = useState(false);
-    const history = useHistory();
-    const { userHasAuthenticated } = useAppContext();
-    const [isLoading, setIsLoading] = useState(false);
-    const [userData, setUserData] = useState(null);
+    // var [isTrue, isFalse] = useState(false);
+    // const history = useHistory();
+    // const { userHasAuthenticated } = useAppContext();
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [userData, setUserData] = useState(null);
     
 
     async function getData(){
         let apiName= "production-DynamoAccess-api";
         let path = "/users"; 
-        let data =  {message:"empty"}
+        let data =  {message:"empty","Item":{address:""}}
         
             
         let user = {
-            email: localStorage.getItem("email"),
-            role: "CLI"
+            // email: localStorage.getItem("email"),
+            // role: "CLI"
+            email: isAuthenticated.email,
+            role: isAuthenticated.userType,
         }
         let init ={body:user,}
        
         console.log(init);
         try{
-            console.log(localStorage.getItem("email"));
+            // console.log(localStorage.getItem("email"));
 
-            data =  await API.put(apiName, path,init);
-           console.log(data);
+            let ret_data =  await API.put(apiName, path,init);
+            if(ret_data.Item){
+                data = ret_data;
+            }
+           console.log(JSON.stringify(data));
 
         }catch(error){
             data.message = error.message;
@@ -130,8 +145,10 @@ export default function MealPreface() {
     //   console.log(localStorage.getItem("userId"));
     //   let key = 0;
 
-      
-    return (({userInfo} &&
+      console.log("this is", isTrue);
+//(userData && 
+    return (
+        (userData && redirectTo == null)?(
         <div>
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
@@ -184,6 +201,9 @@ export default function MealPreface() {
 
 
             </Card>
-        </div>
-    ));
+        </div>):
+        (redirectTo)?(
+            <Redirect to={redirectTo} />
+        ):(null)
+    );
     }
