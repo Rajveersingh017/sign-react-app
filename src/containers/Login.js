@@ -39,14 +39,14 @@ export default function Login() {
         
             
         let user = {
-            email: localStorage.getItem("email"),
+            email: fields.email,
             role: "CLI"
         }
         let init ={body:user,}
        
         // console.log(init);
         try{
-            console.log(localStorage.getItem("email"));
+            console.log(fields.email);
 
             data =  await API.put(apiName, path,init);
           //  console.log(data);
@@ -78,9 +78,9 @@ export default function Login() {
           userType:loggedUserTmp.signInUserSession.idToken.payload["custom:UserType"],
           email:loggedUserTmp.signInUserSession.idToken.payload.email
         }
-
+        getUserInfo();
         userHasAuthenticated(isAuthenticated);
-
+        
      //loggedUserTmp.signInUserSession.idToken.payload.custom:UserType
     
 
