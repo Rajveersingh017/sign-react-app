@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ManageMeals.css";
 import { API } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { onError } from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
-import config from "../config";
-import { LinkContainer } from "react-router-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import Table from 'react-bootstrap/Table';
-import { useAppContext } from "../libs/contextLib";
-import swal from "sweetalert";
 import Card from 'react-bootstrap/Card';
 import Form from "react-bootstrap/Form";
-import Row from 'react-bootstrap/Row';
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
-import { Col } from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -55,10 +48,10 @@ function ManageMeals() {
         event.preventDefault();
         setIsLoading(true);
         try{
-            let FormData = {
-              email: localStorage.getItem("email"),  
-              MealDescription:fields.MealDescription,
-            }
+            // let FormData = {
+            //   email: localStorage.getItem("email"),  
+            //   MealDescription:fields.MealDescription,
+            // }
             await updateMealOption()
             setIsLoading(false);
         } catch (e) {

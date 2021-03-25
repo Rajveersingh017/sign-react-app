@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { API } from "aws-amplify";
 import { useHistory } from "react-router-dom";
-import { onError } from "../libs/errorLib";
-import config from "../config";
-import { LinkContainer } from "react-router-bootstrap";
-import LoaderButton from "../components/LoaderButton";
+// import { onError } from "../libs/errorLib";
+// import config from "../config";
+// import { LinkContainer } from "react-router-bootstrap";
+// import LoaderButton from "../components/LoaderButton";
 import "./MealPreface.css";
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 import { useAppContext } from "../libs/contextLib";
 import swal from "sweetalert";
 import Card from 'react-bootstrap/Card';
@@ -22,25 +22,15 @@ export default function MealPreface() {
 
     var [isTrue, isFalse] = useState(false);
     const history = useHistory();
-    const { userHasAuthenticated } = useAppContext();
-    const [isLoading, setIsLoading] = useState(false);
-    const [userData, setUserData] = useState(null);
+    // const { userHasAuthenticated } = useAppContext();
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [userData, setUserData] = useState(null);
     const { isAuthenticated } = useAppContext();
     const [redirectTo, setRedirectTo] = useState(null);
     const userInfo = useContext(UserData);
 
     useEffect(() => {
-        onLoad();
-    }, []);
-
-    function goToPage(page){
-        setRedirectTo(page);
-    }
-
-    function onLoad() {
-
-
-        if(userInfo.userInfo.address==""){    
+        if(userInfo.userInfo.address===""){    
             console.log(userInfo.userInfo.address)
             isFalse(false);
             swal({
@@ -51,7 +41,25 @@ export default function MealPreface() {
                 dangerMode: true,
             });
         }
-    }    
+    }, []);
+
+    
+
+    // function onLoad() {
+
+
+    //     if(userInfo.userInfo.address===""){    
+    //         console.log(userInfo.userInfo.address)
+    //         isFalse(false);
+    //         swal({
+    //             title: "Oh bummer!",
+    //             text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
+    //             icon: "warning",
+                
+    //             dangerMode: true,
+    //         });
+    //     }
+    // }    
 
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
@@ -86,60 +94,60 @@ export default function MealPreface() {
     // const [userData, setUserData] = useState(null);
     
 
-    async function getData(){
-        let apiName= "production-DynamoAccess-api";
-        let path = "/users"; 
-        let data =  {message:"empty","Item":{address:""}}
+    // async function getData(){
+    //     let apiName= "production-DynamoAccess-api";
+    //     let path = "/users"; 
+    //     let data =  {message:"empty","Item":{address:""}}
         
             
-        let user = {
-            // email: localStorage.getItem("email"),
-            // role: "CLI"
-            email: isAuthenticated.email,
-            role: isAuthenticated.userType,
-        }
-        let init ={body:user,}
+    //     let user = {
+    //         // email: localStorage.getItem("email"),
+    //         // role: "CLI"
+    //         email: isAuthenticated.email,
+    //         role: isAuthenticated.userType,
+    //     }
+    //     let init ={body:user,}
        
-        console.log(init);
-        try{
-            // console.log(localStorage.getItem("email"));
+    //     console.log(init);
+    //     try{
+    //         // console.log(localStorage.getItem("email"));
 
-            let ret_data =  await API.put(apiName, path,init);
-            if(ret_data.Item){
-                data = ret_data;
-            }
-           console.log(JSON.stringify(data));
+    //         let ret_data =  await API.put(apiName, path,init);
+    //         if(ret_data.Item){
+    //             data = ret_data;
+    //         }
+    //        console.log(JSON.stringify(data));
 
-        }catch(error){
-            data.message = error.message;
-        }
-        if(userInfo.userInfo.address==""){    
-            // console.log('null found');
-            // swal("hi");
-            isFalse(false);
-            swal({
-                title: "Oh bummer!",
-                text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
-                icon: "warning",
+    //     }catch(error){
+    //         data.message = error.message;
+    //     }
+    //     if(userInfo.userInfo.address==""){    
+    //         // console.log('null found');
+    //         // swal("hi");
+    //         isFalse(false);
+    //         swal({
+    //             title: "Oh bummer!",
+    //             text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
+    //             icon: "warning",
                 
-                dangerMode: true,
-              });
+    //             dangerMode: true,
+    //           });
 
-        }
-        if(data.Item.address!=null){    
-            // console.log('not null found');
-            isFalse(true);
+    //     }
+    //     if(data.Item.address!=null){    
+    //         // console.log('not null found');
+    //         isFalse(true);
 
-        }
-        return data;
-    }
-    function validateForm() {
-        //  alert(JSON.stringify(fields));
-         return (
+    //     }
+    //     return data;
+    // }
+    // function validateForm() {
+    //     //  alert(JSON.stringify(fields));
+    //      return (
            
-            false
-         );
-    }
+    //         false
+    //      );
+    // }
     
     
     //   console.log(localStorage.getItem("userId"));
@@ -162,7 +170,7 @@ export default function MealPreface() {
                     <span className="userinfoHead">Email: </span>{userInfo.userInfo.email}<br></br>
                     <span className="userinfoHead">Phone: </span>{userInfo.userInfo.phoneNumber}<br></br>
                     <span className="userinfoHead">Number Of Adults: </span>{userInfo.userInfo.adultsHome}<br></br>
-                    <span className="userinfoHead">Number Of Children Home: </span>{userInfo.userInfo.childrenHome}<br></br>
+                    <span className="userinfoHead">Number Of Children: </span>{userInfo.userInfo.childrenHome}<br></br>
                     <span className="userinfoHead">Alergies: </span>{userInfo.userInfo.clientAllergies}<br></br>
                 </Card.Text>
                 <Button variant="primary" onClick={() => history.push('/userinformation')}>Click Here to Edit/Update!</Button>
