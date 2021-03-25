@@ -96,7 +96,7 @@ export default function Signup() {
         email:fields.email
       };
       userHasAuthenticated(isAuthenticated);
-      history.push("/UserInfo");
+      history.push("/UserInformation");
     } catch (e) {
       onError(e);
       setIsLoading(false);
