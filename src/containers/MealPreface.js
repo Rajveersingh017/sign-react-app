@@ -27,6 +27,7 @@ export default function MealPreface() {
     const [userData, setUserData] = useState(null);
     const { isAuthenticated } = useAppContext();
     const [redirectTo, setRedirectTo] = useState(null);
+    const userInfo = useContext(UserData);
 
     useEffect(() => {
         onLoad();
@@ -38,7 +39,6 @@ export default function MealPreface() {
 
     function onLoad() {
 
-        // userInfo = useContext(UserData);
 
         if(userInfo.userInfo.address==""){    
             console.log(userInfo.userInfo.address)
@@ -148,7 +148,7 @@ export default function MealPreface() {
       console.log("this is", isTrue);
 //(userData && 
     return (
-        (userData && redirectTo == null)?(
+        (userInfo && redirectTo == null)?(
         <div>
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
@@ -165,7 +165,7 @@ export default function MealPreface() {
                     <span className="userinfoHead">Number Of Children Home: </span>{userInfo.userInfo.childrenHome}<br></br>
                     <span className="userinfoHead">Alergies: </span>{userInfo.userInfo.clientAllergies}<br></br>
                 </Card.Text>
-                <Button variant="primary" href="/userinfo">Click Here to Edit/Update!</Button>
+                <Button variant="primary" onClick={() => history.push('/userinformation')}>Click Here to Edit/Update!</Button>
                 </Card.Body>
             </Card>
             <Card>

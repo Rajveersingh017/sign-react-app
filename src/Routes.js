@@ -14,12 +14,11 @@ import Edit_Profile from "./containers/Edit_Profile";
 import AgencySignUp from "./containers/AgencySignUp";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import ManageMeals from "./containers/ManageMeals";
-import EditUserInfo from "./containers/EditUserInfo";
+import UserInformation from "./containers/UserInfo";
 
 import AdminUserData from "./containers/AdminUserData";
 import AdminHome from "./containers/AdminHome";
-import AdminUpdateFood from "./containers/AdminUpdateFood";
+import AdminUpdateFood from "./containers/ManageMeals";
 import   UserData  from "./contextData/UserData";
 
 
@@ -37,9 +36,7 @@ export default function Routes() {
   return (
     <Switch>
       <UserData.Provider value={{userInfo,setUserInfo}}>
-      <UnauthenticatedRoute exact path="/ManageMeals">
-            <ManageMeals />
-      </UnauthenticatedRoute>
+
 
       <AuthenticatedRoute exact path="/settings/email">
         <ChangeEmail />
@@ -73,8 +70,8 @@ export default function Routes() {
         <MealPreface />
       </AuthenticatedRoute >
 
-        <AuthenticatedRoute  exact path="/EditUserInfo">
-          <EditUserInfo />
+        <AuthenticatedRoute  exact path="/UserInformation">
+          <UserInformation />
         </AuthenticatedRoute >
 
         <AuthenticatedRoute exact path="/Edit_Profile">
