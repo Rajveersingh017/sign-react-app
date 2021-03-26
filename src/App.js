@@ -61,19 +61,22 @@ function App() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
-              {isAuthenticated.isAuthenticated? (
+              {isAuthenticated.isAuthenticated ? (
                 <>
                   <LinkContainer to="/UserInformation">
                   <Nav.Link>User Information</Nav.Link>
                   </LinkContainer>
  
+                  <LinkContainer to="/Edit_Profile">
+                    <Nav.Link>Edit Profile</Nav.Link>
+                  </LinkContainer>
 
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
 
                   {("CLI" === isAuthenticated.userType && <LinkContainer to="/Request_Meal">
-                    <Nav.Link>Request Meal</Nav.Link>
+                   <Nav.Link>Request Meal</Nav.Link>
                   </LinkContainer>)}
                   
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
@@ -114,6 +117,65 @@ function App() {
       </div>
     )
   );
+
+  // return (
+  //   !isAuthenticating && (
+  //     <div className="App container py-3">
+  //       <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+  //         <LinkContainer to="/">
+  //           <Navbar.Brand className="font-weight-bold text-muted">
+  //             SIGN Home
+  //           </Navbar.Brand>
+  //         </LinkContainer>
+  //         <Navbar.Toggle />
+  //         <Navbar.Collapse className="justify-content-end">
+  //           <Nav activeKey={window.location.pathname}>
+  //             {isAuthenticated.isAuthenticated? (
+  //               <>
+  //                 <LinkContainer to="/UserInformation">
+  //                 <Nav.Link>User Information</Nav.Link>
+  //                 </LinkContainer>
+ 
+
+  //                 <LinkContainer to="/settings">
+  //                   <Nav.Link>Settings</Nav.Link>
+  //                 </LinkContainer>
+
+  //                 {("CLI" === isAuthenticated.userType && <LinkContainer to="/Request_Meal">
+  //                   <Nav.Link>Request Meal</Nav.Link>
+  //                 </LinkContainer>)}
+                  
+  //                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+  //               </>
+  //             ) : (
+  //               <>
+
+
+
+  //                 <LinkContainer to="/Volunteer_Registration">
+  //                   <Nav.Link>Volunteer Sign Up</Nav.Link>
+  //                 </LinkContainer>
+  //                 <LinkContainer to="/Agency_Registration">
+  //                   <Nav.Link>Agency Sign Up</Nav.Link>
+  //                 </LinkContainer>
+                 
+  //                 <LinkContainer to="/signup">
+  //                   <Nav.Link>Client Signup</Nav.Link>
+  //                 </LinkContainer>
+  //                 <LinkContainer to="/login">
+  //                   <Nav.Link>Login</Nav.Link>
+  //                 </LinkContainer>
+  //               </>
+  //             )}
+  //           </Nav>
+  //         </Navbar.Collapse>
+  //       </Navbar>
+  //       <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+  //         <Routes />
+  //       </AppContext.Provider>
+  //     </div>
+  //   )
+  // );
 }
 
 export default App;
