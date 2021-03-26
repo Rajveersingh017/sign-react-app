@@ -148,7 +148,7 @@ export default function UserInfo() {
                 <option value="North Kildonan">North Kildonan</option>   
                 <option value="Old Kildonan">Old Kildonan</option>
                 <option value="Point Douglas">Point Douglas</option>
-                <option value="River Heights - Fort Garry0">River Heights - Fort Garry</option>
+                <option value="River Heights - Fort Garry">River Heights - Fort Garry</option>
                 <option value="St. Boniface">St. Boniface</option>
                 <option value="St. James">St. James</option>
                 <option value="St. Norbert - Seine River">St. Norbert - Seine River</option>

@@ -63,7 +63,7 @@ function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated.isAuthenticated ? (
                 <>
-                  <LinkContainer to="/userinfo">
+                  <LinkContainer to="/UserInformation">
                   <Nav.Link>User Information</Nav.Link>
                   </LinkContainer>
  
@@ -75,9 +75,9 @@ function App() {
                     <Nav.Link>Settings</Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/Request_Meal">
-                    <Nav.Link>Request Meal</Nav.Link>
-                  </LinkContainer>
+                  {("CLI" === isAuthenticated.userType && <LinkContainer to="/Request_Meal">
+                   <Nav.Link>Request Meal</Nav.Link>
+                  </LinkContainer>)}
                   
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
