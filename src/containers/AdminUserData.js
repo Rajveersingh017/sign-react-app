@@ -7,7 +7,6 @@ import { API } from "aws-amplify";
 // import LoaderButton from "../components/LoaderButton";
 import "./Settings.css";
 import Table from 'react-bootstrap/Table';
-// import swal from "sweetalert";
 
 export default function AdminUserData() {
     // const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +25,7 @@ export default function AdminUserData() {
        }catch(error){
         data.message = error.message;
        }
-       
+   
          return data.Items;
          
       }
@@ -34,12 +33,12 @@ export default function AdminUserData() {
        async function onLoad() {
         
        let data1 = await getData();
-      
+     
        let data = {users:[]}
        if(data1.length > 0){
            let usrs = [];
            data1.map(d => {
-            // alert(JSON.stringify(d))
+          
                let user = {};
                user.role = (d.role.S)?d.role.S:"Unknown";
                user.name = (d.clientName)?d.clientName.S:"Unknown";
@@ -53,7 +52,7 @@ export default function AdminUserData() {
                user.alergies = (d.clientAllergies)?d.clientAllergies.S:"Unknown";
                usrs.push(user);
            });
-           alert(JSON.stringify(usrs))
+          
            data.users = usrs;
        }
        setUserData(data);
