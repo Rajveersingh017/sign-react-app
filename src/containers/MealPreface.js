@@ -41,6 +41,9 @@ export default function MealPreface() {
                 dangerMode: true,
             });
         }
+        else{
+            isFalse(true);
+        }
     }, []);
 
     
@@ -171,7 +174,7 @@ export default function MealPreface() {
                     <span className="userinfoHead">Phone: </span>{userInfo.userInfo.phoneNumber}<br></br>
                     <span className="userinfoHead">Number Of Adults: </span>{userInfo.userInfo.adultsHome}<br></br>
                     <span className="userinfoHead">Number Of Children: </span>{userInfo.userInfo.childrenHome}<br></br>
-                    <span className="userinfoHead">Alergies: </span>{userInfo.userInfo.clientAllergies}<br></br>
+                    <span className="userinfoHead">Allergies: </span>{userInfo.userInfo.clientAllergies}<br></br>
                 </Card.Text>
                 <Button variant="primary" onClick={() => history.push('/userinformation')}>Click Here to Edit/Update!</Button>
                 </Card.Body>
