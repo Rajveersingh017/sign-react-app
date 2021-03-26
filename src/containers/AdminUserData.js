@@ -18,36 +18,42 @@ export default function AdminUserData() {
 
       async function getData(){
         let apiName= "production-DynamoAccess-api";
-        let path = "/scanUsersTable";
+        // let path = "/scanUsersTable";
+        let path = "/executestatement";
         let data =  {message:"empty"}
        try{
          data =  await API.get(apiName, path, null);
        }catch(error){
         data.message = error.message;
        }
-         return data;
-         alert(JSON.stringify(data))
+       
+         return data.Items;
+         
       }
       
        async function onLoad() {
         
        let data1 = await getData();
+      
        let data = {users:[]}
        if(data1.length > 0){
            let usrs = [];
            data1.map(d => {
+            // alert(JSON.stringify(d))
                let user = {};
-               user.name = (d.clientName)?d.clientName:"Unknown";
-               user.email = (d.email)?d.email:"Unknown";
-               user.address = (d.address)?d.address:"Unknown";
-               user.neighbourhood = (d.neighbourhood)?d.neighbourhood:"Unknown";
-               user.city = (d.clientCity)?d.clientCity:"Unknown";
-               user.phone_number = (d.phoneNumber)?d.phoneNumber:"Unknown";
-               user.numberAdults = (d.adultsHome)?d.adultsHome:"Unknown";
-               user.numberChildren = (d.childrenHome)?d.childrenHome:"Unknown";
-               user.alergies = (d.clientAllergies)?d.clientAllergies:"Unknown";
+               user.role = (d.role)?d.role.S:"Unknown";
+               user.name = (d.clientName)?d.clientName.S:"Unknown";
+               user.email = (d.email)?d.email.S:"Unknown";
+               user.address = (d.address)?d.address.S:"Unknown";
+               user.neighbourhood = (d.neighbourhood)?d.neighbourhood.S:"Unknown";
+               user.city = (d.clientCity)?d.clientCity.S:"Unknown";
+               user.phone_number = (d.phoneNumber)?d.phoneNumber.S:"Unknown";
+               user.numberAdults = (d.adultsHome)?d.adultsHome.S:"Unknown";
+               user.numberChildren = (d.childrenHome)?d.childrenHome.S:"Unknown";
+               user.alergies = (d.clientAllergies)?d.clientAllergies.S:"Unknown";
                usrs.push(user);
            });
+           alert(JSON.stringify(usrs))
            data.users = usrs;
        }
        setUserData(data);
@@ -57,6 +63,9 @@ export default function AdminUserData() {
     const headerData = {
         labels:[
             "Name","Email","Address","Neighbourhood","City","Phone Number","Number of Adults","Number of Children","Alergies"
+        ],
+        labelsTableTwo:[
+            "Neighbourhood","Total"
         ]
     }
     
@@ -86,7 +95,7 @@ export default function AdminUserData() {
                 <tbody>
                     {
                         userData.users.map(user => {
-                            return (
+                            return (user.role == "CLI" &&
                                 <tr key={key++}>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
@@ -108,33 +117,35 @@ export default function AdminUserData() {
          <br />
 
          <h2>This table displays Total Demographic Information</h2>
-         <Table striped bordered hover variant="dark">
+         <Table striped bordered hover variant="dark" responsive="md">
                 <thead>
                     <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                        {
+                            headerData.labelsTableTwo.map(label => {
+                                return(
+                                    <th key={key++}>
+                                    {
+                                        (label == "")?"Unknown":label
+                                    }
+                                    </th>
+                                ); 
+                            })
+                        }
+                 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>3</td>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
+                    {
+                        userData.users.map(user => {
+                            return (
+                                <tr key={key++}>
+                                    <td>{user.neighbourhood}</td>
+                                    
+                                </tr>
+                            )
+                        })
+                    }
+                    
                 </tbody>
          </Table>
         </div>)
