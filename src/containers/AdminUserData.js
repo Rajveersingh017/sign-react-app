@@ -41,7 +41,7 @@ export default function AdminUserData() {
            data1.map(d => {
             // alert(JSON.stringify(d))
                let user = {};
-               user.role = (d.role)?d.role.S:"Unknown";
+               user.role = (d.role.S)?d.role.S:"Unknown";
                user.name = (d.clientName)?d.clientName.S:"Unknown";
                user.email = (d.email)?d.email.S:"Unknown";
                user.address = (d.address)?d.address.S:"Unknown";
@@ -135,17 +135,137 @@ export default function AdminUserData() {
                     </tr>
                 </thead>
                 <tbody>
+                   <tr>Charleswood - Tuxedo - Weswood
                     {
-                        userData.users.map(user => {
-                            return (
-                                <tr key={key++}>
-                                    <td>{user.neighbourhood}</td>
-                                    
-                                </tr>
-                            )
-                        })
-                    }
-                    
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }    
+                   </tr>
+                   <tr>Daniel McIntyre
+                    {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }  
+                   </tr>
+                   <tr>Elmwood - East Kildonan
+                    {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }  
+                   </tr>
+                   <tr>Fort Rouge - East Fort Garry
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>Mynarski
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Mynarski" &&
+                              <td> {user.neighbourhood.match("Mynarski").length}</td> )
+                            //   match(new RegExp("str", "g")) || []).length
+                            // match("Mynarski").length
+                            // for(var i=count=0; i<str.length; count+=+(stringsearch===str[i++]))
+                           })
+                       }
+                   </tr>
+                   <tr>North Kildonan
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>Old Kildonan
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>Point Douglas
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>River Heights - Fort Garry
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>St. Boniface
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>St. James
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>St. Norbert - Seine River
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>St. Vital 
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>Transcona
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>Waverley West 
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
+                   <tr>I'm not sure
+                   {
+                           userData.users.map(user => {
+                               return (user.neighbourhood == "Charleswood - Tuxedo - Weswood" &&
+                              <td> {user.neighbourhood}</td> )
+                           })
+                       }
+                   </tr>
                 </tbody>
          </Table>
         </div>)

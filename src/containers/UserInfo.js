@@ -144,7 +144,7 @@ export default function UserInfo() {
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
                 <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
                 <option value="Fort Rouge - East Fort Garry">Fort Rouge - East Fort Garry</option>
-                <option value="Mynarski6">Mynarski</option>
+                <option value="Mynarski">Mynarski</option>
                 <option value="North Kildonan">North Kildonan</option>   
                 <option value="Old Kildonan">Old Kildonan</option>
                 <option value="Point Douglas">Point Douglas</option>
