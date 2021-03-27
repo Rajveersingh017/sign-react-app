@@ -32,15 +32,15 @@ export default function Login() {
     return fields.email.length > 0 && fields.password.length > 0;
   }
 
-  async function getUserInfo(){
+  async function getUserInfo(loggedUser){
     let apiName= "production-DynamoAccess-api";
         let path = "/users"; 
         let data =  {message:"empty"}
         
             
         let user = {
-            email: fields.email,
-            role: "CLI"
+            email: loggedUser.email,
+            role: loggedUser.userType
         }
         let init ={body:user,}
        
@@ -51,7 +51,7 @@ export default function Login() {
             data =  await API.put(apiName, path,init);
           //  console.log(data);
             setUserInfo({
-              email: fields.email,
+              email: data.Item.email,
               address: data.Item.address || null,
               phoneNumber: data.Item.phoneNumber || null,
               clientName: data.Item.clientName || null,
@@ -78,7 +78,7 @@ export default function Login() {
           userType:loggedUserTmp.signInUserSession.idToken.payload["custom:UserType"],
           email:loggedUserTmp.signInUserSession.idToken.payload.email
         }
-        getUserInfo();
+        getUserInfo(isAuthenticated);
         userHasAuthenticated(isAuthenticated);
         
      //loggedUserTmp.signInUserSession.idToken.payload.custom:UserType
