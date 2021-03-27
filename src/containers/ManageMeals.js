@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ManageMeals.css";
 import { API } from "aws-amplify";
 // import { useHistory } from "react-router-dom";
@@ -13,8 +13,33 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 function ManageMeals() {
-
     
+    let data = null;
+    const [mealOption, setMeals] = useState([]);
+    async function onLoad(){
+        data = await getCurrentMealsFromDB();
+        
+    }
+    useEffect(() => onLoad(),[]);
+    async function getCurrentMealsFromDB(){
+        let apiName= "production-DynamoAccess-api";
+        let path = "/managemeals"; 
+        let data =  {message:"empty"}
+        try{
+            data =  await API.get(apiName, path, null);
+            setMeals({
+                MealTitle: data.MealTitle,
+                MealDescription: "sadsdad"
+            })
+            console.log(mealOption);
+        }catch(error){
+            data.message = error.message;
+        }
+        return data;
+    }
+
+   
+
     const [fields, handleFieldChange] = useFormFields({
         ID:"",
         MealTitle:"",
@@ -60,7 +85,7 @@ function ManageMeals() {
         }
     }
 
-    return (
+    return (mealOption &&
         <div className="ManageMeals">
             <Card>
                 <Card.Header>
@@ -123,6 +148,7 @@ function ManageMeals() {
                 <Form.Control 
                 as="textarea" rows={5} 
                 type="MealDescription"
+                id = "MealDescription"
                 placeholder="Eg. Pumpkin pie, with lentil soup"
                 value={fields.MealDescription}
                 onChange={handleFieldChange}
