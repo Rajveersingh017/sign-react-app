@@ -17,29 +17,29 @@ function App() {
 
   const history = useHistory();
 
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
-  // const [isAuthenticated, userHasAuthenticated] = useState(false);
+  // const [isAuthenticating, setIsAuthenticating] = useState(true);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isAuthenticated, userHasAuthenticated] = useState({isAuthenticated:false,userType:null,email:null});
   
-  const [loggedUser, setLoggedUser] = useState(null);
+  // const [loggedUser, setLoggedUser] = useState(null);
 
-  useEffect(() => {
-    onLoad();
-  }, []);
+  // useEffect(() => {
+  //   onLoad();
+  // }, []);
   
-  async function onLoad() {
-    try {
-      await Auth.currentSession();
-      userHasAuthenticated({isAuthenticated:true,userType:null,email:null});
-    }
-    catch(e) {
-      if (e !== 'No current user') {
-        onError(e);
-      }
-    }
-  
-    setIsAuthenticating(false);
-  }
+  // async function onLoad() {
+  //   try {
+  //     await Auth.currentSession();
+  //     userHasAuthenticated({isAuthenticated:true,userType:null,email:null});
+  //   }
+  //   catch(e) {
+  //     if (e !== 'No current user') {
+  //       onError(e);
+  //     }
+  //   }
+  // // alert(JSON.stringify(isAuthenticated))
+  //   setIsAuthenticating(false);
+  // }
 
   async function handleLogout() {
     await Auth.signOut();
