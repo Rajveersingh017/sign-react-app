@@ -28,8 +28,9 @@ export default function MealPreface() {
     const { isAuthenticated } = useAppContext();
     const [redirectTo, setRedirectTo] = useState(null);
     const userInfo = useContext(UserData);
-
+    const [meals,setMealOptions] = useState(null);
     useEffect(() => {
+
         if(userInfo.userInfo.address===""){    
             console.log(userInfo.userInfo.address)
             isFalse(false);
@@ -37,17 +38,42 @@ export default function MealPreface() {
                 title: "Oh bummer!",
                 text: "Seams like we don't have your address to deliver your food. Please update your profile in order to book the meal.",
                 icon: "warning",
-                
                 dangerMode: true,
             });
         }
+
         else{
             isFalse(true);
         }
+        const mealOptionsFromDb = fetchMeals();
+       
+        fetchMeals();
+
     }, []);
-
     
+    async function fetchMeals(){
+        let api= "production-DynamoAccess-api";
+        let api_path = "/managemeals"; 
+        let mealData =  {message:"empty"}
+        try{
+            mealData =  await API.get(api, api_path,null);
+            mealData.body.map((item) => console.log(item))
+            
+        }catch(error){
+            mealData.message = error.message;
+        }                      
+    };
 
+    function renderMealsOnForm(mealData){
+        // console.log(mealData)
+        return( 
+               
+            <div>{
+                
+                // meals.map(item => <p>item</p>)
+            }</div>
+        )
+    }
     // function onLoad() {
 
 
@@ -159,8 +185,9 @@ export default function MealPreface() {
       console.log("this is", isTrue);
 //(userData && 
     return (
-        (userInfo && redirectTo == null)?(
+        ((userInfo) && redirectTo == null)?(
         <div>
+        {renderMealsOnForm(meals)}
             <Card>
                 <Card.Header>Your Personal Details:</Card.Header>
                 <Card.Body>

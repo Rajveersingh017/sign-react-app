@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import { v4 as uuidv4 } from 'uuid';
+import swal from "sweetalert";
 
 
 function ManageMeals() {
@@ -17,7 +18,7 @@ function ManageMeals() {
     let data = null;
     const [mealOption, setMeals] = useState([]);
     async function onLoad(){
-        data = await getCurrentMealsFromDB();
+        // data = await getCurrentMealsFromDB();
         
     }
     useEffect(() => onLoad(),[]);
@@ -64,7 +65,12 @@ function ManageMeals() {
         try{
 
             data =  await API.put(apiName, path,init);
-
+            swal({
+                title: "Thank You!",
+                text: "Gotcha! the new meal option will be displayed to the clients.",
+                icon: "success",    
+                dangerMode: false,
+            });
         }catch(error){
             data.message = error.message;
         }
@@ -87,24 +93,25 @@ function ManageMeals() {
 
     return (mealOption &&
         <div className="ManageMeals">
-            <Card>
-                <Card.Header>
-                    Currently Serving:
-                </Card.Header>
-                <Card.Body>
-                
-                <Card.Title> 
-                    Meal 1  
-                </Card.Title>
-                <Card.Text className = "cardText">
-                    widowj
-                </Card.Text>
+        <Card>
+        <Card.Header>
+            Currently Serving:
+        </Card.Header>
+        <Card.Body>
+        
+        <Card.Title> 
+            Meal 1  
+        </Card.Title>
+        <Card.Text className = "cardText">
+            Meal Descrption goes here!
+        </Card.Text>
 
-                <Button variant="primary" href="/userinfo">
-                    Click Here to Edit/Update!
-                </Button>
-                </Card.Body>
-            </Card>
+        <Button variant="primary" href="/userinfo">
+            Click Here to Edit/Update!
+        </Button>
+        </Card.Body>
+    </Card>
+
             
             <Form onSubmit={handleSubmit} >
 
