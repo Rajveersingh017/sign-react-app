@@ -48,7 +48,9 @@ export default function UserInfo() {
   const { isAuthenticated } = useAppContext();
   async function handleSubmit(event) {
     event.preventDefault();
+  
     setIsLoading(true);
+  
     try {
       let user = {
         // userID : localStorage.getItem("userID"),
@@ -142,11 +144,11 @@ export default function UserInfo() {
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
                 <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
                 <option value="Fort Rouge - East Fort Garry">Fort Rouge - East Fort Garry</option>
-                <option value="Mynarski6">Mynarski</option>
+                <option value="Mynarski">Mynarski</option>
                 <option value="North Kildonan">North Kildonan</option>   
                 <option value="Old Kildonan">Old Kildonan</option>
                 <option value="Point Douglas">Point Douglas</option>
-                <option value="River Heights - Fort Garry0">River Heights - Fort Garry</option>
+                <option value="River Heights - Fort Garry">River Heights - Fort Garry</option>
                 <option value="St. Boniface">St. Boniface</option>
                 <option value="St. James">St. James</option>
                 <option value="St. Norbert - Seine River">St. Norbert - Seine River</option>

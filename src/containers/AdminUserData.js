@@ -284,6 +284,7 @@ export default function AdminUserData() {
                  
                     </tr>
                 </thead>
+
                 <tbody>
                     {
                         nbrh.map(nbr => {
