@@ -74,9 +74,7 @@ export default function Routes() {
           <UserInformation />
         </AuthenticatedRoute >
 
-        <AuthenticatedRoute exact path="/Edit_Profile">
-          <Edit_Profile />
-        </AuthenticatedRoute>
+      
       
 
       <AuthenticatedRoute  exact path="/settings">
