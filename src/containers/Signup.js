@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -6,9 +6,13 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./Signup.css";
+import UserData from '../contextData/UserData';
+
 import { Auth } from "aws-amplify";
 
 export default function Signup() {
+  const {setUserInfo} = useContext(UserData);
+
   const [fields, handleFieldChange] = useFormFields({
       name:"",
       email: "",
@@ -96,6 +100,19 @@ export default function Signup() {
         email:fields.email
       };
       userHasAuthenticated(isAuthenticated);
+
+      setUserInfo({
+        email: fields.email,
+        address:  null,
+        phoneNumber: null,
+        clientName: null,
+        clientCity:  null,
+        neighbourhood: null,
+        adultsHome: null,
+        childrenHome: null,
+        clientAllergies: null
+      });
+
       history.push("/UserInformation");
     } catch (e) {
       onError(e);
