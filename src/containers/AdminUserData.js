@@ -7,6 +7,9 @@ import { API } from "aws-amplify";
 // import LoaderButton from "../components/LoaderButton";
 import "./Settings.css";
 import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
+
+
 
 
 
@@ -219,12 +222,17 @@ export default function AdminUserData() {
     }
     
     let key = 0;
-
     return (
         (userData &&
+            
         <div>
-            <h2>This table displays Client Demographic Information</h2>
-            <Table striped bordered hover variant="dark" responsive="md">
+            
+            <Card>
+            <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
+            <Card.Body>
+            
+            <Table striped bordered hover  class="thead-light" responsive="md">
+            {/* variant="dark"  */}
                 <thead>
                     <tr>
                         {
@@ -262,10 +270,12 @@ export default function AdminUserData() {
                     
                 </tbody>
          </Table>
-
+         </Card.Body>
+         </Card>           
          <br />
-
-         <h2>This table displays Total Demographic Information</h2>
+         <Card>  
+         <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center">Client Demographic Information</Card.Header>   
+         
          <Table striped bordered hover variant="dark" responsive="md">
                 <thead>
                     <tr>
@@ -302,6 +312,7 @@ export default function AdminUserData() {
                    
                 </tbody>
          </Table>
+         </Card>  
         </div>)
       );
     }
