@@ -220,9 +220,9 @@ export default function AdminUserData() {
             
             <Card>
             <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
-            <Card.Body>
             
-            <Table striped bordered hover  class="thead-light" responsive="md">
+            
+            <Table striped bordered hover    class="thead-light" responsive="md">
             {/* variant="dark"  */}
                 <thead>
                     <tr>
@@ -261,7 +261,7 @@ export default function AdminUserData() {
                     
                 </tbody>
          </Table>
-         </Card.Body>
+        
          </Card>           
          <br />
          <Card>  
