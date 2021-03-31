@@ -111,6 +111,12 @@ export default function AdminUserData() {
                 totalChildren: 0,
                 totalClients: 0,
             },
+            {
+                name:"TOTAL",
+                totalClients: 0,
+                totalAdults: 0,
+                totalChildren: 0,
+            },
         ]
     );
     useEffect(() => {   
@@ -211,6 +217,8 @@ export default function AdminUserData() {
             "Neighbourhood","Total Clients", "Total Adults", "Total Children", "Total"
         ]
     }
+
+    
     
     let key = 0;
     return (
@@ -222,14 +230,18 @@ export default function AdminUserData() {
             <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
             
             
-            <Table striped bordered hover    class="thead-light" responsive="md">
+            <Table striped bordered hover class="table-light "  responsive="md">
+                
             {/* variant="dark"  */}
-                <thead>
-                    <tr>
+            {/* class="thead-light" */}
+            {/* class="table-light" */}
+            
+                <thead class="table-secondary">
+                    <tr >
                         {
                             headerData.labels.map(label => {
                                 return(
-                                    <th key={key++}>
+                                    <th  key={key++}>
                                     {
                                         (label == "")?"Unknown":label
                                     }
@@ -244,8 +256,8 @@ export default function AdminUserData() {
                     {
                         userData.users.map(user => {
                             return (user.role == "CLI" &&
-                                <tr key={key++}>
-                                    <td>{user.name}</td>
+                                <tr  key={key++}>
+                                    <td >{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.address}</td>
                                     <td>{user.neighbourhood}</td>
@@ -268,7 +280,7 @@ export default function AdminUserData() {
          <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center">Client Demographic Information</Card.Header>   
          
          <Table striped bordered hover variant="dark" responsive="md">
-                <thead>
+                <thead >
                     <tr>
                         {
                             headerData.labelsTableTwo.map(label => {
