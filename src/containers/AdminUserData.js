@@ -8,11 +8,22 @@ import { API } from "aws-amplify";
 import "./Settings.css";
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
+import Form from "react-bootstrap/Form";
+
+
+// import Tooltip from 'react-bootstrap/Tooltip'
+// import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+// import Overlay from 'react-bootstrap/Overlay'
+// import LoaderButton from "../components/LoaderButton";
 
 
 export default function AdminUserData() {
     // const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [nghName, setNghName] = useState("-1");
+
+    // const forceUpdate = React.useState()[1].bind(null, {});
+
     const [nbrh, setNbrh] = useState(
         [
             {
@@ -119,19 +130,29 @@ export default function AdminUserData() {
             },
         ]
     );
-    useEffect(() => {   
+    useEffect(() => {  
+        
+        // alert("nghName = "+nghName)
         onLoad();
        
-      }, []);
+      },[]);
       async function getData(){
+         
         let apiName= "production-DynamoAccess-api";
         // let path = "/scanUsersTable";
-        let path = "/executestatement";
-        let data =  {message:"empty"}
+        let path = "/executestatement/";//?nghName=" + nghName;
+        let data =  {"nghName":nghName}
+        let init = {
+            body: data,   
+          }
+        // alert(JSON.stringify(init));
        try{
-         data =  await API.get(apiName, path, null);
+        //  data =  await API.get(apiName, path, data);
+         data =  await API.put(apiName, path, init);
+        //  alert(JSON.stringify(data))
        }catch(error){
-        data.message = error.message;
+           data.message = error.message;
+           alert(error.message)
        }
    
          return data.Items;
@@ -218,14 +239,64 @@ export default function AdminUserData() {
         ]
     }
 
-    
+    function handleNeighbourhoodChange (e) {
+        let nghNameV = e.target.value;
+        setNghName(nghNameV);
+        // history.push("/AdminUserData");
+        // forceUpdate();
+        // return () => setNghName(nghName => nghNameV);
+        // onLoad();
+        // alert("Get Data For Neighbourhood " + neighbourhood )
+    }
+
+    // const renderTooltip = (props) => (
+    //     <Tooltip id="button-tooltip" {...props}>
+    //       Simple tooltip
+    //     </Tooltip>
+    //   );
     
     let key = 0;
     return (
         (userData &&
             
         <div>
-            
+            {/* <OverlayTrigger
+    placement="right"
+    delay={{ show: 250, hide: 400 }}
+    overlay={renderTooltip}
+  >
+    <LoaderButton  variant="success">Hover me to see</LoaderButton >
+  </OverlayTrigger> */}
+
+        <Form.Group controlId="neighbourhood" size="lg">
+            <Form.Label>Neighbourhood:</Form.Label>
+            <Form.Control 
+                as="select" 
+                type="neighbourhood"
+                // value={fields.neighbourhood}
+                onChange={handleNeighbourhoodChange}            
+            >
+                <option value="0" selected>Select the neighbourhood</option>
+                <option value="-1">All Neighbourhoods</option>
+                <option value="I'm not sure">I'm not sure</option>
+                <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
+                <option value="Daniel McIntyre">Daniel McIntyre</option>
+                <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
+                <option value="Fort Rouge - East Fort Garry">Fort Rouge - East Fort Garry</option>
+                <option value="Mynarski">Mynarski</option>
+                <option value="North Kildonan">North Kildonan</option>   
+                <option value="Old Kildonan">Old Kildonan</option>
+                <option value="Point Douglas">Point Douglas</option>
+                <option value="River Heights - Fort Garry">River Heights - Fort Garry</option>
+                <option value="St. Boniface">St. Boniface</option>
+                <option value="St. James">St. James</option>
+                <option value="St. Norbert - Seine River">St. Norbert - Seine River</option>
+                <option value="St. Vital">St. Vital </option> 
+                <option value="Transcona">Transcona</option>
+                <option value="Waverley West">Waverley West </option> 
+            </Form.Control>
+        </Form.Group>
+
             <Card>
             <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
             
