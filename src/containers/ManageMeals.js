@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ManageMeals.css";
 import { API } from "aws-amplify";
 // import { useHistory } from "react-router-dom";
@@ -10,11 +10,37 @@ import Form from "react-bootstrap/Form";
 // import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 import { v4 as uuidv4 } from 'uuid';
+import swal from "sweetalert";
 
 
 function ManageMeals() {
-
     
+    let data = null;
+    const [mealOption, setMeals] = useState([]);
+    async function onLoad(){
+        // data = await getCurrentMealsFromDB();
+        
+    }
+    useEffect(() => onLoad(),[]);
+    async function getCurrentMealsFromDB(){
+        let apiName= "production-DynamoAccess-api";
+        let path = "/managemeals"; 
+        let data =  {message:"empty"}
+        try{
+            data =  await API.get(apiName, path, null);
+            setMeals({
+                MealTitle: data.MealTitle,
+                MealDescription: "sadsdad"
+            })
+            console.log(mealOption);
+        }catch(error){
+            data.message = error.message;
+        }
+        return data;
+    }
+
+   
+
     const [fields, handleFieldChange] = useFormFields({
         ID:"",
         MealTitle:"",
@@ -39,7 +65,12 @@ function ManageMeals() {
         try{
 
             data =  await API.put(apiName, path,init);
-
+            swal({
+                title: "Thank You!",
+                text: "Gotcha! the new meal option will be displayed to the clients.",
+                icon: "success",    
+                dangerMode: false,
+            });
         }catch(error){
             data.message = error.message;
         }
@@ -60,26 +91,27 @@ function ManageMeals() {
         }
     }
 
-    return (
+    return (mealOption &&
         <div className="ManageMeals">
-            <Card>
-                <Card.Header>
-                    Currently Serving:
-                </Card.Header>
-                <Card.Body>
-                
-                <Card.Title> 
-                    Meal 1  
-                </Card.Title>
-                <Card.Text className = "cardText">
-                    widowj
-                </Card.Text>
+        <Card>
+        <Card.Header>
+            Currently Serving:
+        </Card.Header>
+        <Card.Body>
+        
+        <Card.Title> 
+            Meal 1  
+        </Card.Title>
+        <Card.Text className = "cardText">
+            Meal Descrption goes here!
+        </Card.Text>
 
-                <Button variant="primary" href="/userinfo">
-                    Click Here to Edit/Update!
-                </Button>
-                </Card.Body>
-            </Card>
+        <Button variant="primary" href="/userinfo">
+            Click Here to Edit/Update!
+        </Button>
+        </Card.Body>
+    </Card>
+
             
             <Form onSubmit={handleSubmit} >
 
@@ -123,6 +155,7 @@ function ManageMeals() {
                 <Form.Control 
                 as="textarea" rows={5} 
                 type="MealDescription"
+                id = "MealDescription"
                 placeholder="Eg. Pumpkin pie, with lentil soup"
                 value={fields.MealDescription}
                 onChange={handleFieldChange}

@@ -67,9 +67,7 @@ function App() {
                   <Nav.Link>User Information</Nav.Link>
                   </LinkContainer>
  
-                  <LinkContainer to="/Edit_Profile">
-                    <Nav.Link>Edit Profile</Nav.Link>
-                  </LinkContainer>
+                  
 
                   <LinkContainer to="/settings">
                     <Nav.Link>Settings</Nav.Link>

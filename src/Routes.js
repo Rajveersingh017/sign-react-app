@@ -15,7 +15,7 @@ import AgencySignUp from "./containers/AgencySignUp";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import UserInformation from "./containers/UserInfo";
-
+import Test from "./containers/Test";
 import AdminUserData from "./containers/AdminUserData";
 import AdminHome from "./containers/AdminHome";
 import AdminUpdateFood from "./containers/ManageMeals";
@@ -74,9 +74,7 @@ export default function Routes() {
           <UserInformation />
         </AuthenticatedRoute >
 
-        <AuthenticatedRoute exact path="/Edit_Profile">
-          <Edit_Profile />
-        </AuthenticatedRoute>
+      
       
 
       <AuthenticatedRoute  exact path="/settings">
@@ -98,7 +96,11 @@ export default function Routes() {
       <UnauthenticatedRoute exact path="/Agency_Registration">
         <AgencySignUp></AgencySignUp>
       </UnauthenticatedRoute>
-
+      
+      
+      <Route exact path="/test">
+        <Test />
+      </Route>
       
 
       <Route exact path="/">
