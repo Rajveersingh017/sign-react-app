@@ -20,14 +20,14 @@ import Form from "react-bootstrap/Form";
 export default function AdminUserData() {
     // const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
-    const [nghName, setNghName] = useState("-1");
+    
 
     // const forceUpdate = React.useState()[1].bind(null, {});
 
     const [nbrh, setNbrh] = useState(
         [
             {
-                name:"I'm not sure",
+                name:"I am not sure",
                 totalAdults: 0,
                 totalChildren: 0,
                 totalClients: 0,
@@ -131,47 +131,47 @@ export default function AdminUserData() {
         ]
     );
     useEffect(() => {  
-        
-        // alert("nghName = "+nghName)
         onLoad();
-       
       },[]);
-      async function getData(){
+      async function getData(name){
          
         let apiName= "production-DynamoAccess-api";
         // let path = "/scanUsersTable";
         let path = "/executestatement/";//?nghName=" + nghName;
-        let data =  {"nghName":nghName}
+        let bodyData =  {"nghName":name}
+        let data = {};
         let init = {
-            body: data,   
+            body: bodyData,   
           }
-        // alert(JSON.stringify(init));
+
        try{
-        //  data =  await API.get(apiName, path, data);
          data =  await API.put(apiName, path, init);
-        //  alert(JSON.stringify(data))
+         return data.Items;
        }catch(error){
            data.message = error.message;
            alert(error.message)
+           return null;
        }
-   
-         return data.Items;
-         
-      }
-      function updateNbrh(data){
+      
+        
+    }
+      
+function updateNbrh(data){
         nbrh.map(nbr => {
             nbr.totalClients = getTotalClients(nbr.name,data);
             nbr.totalAdults = getTotalAdults(nbr.name,data);
             nbr.totalChildren = getTotalChildren(nbr.name,data);
         })
+        // alert(JSON.stringify(nbrh))
         setNbrh(nbrh);
       }
       
-       async function onLoad() {
+async function onLoad(name) {
         
-       let data1 = await getData();
-     
+       let data1 = await getData(name);
        let data = {users:[]}
+     if(data1 != undefined && data1 != null){
+       
        if(data1.length > 0){
            let usrs = [];
            data1.map(d => {
@@ -192,11 +192,10 @@ export default function AdminUserData() {
           
            data.users = usrs;
        }
-       updateNbrh(data);
-       setUserData(data);
        
-   
-   
+    }
+    updateNbrh(data);
+    setUserData(data);
  }
       function getTotalClients(nbrName,data){
         let totalClients = 0;
@@ -240,33 +239,16 @@ export default function AdminUserData() {
     }
 
     function handleNeighbourhoodChange (e) {
-        let nghNameV = e.target.value;
-        setNghName(nghNameV);
-        // history.push("/AdminUserData");
-        // forceUpdate();
-        // return () => setNghName(nghName => nghNameV);
-        // onLoad();
-        // alert("Get Data For Neighbourhood " + neighbourhood )
+        let name = e.target.value;
+        onLoad(name);
     }
 
-    // const renderTooltip = (props) => (
-    //     <Tooltip id="button-tooltip" {...props}>
-    //       Simple tooltip
-    //     </Tooltip>
-    //   );
-    
     let key = 0;
     return (
         (userData &&
             
         <div>
-            {/* <OverlayTrigger
-    placement="right"
-    delay={{ show: 250, hide: 400 }}
-    overlay={renderTooltip}
-  >
-    <LoaderButton  variant="success">Hover me to see</LoaderButton >
-  </OverlayTrigger> */}
+            
 
         <Form.Group controlId="neighbourhood" size="lg">
             <Form.Label>Neighbourhood:</Form.Label>
@@ -278,7 +260,7 @@ export default function AdminUserData() {
             >
                 <option value="0" selected>Select the neighbourhood</option>
                 <option value="-1">All Neighbourhoods</option>
-                <option value="I'm not sure">I'm not sure</option>
+                <option value="I am not sure">I am not sure</option>
                 <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
                 <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
@@ -371,16 +353,16 @@ export default function AdminUserData() {
                 <tbody>
                     {
                         nbrh.map(nbr => {
-                            return (
-                                <tr key={key++}>
+                            return ((nbr.totalChildren + nbr.totalAdults + nbr.totalClients) != 0)?(
+                              <tr key={key++}>
                                     <td> {nbr.name} </td>
                                     <td> {nbr.totalClients} </td>
                                     <td> {nbr.totalAdults} </td>
                                     <td> {nbr.totalChildren} </td>
                                     <td> {nbr.totalChildren + nbr.totalAdults} </td>
                                 </tr>
-                            )
-                        })
+                                ):null
+                    })
                     }
                    
                 </tbody>

@@ -139,7 +139,7 @@ export default function UserInfo() {
                 onChange={handleFieldChange}            
             >
                 <option value="0" selected>Select your neighbourhood</option>
-                <option value="I'm not sure">I'm not sure</option>
+                <option value="I am not sure">I am not sure</option>
                 <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
                 <option value="Daniel McIntyre">Daniel McIntyre</option>
                 <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
