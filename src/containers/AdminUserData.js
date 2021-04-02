@@ -8,12 +8,7 @@ import { API } from "aws-amplify";
 import "./Settings.css";
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
-<<<<<<< HEAD
-
-
-=======
 import Form from "react-bootstrap/Form";
->>>>>>> TableClientDemographic_2021-03-31
 
 
 // import Tooltip from 'react-bootstrap/Tooltip'
@@ -242,32 +237,18 @@ async function onLoad(name) {
             "Neighbourhood","Total Clients", "Total Adults", "Total Children", "Total"
         ]
     }
-<<<<<<< HEAD
-    
-=======
 
     function handleNeighbourhoodChange (e) {
         let name = e.target.value;
         onLoad(name);
     }
 
->>>>>>> TableClientDemographic_2021-03-31
     let key = 0;
     return (
         (userData &&
             
         <div>
             
-<<<<<<< HEAD
-            <Card>
-            <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
-            <Card.Body>
-            
-            <Table striped bordered hover  class="thead-light" responsive="md">
-            {/* variant="dark"  */}
-                <thead>
-                    <tr>
-=======
 
         <Form.Group controlId="neighbourhood" size="lg">
             <Form.Label>Neighbourhood:</Form.Label>
@@ -310,7 +291,6 @@ async function onLoad(name) {
             
                 <thead class="table-secondary">
                     <tr >
->>>>>>> TableClientDemographic_2021-03-31
                         {
                             headerData.labels.map(label => {
                                 return(
@@ -346,11 +326,7 @@ async function onLoad(name) {
                     
                 </tbody>
          </Table>
-<<<<<<< HEAD
-         </Card.Body>
-=======
         
->>>>>>> TableClientDemographic_2021-03-31
          </Card>           
          <br />
          <Card>  
