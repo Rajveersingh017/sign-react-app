@@ -19,6 +19,8 @@ import Test from "./containers/Test";
 import AdminUserData from "./containers/AdminUserData";
 import AdminHome from "./containers/AdminHome";
 import AdminUpdateFood from "./containers/ManageMeals";
+import AdminFoodOrders from "./containers/AdminFoodOrders";
+
 import   UserData  from "./contextData/UserData";
 
 
@@ -37,6 +39,9 @@ export default function Routes() {
     <Switch>
       <UserData.Provider value={{userInfo,setUserInfo}}>
 
+      <AuthenticatedRoute  exact path="/AdminFoodOrders">
+          <AdminFoodOrders />
+      </AuthenticatedRoute >
 
       <AuthenticatedRoute exact path="/settings/email">
         <ChangeEmail />
@@ -73,10 +78,7 @@ export default function Routes() {
         <AuthenticatedRoute  exact path="/UserInformation">
           <UserInformation />
         </AuthenticatedRoute >
-
       
-      
-
       <AuthenticatedRoute  exact path="/settings">
         <Settings />
       </AuthenticatedRoute>  

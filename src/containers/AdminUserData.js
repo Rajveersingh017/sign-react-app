@@ -332,7 +332,8 @@ async function onLoad(name) {
          <Card>  
          <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center">Client Demographic Information</Card.Header>   
          
-         <Table striped bordered hover variant="dark" responsive="md">
+         <Table striped bordered hover class="table-light "  responsive="md" >
+         {/* striped bordered hover variant="dark" responsive="md" */}
                 <thead >
                     <tr>
                         {
