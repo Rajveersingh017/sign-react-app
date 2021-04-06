@@ -1,13 +1,18 @@
 import { Card, Table } from "react-bootstrap";
+import {useState} from "react";
 
 
-const headerData = {
-    labels:[
-        "Email", "Order ID", "Meal ID", "Quantity"
-    ]
-}
 
 export default function AdminFoodOrders() {
+
+    const [foodData, setFoodData] = useState(null);
+
+
+    const headerData = {
+        labels:[
+            "Email", "Order ID", "Meal ID", "Quantity"
+        ]
+    }
 
     let key = 0;
 
