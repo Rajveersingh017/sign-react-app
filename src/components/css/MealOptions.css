@@ -1,0 +1,11 @@
+.MealOptions{
+    background-color: cornsilk;
+}
+.mealLeftFloat{
+    float: left;
+    width: 90%;
+}
+.mealRightFloat{
+    width: 10%;
+    float: right;
+}
