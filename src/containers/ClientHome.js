@@ -9,8 +9,9 @@ export default function ClientHome() {
   return (
     <div className="Home">
       <div className="lander">
-      <Card style={{ width: '36rem' }} className="flex" > 
-        <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" className="img-fluid" alt="" />
+      <Card  className="flex" class="card border-0 w-50" > 
+      {/* style={{ width: '36rem' }} */}
+        <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg"  className="img-fluid" alt="" />
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
           <Card.Text>
@@ -18,13 +19,17 @@ export default function ClientHome() {
             the card's content.
           </Card.Text>
         </Card.Body>
-        <Card.Body>
+        <Card.Footer>
+      {/* <small className="text-muted">Last updated 3 mins ago</small>           */}
           <Card.Link href="#">Card Link</Card.Link>
           <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
+        </Card.Footer>
+
       </Card>
+
       <br />
-      <Card style={{ width: '36rem' }}>
+      <Card  class="card border-0 w-50">
+      {/* style={{ width: '36rem' }} */}
         <Card.Img variant="top" src="https://mdbootstrap.com/img/Others/documentation/1.jpg" className="img-fluid" alt="" />
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
@@ -33,10 +38,11 @@ export default function ClientHome() {
             the card's content.
           </Card.Text>
         </Card.Body>
-        <Card.Body>
+        <Card.Footer>
+      {/* <small className="text-muted">Last updated 3 mins ago</small>           */}
           <Card.Link href="#">Card Link</Card.Link>
           <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
+        </Card.Footer>
       </Card>
       </div>
       <div>
