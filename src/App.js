@@ -75,8 +75,6 @@ function App() {
                 className="d-inline-block align-top"
               />{' '}
               SIGN Home
-
-              {/* SIGN Home */}
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle />
