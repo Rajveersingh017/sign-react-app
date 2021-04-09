@@ -51,9 +51,9 @@ export default function Routes() {
         <ChangePassword />
       </AuthenticatedRoute>
 
-      <AuthenticatedRoute exact path="/login/reset">
+      <UnauthenticatedRoute exact path="/login/reset">
        <ResetPassword />
-      </AuthenticatedRoute>
+      </UnauthenticatedRoute>
 
       <AuthenticatedRoute exact path="/AdminUpdateFood">
             <AdminUpdateFood />
