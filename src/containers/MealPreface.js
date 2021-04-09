@@ -7,7 +7,7 @@ import MealDisplayCycle from "../components/MealDisplayCycle";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
-import swal from "sweetalert";
+import * as swal from 'sweetalert';
 
 
 
@@ -33,8 +33,21 @@ function MealPreface() {
             await updateOrder();
         }
     }
-    function addOrderIdToState(event){
+    async function addOrderIdToState(event){
         event.preventDefault();
+        
+        const { value: ipAddress } = await swal.fire({
+            title: 'Enter your IP address',
+            input: 'text',
+            inputLabel: 'Your IP address',
+            inputValue: ' ',
+            showCancelButton: true,
+            inputValidator: (value) => {
+              if (!value) {
+                return 'You need to write something!'
+              }
+            }
+          })
         console.log(event.target.value)
         console.log(event)
         SetMealOrder({...mealOrder, mealId: event.target.value})
@@ -78,7 +91,12 @@ function MealPreface() {
                 <Col>
                     <Form>  
                         <MealDisplayCycle addOrderIdToState={addOrderIdToState} />
-                    
+                        <Form.Control 
+                        type ="number"
+                        placeholder="Quantity"
+                        min="0"
+                        max="6"
+                        />
                         <Button variant="dark" id="reqs"  onClick={()=>handleSubmit()}>Request Meal!</Button>
                     </Form>
                 </Col>
