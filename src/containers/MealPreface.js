@@ -15,9 +15,11 @@ function MealPreface() {
 
     const userInfo = useContext(UserData);
    console.log(userInfo.userInfo.email)
+   const [orderedQty,setQtyOrdered] = useState(0);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
         mealId:"",
+        mealServingCap:"",
         role: "CLI",
     });
     console.log(mealOrder);
@@ -36,34 +38,29 @@ function MealPreface() {
     async function addOrderIdToState(event){
         event.preventDefault();
         
-        const { value: ipAddress } = await swal.fire({
-            title: 'Enter your IP address',
-            input: 'text',
-            inputLabel: 'Your IP address',
-            inputValue: ' ',
-            showCancelButton: true,
-            inputValidator: (value) => {
-              if (!value) {
-                return 'You need to write something!'
-              }
-            }
-          })
         console.log(event.target.value)
-        console.log(event)
-        SetMealOrder({...mealOrder, mealId: event.target.value})
+        console.log(event.target.id)
+        SetMealOrder({...mealOrder, mealId: event.target.value, mealServingCap: event.target.id})
         console.log(mealOrder);
+        console.log(orderedQty)
     }
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
         let path = "/generateorderid"; 
         let data =  {message:"empty"}
          
-            
+        const updateMealCap = mealOrder.mealServingCap - Number(orderedQty);
+        console.log(updateMealCap)
+
         let user = {
             // email: localStorage.getItem("email"),
             email: userInfo.userInfo.email,
-            role: "CLI"
-
+            role: "CLI",
+            CurrentOrderId: mealOrder.mealId,
+            QtyOrdered:Number(orderedQty),
+            UpdatedMealQty: updateMealCap,
+            MealId: mealOrder.mealId,
+            instructions: "none"
             // role: userInfo.userInfo.userType,
         }
         let init ={body:user,}
@@ -96,7 +93,9 @@ function MealPreface() {
                         placeholder="Quantity"
                         min="0"
                         max="6"
-                        />
+                        value={orderedQty}
+                        onChange={e => setQtyOrdered(e.target.value)}
+                        /><br></br>
                         <Button variant="dark" id="reqs"  onClick={()=>handleSubmit()}>Request Meal!</Button>
                     </Form>
                 </Col>

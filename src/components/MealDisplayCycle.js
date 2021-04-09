@@ -61,7 +61,7 @@ function MealDisplayCycle(props) {
                                 </span>    
                             </div>
                             <div className="mealRightFloat">
-                                <button onClick={addOrderIdToState} id={item.ID} value={item.ID}>Select</button>
+                                <button onClick={addOrderIdToState} id={item.MealServingCap} value={item.ID}>Select</button>
                             </div>
                             </Card.Body>
                            
