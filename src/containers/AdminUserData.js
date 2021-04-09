@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-// import { useHistory } from "react-router-dom";
-// import { onError } from "../libs/errorLib";
-// import config from "../config";
-// import { LinkContainer } from "react-router-bootstrap";
-// import LoaderButton from "../components/LoaderButton";
+
 import "./Settings.css";
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
+import Form from "react-bootstrap/Form";
+
 
 
 export default function AdminUserData() {
     // const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState(null);
+    
+
+    // const forceUpdate = React.useState()[1].bind(null, {});
+
     const [nbrh, setNbrh] = useState(
         [
             {
-                name:"I'm not sure",
+                name:"I am not sure",
                 totalAdults: 0,
                 totalChildren: 0,
                 totalClients: 0,
@@ -111,40 +113,56 @@ export default function AdminUserData() {
                 totalChildren: 0,
                 totalClients: 0,
             },
+            {
+                name:"TOTAL",
+                totalClients: 0,
+                totalAdults: 0,
+                totalChildren: 0,
+            },
         ]
     );
-    useEffect(() => {   
+    useEffect(() => {  
         onLoad();
-       
-      }, []);
-      async function getData(){
+      },[]);
+      async function getData(name){
+         
         let apiName= "production-DynamoAccess-api";
         // let path = "/scanUsersTable";
-        let path = "/executestatement";
-        let data =  {message:"empty"}
+        let path = "/executestatement/";//?nghName=" + nghName;
+        let bodyData =  {"nghName":name}
+        let data = {};
+        let init = {
+            body: bodyData,   
+          }
+
        try{
-         data =  await API.get(apiName, path, null);
-       }catch(error){
-        data.message = error.message;
-       }
-   
+         data =  await API.put(apiName, path, init);
          return data.Items;
-         
-      }
-      function updateNbrh(data){
+       }catch(error){
+           data.message = error.message;
+           alert(error.message)
+           return null;
+       }
+      
+        
+    }
+      
+function updateNbrh(data){
         nbrh.map(nbr => {
             nbr.totalClients = getTotalClients(nbr.name,data);
             nbr.totalAdults = getTotalAdults(nbr.name,data);
             nbr.totalChildren = getTotalChildren(nbr.name,data);
         })
+        // alert(JSON.stringify(nbrh))
         setNbrh(nbrh);
       }
       
-       async function onLoad() {
+async function onLoad(name) {
         
-       let data1 = await getData();
-     
+       let data1 = await getData(name);
        let data = {users:[]}
+     if(data1 != undefined && data1 != null){
+       
        if(data1.length > 0){
            let usrs = [];
            data1.map(d => {
@@ -165,11 +183,10 @@ export default function AdminUserData() {
           
            data.users = usrs;
        }
-       updateNbrh(data);
-       setUserData(data);
        
-   
-   
+    }
+    updateNbrh(data);
+    setUserData(data);
  }
       function getTotalClients(nbrName,data){
         let totalClients = 0;
@@ -211,25 +228,64 @@ export default function AdminUserData() {
             "Neighbourhood","Total Clients", "Total Adults", "Total Children", "Total"
         ]
     }
-    
+
+    function handleNeighbourhoodChange (e) {
+        let name = e.target.value;
+        onLoad(name);
+    }
+
     let key = 0;
     return (
         (userData &&
             
         <div>
             
+
+        <Form.Group controlId="neighbourhood" size="lg">
+            <Form.Label>Neighbourhood:</Form.Label>
+            <Form.Control 
+                as="select" 
+                type="neighbourhood"
+                // value={fields.neighbourhood}
+                onChange={handleNeighbourhoodChange}            
+            >
+                <option value="0" selected>Select the neighbourhood</option>
+                <option value="-1">All Neighbourhoods</option>
+                <option value="I am not sure">I am not sure</option>
+                <option value="Charleswood - Tuxedo - Westwood">Charleswood - Tuxedo - Westwood</option>
+                <option value="Daniel McIntyre">Daniel McIntyre</option>
+                <option value="Elmwood - East Kildonan">Elmwood - East Kildonan</option>
+                <option value="Fort Rouge - East Fort Garry">Fort Rouge - East Fort Garry</option>
+                <option value="Mynarski">Mynarski</option>
+                <option value="North Kildonan">North Kildonan</option>   
+                <option value="Old Kildonan">Old Kildonan</option>
+                <option value="Point Douglas">Point Douglas</option>
+                <option value="River Heights - Fort Garry">River Heights - Fort Garry</option>
+                <option value="St. Boniface">St. Boniface</option>
+                <option value="St. James">St. James</option>
+                <option value="St. Norbert - Seine River">St. Norbert - Seine River</option>
+                <option value="St. Vital">St. Vital </option> 
+                <option value="Transcona">Transcona</option>
+                <option value="Waverley West">Waverley West </option> 
+            </Form.Control>
+        </Form.Group>
+
             <Card>
             <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center" >Client Demographic Information</Card.Header>
-            <Card.Body>
             
-            <Table striped bordered hover  class="thead-light" responsive="md">
+            
+            <Table striped bordered hover class="table-light "  responsive="md">
+                
             {/* variant="dark"  */}
-                <thead>
-                    <tr>
+            {/* class="thead-light" */}
+            {/* class="table-light" */}
+            
+                <thead class="table-secondary">
+                    <tr >
                         {
                             headerData.labels.map(label => {
                                 return(
-                                    <th key={key++}>
+                                    <th  key={key++}>
                                     {
                                         (label == "")?"Unknown":label
                                     }
@@ -244,8 +300,8 @@ export default function AdminUserData() {
                     {
                         userData.users.map(user => {
                             return (user.role == "CLI" &&
-                                <tr key={key++}>
-                                    <td>{user.name}</td>
+                                <tr  key={key++}>
+                                    <td >{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.address}</td>
                                     <td>{user.neighbourhood}</td>
@@ -261,14 +317,15 @@ export default function AdminUserData() {
                     
                 </tbody>
          </Table>
-         </Card.Body>
+        
          </Card>           
          <br />
          <Card>  
          <Card.Header as="h3" class="p-3 mb-2 bg-secondary text-white card text-center">Client Demographic Information</Card.Header>   
          
-         <Table striped bordered hover variant="dark" responsive="md">
-                <thead>
+         <Table striped bordered hover class="table-light "  responsive="md" >
+         {/* striped bordered hover variant="dark" responsive="md" */}
+                <thead >
                     <tr>
                         {
                             headerData.labelsTableTwo.map(label => {
@@ -288,16 +345,16 @@ export default function AdminUserData() {
                 <tbody>
                     {
                         nbrh.map(nbr => {
-                            return (
-                                <tr key={key++}>
+                            return ((nbr.totalChildren + nbr.totalAdults + nbr.totalClients) != 0)?(
+                              <tr key={key++}>
                                     <td> {nbr.name} </td>
                                     <td> {nbr.totalClients} </td>
                                     <td> {nbr.totalAdults} </td>
                                     <td> {nbr.totalChildren} </td>
                                     <td> {nbr.totalChildren + nbr.totalAdults} </td>
                                 </tr>
-                            )
-                        })
+                                ):null
+                    })
                     }
                    
                 </tbody>

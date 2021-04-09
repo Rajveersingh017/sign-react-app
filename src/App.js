@@ -49,12 +49,31 @@ function App() {
     history.push("/login");
   }
 
+
+
+  // <Navbar.Brand href="#home">
+  //     <img
+  //       alt=""
+  //       src="/logo.svg"
+  //       width="30"
+  //       height="30"
+  //       className="d-inline-block align-top"
+  //     />{' '}
+  //     React Bootstrap
+  //   </Navbar.Brand>
   return (
     !isAuthenticating && (
       <div className="App container py-3">
         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
+            <img
+                alt=""
+                src="favicon-32x32.png"
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{' '}
               SIGN Home
             </Navbar.Brand>
           </LinkContainer>

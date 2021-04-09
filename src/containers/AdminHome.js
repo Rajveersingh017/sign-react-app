@@ -59,11 +59,11 @@ export default function AdminHome() {
   <Card style={styles.card}>
     <Card.Img variant="top" src="https://www.canadahelps.org/media/charity_clipart.jpg" alt=""/>
     <Card.Body>
-      <Card.Title>Agency Information</Card.Title>
+      <Card.Title>Food Order Info. (Add elsewhere Agency Information)</Card.Title>
       <Card.Text>
-        Here you can view information about the agencies that have signed up.
+        Here you can view information about the orders that have been placed.
       </Card.Text>
-      <Button variant="primary" onClick={() => history.push('/ManageMeals')} >Manage Meals</Button>
+      <Button variant="primary" onClick={() => history.push('/AdminFoodOrders')} >View New Orders</Button>
     </Card.Body>
   </Card>
   <Card style={styles.card}>
