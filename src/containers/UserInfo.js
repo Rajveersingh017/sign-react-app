@@ -19,7 +19,7 @@ export default function UserInfo() {
 
   const {setUserInfo} = useContext(UserData);
   const userInfo = useContext(UserData);
-  // const [userData, setUserData] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   const [fields, handleFieldChange] = useFormFields({
     address:userInfo.userInfo.address,
@@ -32,26 +32,71 @@ export default function UserInfo() {
     clientAllergies:userInfo.userInfo.clientAllergies,
 });
 
+function isPhoneValid(p) {
+  // var phoneRe = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+  // var digits = p.replace(/\D/g, "");
+  // return phoneRe.test(p);
+  return p.match(/\d/g).length===10;
+}
 
-// const userData = {
-//     address:userInfo.address,
-//     phoneNumber:userInfo.phoneNumber,
-//     clientName:userInfo.clientName,
-//     clientCity:userInfo.clientCity,
-//     neighbourhood:userInfo.neighbourhood,
-//     adultsHome:userInfo.adultsHome,
-//     childrenHome:userInfo.childrenHome,
-//     clientAllergies:userInfo.clientAllergies
-//   };
+function handleFieldChangeInner(e){
+  let target = e.target;
+  let id = target.id;
+  errors.map(error => {
+    if(error.id == id){
+      error.error="";
+    }
+  })
+  handleFieldChange(e);
+}
+
+function isFormValid(){
+  let ret = true;
+  let errors = [];
+  if(!fields.address && fields.address == ""){
+    let error = {id:"address", error:"Address Cannot Be Empty"};
+    errors.push(error);
+    ret = false;
+  }
+
+  // if(!fields.phoneNumber && fields.phoneNumber == "" && isPhoneValid(fields.phoneNumber)){
+  //   let error = {id:"phoneNumber", error:"Phone Number Cannot Be Empty"};
+  //   errors.push(error);
+  //   ret = false;
+  // }
+  let phoneValid = isPhoneValid(fields.phoneNumber);
+  // alert("isPhoneValid = "+phoneValid)
+  if(!phoneValid){
+    let error = {id:"phoneNumber", error:"Please Enter a Valid Phone Number"};
+    errors.push(error);
+    ret = false;
+  }
+
+  if(errors.length != 0){
+    setErrors(errors);
+    }
+  return ret;
+}
+
+function getError(id){
+  let ret = "";
+  errors.map(error => {
+    if(error.id == id){
+      ret = error.error;
+    }
+  })
+  return ret;
+}
  
   function updateUser(user) {
+   
     API.configure();
       let init = {
         body: user,   
       }
       let apiName= "production-DynamoAccess-api";
       let path = "/edituserdetails";
-      console.log(user);
+      // console.log(user);
     return API.put(apiName, path, init);
   }
   
@@ -62,43 +107,57 @@ export default function UserInfo() {
   const { isAuthenticated } = useAppContext();
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if(isFormValid()){
+      setIsLoading(true);
   
-    setIsLoading(true);
+      try {
+        let user = {
+          // userID : localStorage.getItem("userID"),
+          email: isAuthenticated.email,
+          // email: localStorage.getItem("email"),
+          role: isAuthenticated.userType,
+          // role: "CLI",
+          address:fields.address,
+          phoneNumber:fields.phoneNumber,
+          clientName:fields.clientName,
+          clientCity:fields.clientCity,
+          neighbourhood:fields.neighbourhood,
+          adultsHome:fields.adultsHome,
+          childrenHome:fields.childrenHome,
+          clientAllergies:fields.clientAllergies,
+        }
+        let retUser = await updateUser(user);
+        setUserInfo(user);
+        // swal("Profile successfully updated.");
+        swal(retUser);
+        swal({
+          title: "Thank You!",
+          text: retUser,
+          icon: "success",
+          
+          dangerMode: true,
+        });
   
-    try {
-      let user = {
-        // userID : localStorage.getItem("userID"),
-        email: isAuthenticated.email,
-        // email: localStorage.getItem("email"),
-        role: isAuthenticated.userType,
-        // role: "CLI",
-        address:fields.address,
-        phoneNumber:fields.phoneNumber,
-        clientName:fields.clientName,
-        clientCity:fields.clientCity,
-        neighbourhood:fields.neighbourhood,
-        adultsHome:fields.adultsHome,
-        childrenHome:fields.childrenHome,
-        clientAllergies:fields.clientAllergies,
-      }
-      let retUser = await updateUser(user);
-      setUserInfo(user);
-      // swal("Profile successfully updated.");
-      swal(retUser);
+        setIsLoading(false);
+      } catch (e) {
+        onError(e);
+        setIsLoading(false);
+     }
+    }else{
       swal({
-        title: "Thank You!",
-        text: retUser,
-        icon: "success",
+        title: "Invalid Form",
+        text: "Please make sure you have filled out all of the fields correctly",
+        icon: "error",
         
         dangerMode: true,
       });
-
-      setIsLoading(false);
-    } catch (e) {
-      onError(e);
-      setIsLoading(false);
-   }
+    }
+  
+   
   }
+
+
   function renderForm() {
     return (
       <Form onSubmit={handleSubmit}>
@@ -114,18 +173,22 @@ export default function UserInfo() {
             type="address"
             placeholder="Your home address"
             value={fields.address}
-            onChange={handleFieldChange}
+            onChange={handleFieldChangeInner}
           />
+         <Form.Label className= "errorStyle">{getError("address")}</Form.Label>
         </Form.Group>
+
         <Form.Group controlId="phoneNumber" size="lg">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control
             type="phone"
             placeholder="Phone number"
             value={fields.phoneNumber}
-            onChange={handleFieldChange}
+            onChange={handleFieldChangeInner}
           />
+           <Form.Label className= "errorStyle">{getError("phoneNumber")}</Form.Label>
         </Form.Group>
+
         <Form.Group controlId="clientName" size="lg">
           <Form.Label>Full Name</Form.Label>
           <Form.Control
@@ -135,6 +198,7 @@ export default function UserInfo() {
             onChange={handleFieldChange}
           />
         </Form.Group>
+
         <Form.Group controlId="clientCity" size="lg">
           <Form.Label>City</Form.Label>
           <Form.Control

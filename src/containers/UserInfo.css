@@ -14,4 +14,9 @@
   .disclaimerCB {
     color: cornflowerblue;
   }
+
+  .errorStyle {
+    color: red;
+    font-size: smaller;
+  }
 }
