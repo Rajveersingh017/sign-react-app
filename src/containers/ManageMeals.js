@@ -11,6 +11,7 @@ import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button'
 import { v4 as uuidv4 } from 'uuid';
 import swal from "sweetalert";
+import MealDisplayCycle from "../components/MealDisplayCycle";
 
 
 function ManageMeals() {
@@ -93,24 +94,8 @@ function ManageMeals() {
 
     return (mealOption &&
         <div className="ManageMeals">
-        <Card>
-        <Card.Header>
-            Currently Serving:
-        </Card.Header>
-        <Card.Body>
         
-        <Card.Title> 
-            Meal 1  
-        </Card.Title>
-        <Card.Text className = "cardText">
-            Meal Descrption goes here!
-        </Card.Text>
-
-        <Button variant="primary" href="/userinfo">
-            Click Here to Edit/Update!
-        </Button>
-        </Card.Body>
-    </Card>
+        <MealDisplayCycle />
 
             
             <Form onSubmit={handleSubmit} >

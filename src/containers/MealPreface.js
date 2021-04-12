@@ -8,14 +8,16 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import * as swal from 'sweetalert';
+import LoaderButton from "../components/LoaderButton";
 
 
 
 function MealPreface() {
+    const [isLoading, setIsLoading] = useState(false);
 
     const userInfo = useContext(UserData);
    console.log(userInfo.userInfo.email)
-   const [orderedQty,setQtyOrdered] = useState(0);
+   const [orderedQty,setQtyOrdered] = useState(null);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
         mealId:"",
@@ -25,11 +27,14 @@ function MealPreface() {
     console.log(mealOrder);
     // only for testing this page! Get rid until -------
    
-    async function handleSubmit(){
-        // event.preventDefault();
+    async function handleSubmit(event){
+        console.log(event);
+        event.preventDefault();
+        setIsLoading(true);
         if(mealOrder.mealId==""){
             console.log("mi;")
             swal("choose a meal first in order to proceed.");
+            setIsLoading(false);
         }
         else{
             await updateOrder();
@@ -56,8 +61,8 @@ function MealPreface() {
             // email: localStorage.getItem("email"),
             email: userInfo.userInfo.email,
             role: "CLI",
-            CurrentOrderId: mealOrder.mealId,
-            QtyOrdered:Number(orderedQty),
+            // CurrentOrderId: mealOrder.mealId,
+            QtyOrdered: Number(orderedQty),
             UpdatedMealQty: updateMealCap,
             MealId: mealOrder.mealId,
             instructions: "none"
@@ -71,9 +76,13 @@ function MealPreface() {
 
             data =  await API.put(apiName, path,init);
            console.log(data);
+           setIsLoading(false);
+           swal("Succesfully booked your meal! Thank you.");
+
 
         }catch(error){
             data.message = error.message;
+            setIsLoading(false);
         }
     }
     // -------------------------------------------------
@@ -86,7 +95,7 @@ function MealPreface() {
             <Row>
                 <Col md="auto"><SideBar props={userInfo}/></Col>
                 <Col>
-                    <Form>  
+                    <Form onSubmit={handleSubmit}>  
                         <MealDisplayCycle addOrderIdToState={addOrderIdToState} />
                         <Form.Control 
                         type ="number"
@@ -96,7 +105,18 @@ function MealPreface() {
                         value={orderedQty}
                         onChange={e => setQtyOrdered(e.target.value)}
                         /><br></br>
-                        <Button variant="dark" id="reqs"  onClick={()=>handleSubmit()}>Request Meal!</Button>
+                        
+                        <LoaderButton
+                        // Class="box"
+                        block
+                        size="lg"
+                        type="submit"
+                        variant="success"
+                        isLoading={isLoading}
+                        >
+                            Request Meal!                        
+                        </LoaderButton>
+        
                     </Form>
                 </Col>
             </Row>    
