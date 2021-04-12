@@ -7,8 +7,9 @@ import MealDisplayCycle from "../components/MealDisplayCycle";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
-import * as swal from 'sweetalert';
 import LoaderButton from "../components/LoaderButton";
+
+import swal from "sweetalert";
 
 
 
@@ -17,12 +18,13 @@ function MealPreface() {
 
     const userInfo = useContext(UserData);
    console.log(userInfo.userInfo.email)
-   const [orderedQty,setQtyOrdered] = useState(null);
+   const [orderedQty,setQtyOrdered] = useState(0);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
         mealId:"",
         mealServingCap:"",
         role: "CLI",
+        QtyOrdered: "0"
     });
     console.log(mealOrder);
     // only for testing this page! Get rid until -------
@@ -31,13 +33,17 @@ function MealPreface() {
         console.log(event);
         event.preventDefault();
         setIsLoading(true);
+        console.log(orderedQty)
         if(mealOrder.mealId==""){
             console.log("mi;")
             swal("choose a meal first in order to proceed.");
             setIsLoading(false);
+        } else if(mealOrder.mealServingCap >= orderedQty){
+            await updateOrder();
         }
         else{
-            await updateOrder();
+            swal("Meal Quantity can not exceed the quantity that we are serving");
+            setIsLoading(false);
         }
     }
     async function addOrderIdToState(event){
@@ -75,13 +81,24 @@ function MealPreface() {
             // console.log(localStorage.getItem("email"));
 
             data =  await API.put(apiName, path,init);
-           console.log(data);
-           setIsLoading(false);
-           swal("Succesfully booked your meal! Thank you.");
+            console.log(data);
+            setIsLoading(false);
+            swal({title: "Thank You!",
+                text: data,
+                icon: "success",
+                
+                dangerMode: true
+              });
+        //    swal("Succesfully booked your meal! Thank you.");
+            
 
-
-        }catch(error){
-            data.message = error.message;
+        }catch(error){        
+            swal({
+                title: "Bummer! ):",
+                text: "something went wrong",
+                icon: "success",
+                dangerMode:true,
+            });
             setIsLoading(false);
         }
     }
