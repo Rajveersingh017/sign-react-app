@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -15,12 +15,35 @@ import Alert from 'react-bootstrap/Alert';
 import UserData from '../contextData/UserData';
 
 
-
 export default function UserInfo() {
 
   const {setUserInfo} = useContext(UserData);
+  const userInfo = useContext(UserData);
+  // const [userData, setUserData] = useState(null);
+
+  const [fields, handleFieldChange] = useFormFields({
+    address:userInfo.userInfo.address,
+    phoneNumber:userInfo.userInfo.phoneNumber,
+    clientName:userInfo.userInfo.clientName,
+    clientCity:userInfo.userInfo.clientCity,
+    neighbourhood:userInfo.userInfo.neighbourhood,
+    adultsHome:userInfo.userInfo.adultsHome,
+    childrenHome:userInfo.userInfo.childrenHome,
+    clientAllergies:userInfo.userInfo.clientAllergies,
+});
 
 
+// const userData = {
+//     address:userInfo.address,
+//     phoneNumber:userInfo.phoneNumber,
+//     clientName:userInfo.clientName,
+//     clientCity:userInfo.clientCity,
+//     neighbourhood:userInfo.neighbourhood,
+//     adultsHome:userInfo.adultsHome,
+//     childrenHome:userInfo.childrenHome,
+//     clientAllergies:userInfo.clientAllergies
+//   };
+ 
   function updateUser(user) {
     API.configure();
       let init = {
@@ -31,16 +54,7 @@ export default function UserInfo() {
       console.log(user);
     return API.put(apiName, path, init);
   }
-  const [fields, handleFieldChange] = useFormFields({
-    address:"",
-    phoneNumber:"",
-    clientName:"",
-    clientCity:"",
-    neighbourhood:"",
-    adultsHome:"",
-    childrenHome:"",
-    clientAllergies:"",
-});
+  
   const history = useHistory();
   // const [newUser, setNewUser] = useState(null);
   const { userHasAuthenticated } = useAppContext();

@@ -17,7 +17,7 @@ function MealPreface() {
     const [isLoading, setIsLoading] = useState(false);
 
     const userInfo = useContext(UserData);
-   console.log(userInfo.userInfo.email)
+//    console.log(userInfo.userInfo.email)
    const [orderedQty,setQtyOrdered] = useState(0);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
@@ -26,7 +26,7 @@ function MealPreface() {
         role: "CLI",
         QtyOrdered: "0"
     });
-    console.log(mealOrder);
+    // console.log(mealOrder);
     // only for testing this page! Get rid until -------
    
     async function handleSubmit(event){
