@@ -32,11 +32,18 @@ export default function UserInfo() {
     clientAllergies:userInfo.userInfo.clientAllergies,
 });
 
-function isPhoneValid(p) {
-  // var phoneRe = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-  // var digits = p.replace(/\D/g, "");
-  // return phoneRe.test(p);
-  return p.match(/\d/g).length===10;
+function isPhoneValid(inputnum) {
+  return inputnum.match(/\d/g).length===10 ;
+
+}
+
+function isNameValid(inputtxt) {
+//       var letters = /^[A-Za-z]+$/;      use this only for letters without space  
+  return inputtxt.match(/^[a-zA-Z\s]*$/);
+}
+
+function isAlergyValid(input){
+  return input.match(/^[a-zA-Z\s]*$/);
 }
 
 function handleFieldChangeInner(e){
@@ -58,12 +65,6 @@ function isFormValid(){
     errors.push(error);
     ret = false;
   }
-
-  // if(!fields.phoneNumber && fields.phoneNumber == "" && isPhoneValid(fields.phoneNumber)){
-  //   let error = {id:"phoneNumber", error:"Phone Number Cannot Be Empty"};
-  //   errors.push(error);
-  //   ret = false;
-  // }
   let phoneValid = isPhoneValid(fields.phoneNumber);
   // alert("isPhoneValid = "+phoneValid)
   if(!phoneValid){
@@ -71,7 +72,39 @@ function isFormValid(){
     errors.push(error);
     ret = false;
   }
-
+  let nameValid = isNameValid(fields.clientName)
+  if(!nameValid){
+    let error = {id:"clientName", error:"Please Enter Your Name"};
+    errors.push(error);
+    ret = false;
+  }
+  let nameCityValid = isNameValid(fields.clientCity)
+  if(!nameCityValid){
+    let error = {id:"clientCity", error:"Please Enter Your City"};
+    errors.push(error);
+    ret = false;
+  }
+  if(fields.neighbourhood == "0"){
+    let error = {id:"neighbourhood", error:"Please choose from the provided list"};
+    errors.push(error);
+    ret = false;
+  }
+  if(fields.adultsHome == "0"){
+    let error = {id:"adultsHome", error:"Please Choose The Number Of Adults"};
+    errors.push(error);
+    ret = false;
+  }
+  if(fields.childrenHome == "-0"){
+    let error = {id:"childrenHome", error:"Please Choose The Number Of Children"};
+    errors.push(error);
+    ret = false;
+  }
+  let alergyValid = isAlergyValid(fields.clientAllergies)
+  if(!alergyValid){
+    let error = {id:"clientAllergies", error:"No numbers or special characters are permitted in this field"};
+    errors.push(error);
+    ret = false;
+  }
   if(errors.length != 0){
     setErrors(errors);
     }
@@ -88,8 +121,7 @@ function getError(id){
   return ret;
 }
  
-  function updateUser(user) {
-   
+  function updateUser(user) {  
     API.configure();
       let init = {
         body: user,   
@@ -148,24 +180,17 @@ function getError(id){
       swal({
         title: "Invalid Form",
         text: "Please make sure you have filled out all of the fields correctly",
-        icon: "error",
-        
+        icon: "error",    
         dangerMode: true,
       });
     }
-  
-   
   }
-
 
   function renderForm() {
     return (
       <Form onSubmit={handleSubmit}>
 <Alert variant="success">
-  <Alert.Heading>Hey, nice to see you</Alert.Heading>
-  <p>
-  Please complete or update your information.
-  </p>
+  <Alert.Heading>  Please complete or update your information.</Alert.Heading>
 </Alert>
         <Form.Group controlId="address" size="lg">
           <Form.Label>Home Address</Form.Label>
@@ -179,7 +204,7 @@ function getError(id){
         </Form.Group>
 
         <Form.Group controlId="phoneNumber" size="lg">
-          <Form.Label>Phone Number</Form.Label>
+          <Form.Label>Phone Number With Area Code</Form.Label>
           <Form.Control
             type="phone"
             placeholder="Phone number"
@@ -195,8 +220,9 @@ function getError(id){
             type="clientName"
             placeholder="First name and Last name"
             value={fields.clientName}
-            onChange={handleFieldChange}
+            onChange={handleFieldChangeInner}
           />
+          <Form.Label className= "errorStyle">{getError("clientName")}</Form.Label>
         </Form.Group>
 
         <Form.Group controlId="clientCity" size="lg">
@@ -205,16 +231,18 @@ function getError(id){
             type="clientCity"
             placeholder="Your City"
             value={fields.clientCity}
-            onChange={handleFieldChange}
+            onChange={handleFieldChangeInner}
           />
+          <Form.Label className= "errorStyle">{getError("clientCity")}</Form.Label>
         </Form.Group>
+
         <Form.Group controlId="neighbourhood" size="lg">
-            <Form.Label>Neighbourhood:</Form.Label>
+            <Form.Label>Neighbourhood</Form.Label>
             <Form.Control 
                 as="select" 
                 type="neighbourhood"
                 value={fields.neighbourhood}
-                onChange={handleFieldChange}            
+                onChange={handleFieldChangeInner}            
             >
                 <option value="0" selected>Select your neighbourhood</option>
                 <option value="I am not sure">I am not sure</option>
@@ -234,15 +262,19 @@ function getError(id){
                 <option value="Transcona">Transcona</option>
                 <option value="Waverley West">Waverley West </option> 
             </Form.Control>
+            <Form.Label className= "errorStyle">{getError("neighbourhood")}</Form.Label>
         </Form.Group>
+        <div>
         <img src="https://winnipeg.ca/census/2016/Images/ElectoralWards.gif" className="img-fluid" alt="" />   
+        </div>
+
         <Form.Group controlId="adultsHome" size="lg">
             <Form.Label>How many adults 18 and over live in the home:</Form.Label>
             <Form.Control 
                 as="select" 
                 type="adultsHome"
                 value={fields.adultsHome}
-                onChange={handleFieldChange}            
+                onChange={handleFieldChangeInner}            
             >
                 <option value="0" selected>Select the number of adults in the home</option>
                 <option value="1">1</option>
@@ -251,14 +283,16 @@ function getError(id){
                 <option value="4">4</option>
                 <option value="5">5</option>
             </Form.Control>
+            <Form.Label className= "errorStyle">{getError("adultsHome")}</Form.Label>
         </Form.Group>
+
         <Form.Group controlId="childrenHome" size="lg">
             <Form.Label>How many children under 18 live in the home:</Form.Label>
             <Form.Control 
                 as="select" 
                 type="childrenHome"
                 value={fields.childrenHome}
-                onChange={handleFieldChange}            
+                onChange={handleFieldChangeInner}            
             >
                 <option value="-0" selected>Select the number of children</option>
                 <option value="0">0</option>
@@ -271,7 +305,9 @@ function getError(id){
                 <option value="7">7</option>
                 <option value="8">8</option>
             </Form.Control>
+            <Form.Label className= "errorStyle">{getError("childrenHome")}</Form.Label>
         </Form.Group>
+
         <Form.Group controlId="clientAllergies">
           <Form.Label>Please list any allergies you may have</Form.Label>
           <Form.Control 
@@ -279,8 +315,9 @@ function getError(id){
           type="clientAllergies"
           placeholder="Eg. Flower, Milk, Nuts"
           value={fields.clientAllergies}
-          onChange={handleFieldChange}
+          onChange={handleFieldChangeInner}
           />
+          <Form.Label className= "errorStyle">{getError("clientAllergies")}</Form.Label>
         </Form.Group>
         <LoaderButton
           block
