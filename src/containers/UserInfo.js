@@ -13,6 +13,7 @@ import { API } from "aws-amplify";
 // import { Grid, Row, Col, Image } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import UserData from '../contextData/UserData';
+import { setNestedObjectValues } from "formik";
 
 
 export default function UserInfo() {
@@ -20,31 +21,68 @@ export default function UserInfo() {
   const {setUserInfo} = useContext(UserData);
   const userInfo = useContext(UserData);
   const [errors, setErrors] = useState([]);
-
-  const [fields, handleFieldChange] = useFormFields({
-    address:userInfo.userInfo.address,
-    phoneNumber:userInfo.userInfo.phoneNumber,
-    clientName:userInfo.userInfo.clientName,
-    clientCity:userInfo.userInfo.clientCity,
-    neighbourhood:userInfo.userInfo.neighbourhood,
-    adultsHome:userInfo.userInfo.adultsHome,
-    childrenHome:userInfo.userInfo.childrenHome,
-    clientAllergies:userInfo.userInfo.clientAllergies,
+  const [refreshfields, setRefreshfields] = useState(false);
+// alert(JSON.stringify(userInfo))
+//   const [fields, handleFieldChange] = useFormFields({
+//     address:userInfo.userInfo.address,
+//     phoneNumber:userInfo.userInfo.phoneNumber,
+//     clientName:userInfo.userInfo.clientName,
+//     clientCity:userInfo.userInfo.clientCity,
+//     neighbourhood:userInfo.userInfo.neighbourhood,
+//     adultsHome:userInfo.userInfo.adultsHome,
+//     childrenHome:userInfo.userInfo.childrenHome,
+//     clientAllergies:userInfo.userInfo.clientAllergies,
+// });
+const [fields, handleFieldChange] = useFormFields({
+  address:"",
+  phoneNumber:"",
+  clientName:"",
+  clientCity:"",
+  neighbourhood:"0",
+  adultsHome:"0",
+  childrenHome:"-1",
+  clientAllergies:"",
 });
+// alert(JSON.stringify(fields))
+
+
+function onLoad(){
+
+  fields.address=userInfo.userInfo.address;
+  fields.phoneNumber=userInfo.userInfo.phoneNumber;
+  fields.clientName=userInfo.userInfo.clientName;
+  fields.clientCity=userInfo.userInfo.clientCity;
+  fields.neighbourhood=userInfo.userInfo.neighbourhood;
+  fields.adultsHome=userInfo.userInfo.adultsHome;
+  fields.childrenHome=userInfo.userInfo.childrenHome;
+  fields.clientAllergies=userInfo.userInfo.clientAllergies;
+
+  setRefreshfields(true);
+}
+
+useEffect(onLoad,[])
 
 function isPhoneValid(inputnum) {
-  return inputnum.match(/\d/g).length===10 ;
-
+  // let match = false;
+  // if(inputnum != null && inputnum != ""){
+  //   match = inputnum.match(/\d/g).length===10;
+  // }
+  // return match ;
+  return (inputnum != null && inputnum != "" && inputnum.match(/\d/g).length===10);
 }
 
 function isNameValid(inputtxt) {
 //       var letters = /^[A-Za-z]+$/;      use this only for letters without space  
-  return inputtxt.match(/^[a-zA-Z\s]*$/);
+  return (inputtxt != null && inputtxt != "" && inputtxt.match(/^[a-zA-Z\s]*$/));
 }
 
 function isAlergyValid(input){
-  return input.match(/^[a-zA-Z\s]*$/);
+  return (input !="" && input != null && input.match(/^[a-zA-Z\s]*$/));
 }
+
+// function isAddressValid(address){
+//   return address.match(/^\d+\s[A-z]+\s[A-z]+/);
+// }
 
 function handleFieldChangeInner(e){
   let target = e.target;
@@ -60,11 +98,14 @@ function handleFieldChangeInner(e){
 function isFormValid(){
   let ret = true;
   let errors = [];
-  if(!fields.address && fields.address == ""){
-    let error = {id:"address", error:"Address Cannot Be Empty"};
+  
+  // let addressValid = isAddressValid(fields.address);
+  if(!fields.address && fields.address == "" || fields.address == null){
+    let error = {id:"address", error:"Please Enter A Valid Address"};
     errors.push(error);
     ret = false;
   }
+
   let phoneValid = isPhoneValid(fields.phoneNumber);
   // alert("isPhoneValid = "+phoneValid)
   if(!phoneValid){
@@ -72,33 +113,39 @@ function isFormValid(){
     errors.push(error);
     ret = false;
   }
+
   let nameValid = isNameValid(fields.clientName)
   if(!nameValid){
     let error = {id:"clientName", error:"Please Enter Your Name"};
     errors.push(error);
     ret = false;
   }
+
   let nameCityValid = isNameValid(fields.clientCity)
   if(!nameCityValid){
     let error = {id:"clientCity", error:"Please Enter Your City"};
     errors.push(error);
     ret = false;
   }
-  if(fields.neighbourhood == "0"){
+
+  if(fields.neighbourhood == "0" || fields.neighbourhood == "" || fields.neighbourhood == null){
     let error = {id:"neighbourhood", error:"Please choose from the provided list"};
     errors.push(error);
     ret = false;
   }
-  if(fields.adultsHome == "0"){
+
+  if(fields.adultsHome == "0" || fields.adultsHome == "" || fields.adultsHome == null){
     let error = {id:"adultsHome", error:"Please Choose The Number Of Adults"};
     errors.push(error);
     ret = false;
   }
-  if(fields.childrenHome == "-0"){
+
+  if(fields.childrenHome == "-1" || fields.childrenHome == "" || fields.childrenHome == null){
     let error = {id:"childrenHome", error:"Please Choose The Number Of Children"};
     errors.push(error);
     ret = false;
   }
+
   let alergyValid = isAlergyValid(fields.clientAllergies)
   if(!alergyValid){
     let error = {id:"clientAllergies", error:"No numbers or special characters are permitted in this field"};
@@ -294,7 +341,7 @@ function getError(id){
                 value={fields.childrenHome}
                 onChange={handleFieldChangeInner}            
             >
-                <option value="-0" selected>Select the number of children</option>
+                <option value="-1" selected>Select the number of children</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
