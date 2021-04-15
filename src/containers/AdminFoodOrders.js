@@ -1,20 +1,62 @@
 import { Card, Table } from "react-bootstrap";
-import {useState} from "react";
-
+import {useState, useEffect} from "react";
+import { API } from "aws-amplify";
 
 
 export default function AdminFoodOrders() {
 
-    const [foodData, setFoodData] = useState(null);
-
-
     const headerData = {
         labels:[
-            "Email", "Order ID", "Meal ID", "Quantity"
+            "Email", "Meal", "Quantity",
         ]
     }
+    let key = 0; 
+    const [foodData, setFoodData] = useState({meals:[]});
 
-    let key = 0;
+    useEffect(() => {  
+        onLoad();
+      },[]);
+
+    async function getData(){
+         
+        let apiName= "production-DynamoAccess-api";
+        let path = "/updateFoodOrdersTable/";//?nghName=" + nghName;
+        let data = {};
+      
+       try{
+         data =  await API.get(apiName, path, null);
+         return data;
+       }catch(error){
+           data.message = error.message;
+           alert(error.message)
+           return null;
+       }
+      
+        
+    }
+
+    async function onLoad(){
+        let data1 = await getData();
+        // let data = {meals:[]}
+        // if(data1 != undefined && data1 != null && data1.length > 0){
+        //     let mls = [];
+        //     data1.map(d => {
+        //         let meal = {};
+        //         meal.Email = d.Email;//(d.Email.S)?d.Email.S:"Unknown";
+        //         meal.MealId = d.MealId;//(d.MealId)?d.MealId.S:"Unknown";
+        //         meal.QtyOrdered = d.QtyOrdered;//(d.QtyOrdered)?((d.QtyOrdered.S)?d.QtyOrdered.S:d.QtyOrdered.N):"Unknown";
+        //         meal.MealDescription = d.MealDesc;
+        //         mls.push(meal);
+        //     });
+        //     data.meals = mls;
+        // }
+        setFoodData(data1);
+        //  console.log(JSON.stringify(data1));
+    }
+
+    // function displayMeal(e){
+    //     alert("displaying Meal id = "+e.target.id);
+    // }
 
     return(
         <div>
@@ -37,11 +79,30 @@ export default function AdminFoodOrders() {
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    {
+                        foodData.meals.map(meal => {
+                            return(
+                                <tr key = {key++}>
+                                    <td>
+                                        {meal.Email}
+                                    </td>
+                                    {/* <td id={meal.MealId} onClick={displayMeal}>
+                                        {meal.MealDesc}
+                                    </td> */}
+                                     <td>
+                                        {meal.MealDesc}
+                                    </td>
+                                    <td>
+                                        {meal.QtyOrdered}
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </Table>
         </Card>
         </div>
     );
-}
 
+}
