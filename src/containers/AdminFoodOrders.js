@@ -36,6 +36,9 @@ export default function AdminFoodOrders() {
                        }
                     </tr>
                 </thead>
+                <tbody>
+                    
+                </tbody>
             </Table>
         </Card>
         </div>
