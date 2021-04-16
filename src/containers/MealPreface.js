@@ -8,16 +8,22 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
+import SingleMealDisplay from "../components/SingleMealDisplay";
 
 import swal from "sweetalert";
 
 
 
 function MealPreface() {
+    const [reload,setReload]=useState(false);
+    
+    useEffect(()=>{
+        updateTest(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />)
+    },[reload])
     const [isLoading, setIsLoading] = useState(false);
-
+    const [initaltesting, updateTest] = useState(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />);
     const userInfo = useContext(UserData);
-//    console.log(userInfo.userInfo.email)
+   console.log(userInfo.userInfo)
    const [orderedQty,setQtyOrdered] = useState(0);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
@@ -89,6 +95,7 @@ function MealPreface() {
                 
                 dangerMode: true
               });
+              setReload(!reload);
         //    swal("Succesfully booked your meal! Thank you.");
             
 
@@ -105,15 +112,21 @@ function MealPreface() {
     // -------------------------------------------------
 
 
-    
+    // <MealDisplayCycle addOrderIdToState={addOrderIdToState} />
     // console.log(userInfo)
     return(
         <div>
             <Row>
-                <Col md="auto"><SideBar props={userInfo}/></Col>
+                <Col md="auto">
+                    <SideBar props={userInfo}/>
+                    <SingleMealDisplay props={userInfo.userInfo} />
+
+                </Col>
                 <Col>
+
                     <Form onSubmit={handleSubmit}>  
-                        <MealDisplayCycle addOrderIdToState={addOrderIdToState} />
+                        {initaltesting}
+                    
                         <Form.Control 
                         type ="number"
                         placeholder="Quantity"

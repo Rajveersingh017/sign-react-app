@@ -59,7 +59,8 @@ export default function Login() {
               neighbourhood: data.Item.neighbourhood || null,
               adultsHome: data.Item.adultsHome || null,
               childrenHome: data.Item.childrenHome || null,
-              clientAllergies: data.Item.clientAllergies || null
+              clientAllergies: data.Item.clientAllergies || null,
+              currentOrderId: data.Item.CurrentOrderId || null
             });
         }catch(error){
             data.message = error.message;
