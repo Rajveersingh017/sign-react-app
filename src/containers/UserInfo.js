@@ -214,7 +214,6 @@ function getError(id){
           title: "Thank You!",
           text: retUser,
           icon: "success",
-          
           dangerMode: true,
         });
   

@@ -124,6 +124,7 @@ export default function AdminUserData() {
     useEffect(() => {  
         onLoad();
       },[]);
+      
       async function getData(name){
          
         let apiName= "production-DynamoAccess-api";
