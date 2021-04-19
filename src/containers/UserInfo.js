@@ -68,7 +68,9 @@ function isPhoneValid(inputnum) {
   //   match = inputnum.match(/\d/g).length===10;
   // }
   // return match ;
-  return (inputnum != null && inputnum != "" && inputnum.match(/\d/g).length===10);
+  return (inputnum != null && inputnum != "" && (inputnum != inputnum.match(/^[a-zA-Z\s]*$/)) && inputnum.match(/\d/g).length===10);
+  // return (inputnum != null && inputnum != "" && inputnum.match(/\d/g).length===10);
+
 }
 
 function isNameValid(inputtxt) {
@@ -214,6 +216,7 @@ function getError(id){
           title: "Thank You!",
           text: retUser,
           icon: "success",
+
           dangerMode: true,
         });
   
