@@ -35,6 +35,7 @@ function SingleMealDisplay(userinfo) {
             for (let i = 0; i < mealData.length; i++) {
                 let element = mealData[i];
                 gatherMealsFromDB.push({
+                    id: element.MealId,
                     desc: element.MealDescription,
                     title: element.MealTitle,
                     qty: element.OrderedQty
@@ -46,7 +47,7 @@ function SingleMealDisplay(userinfo) {
             // currentOrder.map((item)=> console.log(item))
             // console.log(currentOrder);
 
-            setLoadComponent(!loadComponent);
+            setLoadComponent(true);
             
         }catch(error){
             console.log(error);
@@ -69,7 +70,7 @@ function SingleMealDisplay(userinfo) {
                 {
                     currentOrder.map(item =>{
                         return(
-                            <div>
+                            <div key={item.id}>
                                 <span className="Current_order_heading">Title: </span>{item.title}<br></br>
                                 <span className="Current_order_heading">Description: </span>{item.desc}<br></br>
                                 <span className="Current_order_heading">Qty: </span>{item.qty}<br></br>

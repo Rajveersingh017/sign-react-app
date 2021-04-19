@@ -15,6 +15,8 @@ import swal from "sweetalert";
 
 
 function MealPreface() {
+    const {setUserInfo} = useContext(UserData);
+
     const [reload,setReload]=useState(false);
     const userInfo = useContext(UserData);
 
@@ -80,54 +82,103 @@ function MealPreface() {
     const selectedMeals = [];
     let mealReqCount = 0;
 
+    
 
     async function addOrderIdToState(event){
-        let temp = 0;
+        
         let bool = true;
+        let temp = 0;
+
         if (selectedMeals.length!=0){
-            console.log("is not null",selectedMeals)
+        
+            console.log("is not null",selectedMeals);
+            let updatedMealQty = Number(event.target.id) - Number(event.target.value);
+            
+            // console.log(temp, "before if, in length", event.target.value)
+            // if(Number(temp) + Number(event.target.value) < 7 ){
+            //     temp += Number(event.target.value);
+            // }
+            // else{
+            //     swal({
+            //         title: "oh no! ):",
+            //         text: "we only allow our clients to book a max of 6 meals",
+            //         icon: "danger",
+            //         dangerMode:true,
+            //     });
+            // }
+            console.log(temp, "after if", event.target.value)
+            
 
             selectedMeals.map(function(item, i){
-        
+
+                let updatedMealQty = Number(event.target.id) - Number(event.target.value)
+                
                 if(event.target.className==item.mealId){
                     console.log("its a match",bool);
                     item.qtyOrdered = event.target.value;
+                    item.newQtyLeft = updatedMealQty;
                     bool = false;
                 }
-                // else{
-                //     bool = true;
-                // }
+                
                 temp += Number(item.qtyOrdered);
+                console.log(temp,"in map")
+            
             });
+            console.log(temp,"out map")
             console.log("it was a match outter map",bool);
+            if(temp + Number(event.target.value) <= 6){
+                temp+=event.target.value;
+                // bool=true;
+                console.log("io")
+            }
+            else{
+                swal({
+                    title: "oh no! ):",
+                    text: "we only allow our clients to book a max of 6 meals",
+                    icon: "danger",
+                    dangerMode:true,
+                });
+            }
 
             if(bool==true){
+            
                 console.log("putting item 1")
                 selectedMeals.push({                   
                     mealId: event.target.className,
                     mealServingCap: event.target.id,
-                    qtyOrdered: event.target.value
+                    qtyOrdered: event.target.value,
+                    newQtyLeft: updatedMealQty
                 })
             }
+            
             mealReqCount =temp;
+       
         }
         else{
+
             console.log("is null",selectedMeals)
             // if(mealReqCount > 6 || (mealReqCount+Number(event.target.value)) > 6){
             //     swal("error can't select more than 6 meals")
             // }
+            
             selectedMeals.push({
                 mealId: event.target.className,
                 mealServingCap: event.target.id,
-                qtyOrdered: event.target.value
+                qtyOrdered: event.target.value,
+                newQtyLeft: Number(event.target.id) - Number(event.target.value)
             })
-            console.log("putting item 2")
+            
+            temp += Number(event.target.value);
+
+            console.log("state in else",temp)
+            
             mealReqCount = mealReqCount + Number(event.target.value);
+            
             setQtyOrdered(mealReqCount);
+            
             console.log("this[]" , selectedMeals);
             console.log(orderedQty)
-            // console.log(event.target.value)
-            // console.log(event.target.id)
+            
             SetMealOrder({...mealOrder, mealId: event.target.className, mealServingCap: event.target.id, qtyOrdered: event.target.value})
         
         }
@@ -159,7 +210,25 @@ function MealPreface() {
         
         // console.log(orderedQty)
     }
+    async function updateTheOrderIdInContextAPI(orderId){
+        setUserInfo({
+            email: userInfo.userInfo.email,
+            role: userInfo.userInfo.userType,
+            address:userInfo.userInfo.address,
+            phoneNumber:userInfo.userInfo.phoneNumber,
+            clientName:userInfo.userInfo.clientName,
+            clientCity:userInfo.userInfo.clientCity,
+            neighbourhood:userInfo.userInfo.neighbourhood,
+            adultsHome:userInfo.userInfo.adultsHome,
+            childrenHome:userInfo.userInfo.childrenHome,
+            clientAllergies:userInfo.userInfo.clientAllergies,
+            currentOrderId: orderId
+        });
 
+        // <SingleMealDisplay props={userInfo.userInfo} key={userInfo.userInfo.currentOrderId} />
+
+        console.log("userinfo updated!",orderId)
+    }
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
         let path = "/generateorderid"; 
@@ -189,8 +258,9 @@ function MealPreface() {
 
             data =  await API.put(apiName, path,init);
             console.log(data);
-            setIsLoading(false);
             
+            await updateTheOrderIdInContextAPI(currentOrderId);
+            setIsLoading(false);
             swal({title: "Thank You!",
                 text: data,
                 icon: "success",

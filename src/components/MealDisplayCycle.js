@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./css/MealOptions.css";
 import { Card, Col } from 'react-bootstrap';
+import UserData from '../contextData/UserData';
 import { API } from "aws-amplify";
 import { Form } from "react-bootstrap";
 import MealDisplayJSXjs from "./MealDisplayJSXjs"
 
 function MealDisplayCycle(props) {
+    const userInfo = useContext(UserData);
 
-    useEffect(async () => await fetchMeals(),[])
+    // useEffect(async () => await fetchMeals(),[])
+    useEffect(async () => await fetchMeals(),[userInfo.userInfo.currentOrderId]) 
+
 
     const {addOrderIdToState} = props;
     const [meals, setMealData] = useState({});
@@ -45,7 +49,10 @@ function MealDisplayCycle(props) {
             mealData.message = error.message;
         }                      
         if(meals!=null){
-            setIsLoading(!isLoading);
+            setIsLoading(true);
+        }
+        else{
+            setIsLoading(false);
         }
     };
 
@@ -55,7 +62,7 @@ function MealDisplayCycle(props) {
             {
                 meals.map(item => {
                     return(
-                        <div>
+                        <div key={item.ID}>
                         <Card> 
                             <Card.Header>{item.MealTitle}</Card.Header>
                             <Card.Body>
