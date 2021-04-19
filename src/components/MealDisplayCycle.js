@@ -11,7 +11,12 @@ function MealDisplayCycle(props) {
 
     const {addOrderIdToState} = props;
     const [meals, setMealData] = useState({});
+    const [dropDownLoopVal, setDropDownLoopVal] = useState(6);
     const [isLoading, setIsLoading] = useState(false);
+
+    function formTheOrderRequest(event){
+        // console.log("hi",event.target.value,"id", event.target.id, "cl", event.target.className)
+    }
 
     async function fetchMeals(){
         let api= "production-DynamoAccess-api";
@@ -61,6 +66,18 @@ function MealDisplayCycle(props) {
                                 </span>    
                             </div>
                             <div className="mealRightFloat">
+                                <select
+                                onChange={addOrderIdToState}
+                                id={item.MealServingCap} 
+                                className={item.ID}>
+                                    <option value="0">QTY</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
                                 <button onClick={addOrderIdToState} id={item.MealServingCap} value={item.ID}>Select</button>
                             </div>
                             </Card.Body>

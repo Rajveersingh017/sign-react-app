@@ -16,21 +16,43 @@ import swal from "sweetalert";
 
 function MealPreface() {
     const [reload,setReload]=useState(false);
+    const userInfo = useContext(UserData);
+
+    const [buttonStatus, setButtonStatus] = useState(true);
+    const randomOrderId = () =>{
+        return "OD-" + Math.random().toString(36).substr(2,9);
+    };
     
     useEffect(()=>{
-        updateTest(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />)
-    },[reload])
+        
+    console.log(userInfo.userInfo)
+        // updateTest(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />)
+        if(userInfo.userInfo.currentOrderId==null){
+            setButtonStatus(true);
+        }
+        else if(userInfo.userInfo.address==null){
+            setButtonStatus(true);
+            swal({
+                icon: 'error',
+                title: 'Oh bummer!',
+                text: 'We need you to provide us with an address so that we can deliver you the food! Please update your profile.',
+              })
+        }
+        else{
+            setButtonStatus(false);
+        }
+    },[])
     const [isLoading, setIsLoading] = useState(false);
     const [initaltesting, updateTest] = useState(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />);
-    const userInfo = useContext(UserData);
-   console.log(userInfo.userInfo)
+//    console.log(userInfo.userInfo)
    const [orderedQty,setQtyOrdered] = useState(0);
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
         mealId:"",
         mealServingCap:"",
-        role: "CLI",
-        QtyOrdered: "0"
+        qtyOrdered: "",
+        role: "CLI"
+        
     });
     // console.log(mealOrder);
     // only for testing this page! Get rid until -------
@@ -39,44 +61,123 @@ function MealPreface() {
         console.log(event);
         event.preventDefault();
         setIsLoading(true);
+        // console.log(mealOrder)
         console.log(orderedQty)
-        if(mealOrder.mealId==""){
-            console.log("mi;")
-            swal("choose a meal first in order to proceed.");
-            setIsLoading(false);
-        } else if(mealOrder.mealServingCap >= orderedQty){
-            await updateOrder();
+        await updateOrder();
+        // if(mealOrder.mealId==""){
+        //     console.log("mi;")
+        //     swal("choose a meal first in order to proceed.");
+        //     setIsLoading(false);
+        // } else if(mealOrder.mealServingCap >= orderedQty){
+        //     await updateOrder();
+        // }
+        // else{
+        //     swal("Meal Quantity can not exceed the quantity that we are serving");
+        //     setIsLoading(false);
+        // }
+    }
+
+    const selectedMeals = [];
+    let mealReqCount = 0;
+
+
+    async function addOrderIdToState(event){
+        let temp = 0;
+        let bool = true;
+        if (selectedMeals.length!=0){
+            console.log("is not null",selectedMeals)
+
+            selectedMeals.map(function(item, i){
+        
+                if(event.target.className==item.mealId){
+                    console.log("its a match",bool);
+                    item.qtyOrdered = event.target.value;
+                    bool = false;
+                }
+                // else{
+                //     bool = true;
+                // }
+                temp += Number(item.qtyOrdered);
+            });
+            console.log("it was a match outter map",bool);
+
+            if(bool==true){
+                console.log("putting item 1")
+                selectedMeals.push({                   
+                    mealId: event.target.className,
+                    mealServingCap: event.target.id,
+                    qtyOrdered: event.target.value
+                })
+            }
+            mealReqCount =temp;
         }
         else{
-            swal("Meal Quantity can not exceed the quantity that we are serving");
-            setIsLoading(false);
-        }
-    }
-    async function addOrderIdToState(event){
-        event.preventDefault();
+            console.log("is null",selectedMeals)
+            // if(mealReqCount > 6 || (mealReqCount+Number(event.target.value)) > 6){
+            //     swal("error can't select more than 6 meals")
+            // }
+            selectedMeals.push({
+                mealId: event.target.className,
+                mealServingCap: event.target.id,
+                qtyOrdered: event.target.value
+            })
+            console.log("putting item 2")
+            mealReqCount = mealReqCount + Number(event.target.value);
+            setQtyOrdered(mealReqCount);
+            console.log("this[]" , selectedMeals);
+            console.log(orderedQty)
+            // console.log(event.target.value)
+            // console.log(event.target.id)
+            SetMealOrder({...mealOrder, mealId: event.target.className, mealServingCap: event.target.id, qtyOrdered: event.target.value})
         
-        console.log(event.target.value)
-        console.log(event.target.id)
-        SetMealOrder({...mealOrder, mealId: event.target.value, mealServingCap: event.target.id})
-        console.log(mealOrder);
-        console.log(orderedQty)
+        }
+        event.preventDefault();
+        // console.log("hi",event.target.value,"id", event.target.id, "cl", event.target.className)
+        console.log(mealReqCount)
+        
+        // let user = {
+        //     // email: localStorage.getItem("email"),
+        //     email: userInfo.userInfo.email,
+        //     role: "CLI",
+        //     CurrentOrderId: currentOrderId,
+        //     QtyOrdered: Number(mealOrder.mealReqCount),
+        //     UpdatedMealQty: "none",
+        //     MealId: selectedMeals,
+        //     instructions: "none"
+        //     // role: userInfo.userInfo.userType,
+        // }
+
+        
+        // selectedMeals.map(function (item,i){
+        //     console.log(item);
+        //     SetMealOrder({wholeMeal: item})
+        // })
+        SetMealOrder(selectedMeals);
+        
+        // console.log(user);
+        
+        
+        // console.log(orderedQty)
     }
+
     async function updateOrder(){
         let apiName= "production-DynamoAccess-api";
         let path = "/generateorderid"; 
+        // let path = "";
         let data =  {message:"empty"}
-         
-        const updateMealCap = mealOrder.mealServingCap - Number(orderedQty);
-        console.log(updateMealCap)
+        
+        // console.log(mealOrder)
 
+        const updateMealCap = Number(mealOrder.mealServingCap) - Number(mealOrder.qtyOrdered);
+        // console.log(updateMealCap)
+        const currentOrderId = randomOrderId();
+        // console.log(currentOrderId);
         let user = {
             // email: localStorage.getItem("email"),
             email: userInfo.userInfo.email,
             role: "CLI",
-            // CurrentOrderId: mealOrder.mealId,
-            QtyOrdered: Number(orderedQty),
-            UpdatedMealQty: updateMealCap,
-            MealId: mealOrder.mealId,
+            CurrentOrderId: currentOrderId,
+            Order: mealOrder,
             instructions: "none"
             // role: userInfo.userInfo.userType,
         }
@@ -96,6 +197,7 @@ function MealPreface() {
                 dangerMode: true
               });
               setReload(!reload);
+            //   console.log(mealOrder);
         //    swal("Succesfully booked your meal! Thank you.");
             
 
@@ -143,6 +245,7 @@ function MealPreface() {
                         type="submit"
                         variant="success"
                         isLoading={isLoading}
+                        disabled={buttonStatus}
                         >
                             Request Meal!                        
                         </LoaderButton>
