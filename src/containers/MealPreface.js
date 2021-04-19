@@ -190,6 +190,7 @@ function MealPreface() {
             data =  await API.put(apiName, path,init);
             console.log(data);
             setIsLoading(false);
+            
             swal({title: "Thank You!",
                 text: data,
                 icon: "success",

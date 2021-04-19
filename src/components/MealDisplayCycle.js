@@ -78,7 +78,6 @@ function MealDisplayCycle(props) {
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
-                                <button onClick={addOrderIdToState} id={item.MealServingCap} value={item.ID}>Select</button>
                             </div>
                             </Card.Body>
                            
@@ -90,5 +89,6 @@ function MealDisplayCycle(props) {
         </div>
     )
 }
+// <button onClick={addOrderIdToState} id={item.MealServingCap} value={item.ID}>Select</button>
 
 export default MealDisplayCycle
