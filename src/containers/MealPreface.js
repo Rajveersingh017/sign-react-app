@@ -27,7 +27,7 @@ function MealPreface() {
         
     console.log(userInfo.userInfo)
         // updateTest(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />)
-        if(userInfo.userInfo.currentOrderId==null){
+        if(userInfo.userInfo.currentOrderId!=null){
             setButtonStatus(true);
         }
         else if(userInfo.userInfo.address==null){

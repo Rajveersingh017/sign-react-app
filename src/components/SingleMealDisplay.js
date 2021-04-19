@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { API } from "aws-amplify";
 import { Col } from 'react-bootstrap';
 import "./css/SingleMealDisplay.css";
-import SingleMealDisplayCycle from "./SingleMealDisplayCycle";
 
 function SingleMealDisplay(userinfo) {
     // console.log("this is userprop",userinfo.props.currentOrderId);
@@ -12,7 +11,7 @@ function SingleMealDisplay(userinfo) {
             
         }
     );
-    useEffect(async () => await fetchMeals(),[]) 
+    useEffect(async () => await fetchMeals(),[userinfo.props.currentOrderId]) 
     async function fetchMeals(){
         let api= "production-DynamoAccess-api";
         let api_path = "/getmealstatusfromorderid"; 
