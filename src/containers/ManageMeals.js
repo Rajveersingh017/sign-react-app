@@ -11,7 +11,7 @@ import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button'
 import { v4 as uuidv4 } from 'uuid';
 import swal from "sweetalert";
-import MealDisplayCycle from "../components/MealDisplayCycle";
+import AdminMealDisplayCycle from "../components/AdminMealDisplayCycle";
 
 
 function ManageMeals() {
@@ -43,6 +43,13 @@ function ManageMeals() {
    
 
     const [fields, handleFieldChange] = useFormFields({
+        ID:"",
+        MealTitle:"",
+        MealDescription:"",
+        MealServingCap:"",
+    });
+
+    const [field, handleFieldChanges] = useState({
         ID:"",
         MealTitle:"",
         MealDescription:"",
@@ -91,11 +98,43 @@ function ManageMeals() {
             setIsLoading(false);
         }
     }
+    async function addOrderIdToState(event){
+        // console.log(event.target.value)
+        await updateMealOption()
+        async function updateMealOption(){
+            let apiName= "production-DynamoAccess-api";
+            let path = "/adminupdatefoodfetchsinglemeal"; 
+            let data =  {message:"empty"}
+            
+            let init ={ body:{
+                MealId: event.target.value
+            }}
+           
+            console.log(init);
+            try{
+                data =  await API.put(apiName, path,init);
+                console.log(data)
+
+                console.log(field)
+                handleFieldChanges({
+                    ID:data.Item.ID,
+                    MealTitle:data.Item.MealTitle,
+                    MealDescription: data.Item.MealDescription,
+                    MealServingCap: data.Item.MealServingCap,
+                })
+                console.log(field)
+            }catch(error){
+                data.message = error.message;
+            }
+        }
+
+        // adminupdatefoodfetchsinglemeal
+    }
 
     return (mealOption &&
         <div className="ManageMeals">
         
-        <MealDisplayCycle />
+        
 
             
             <Form onSubmit={handleSubmit} >
@@ -109,8 +148,8 @@ function ManageMeals() {
                     size = "lg"
                     id = "MealTitle"
                     placeholder ="Eg. Chicken Soup"
-                    value={fields.MealTitle}
-                    onChange={handleFieldChange}
+                    value={field.MealTitle}
+                    onChange={e  => handleFieldChanges(e.target.value)}
                 />
             </Form.Group>
 
@@ -120,6 +159,7 @@ function ManageMeals() {
                     id="custom-file"
                     label=""
                     custom
+                    disabled
                 />
             </Form.Group>
         
@@ -129,7 +169,7 @@ function ManageMeals() {
                  id="MealServingCap"
                  size="lg"
                  placeholder="Number of meals"
-                 value={fields.MealServingCap}
+                 value={field.MealServingCap}
                  onChange={handleFieldChange}
                 />
             </Form.Group>
@@ -142,7 +182,7 @@ function ManageMeals() {
                 type="MealDescription"
                 id = "MealDescription"
                 placeholder="Eg. Pumpkin pie, with lentil soup"
-                value={fields.MealDescription}
+                value={field.MealDescription}
                 onChange={handleFieldChange}
                 />
             </Form.Group>
@@ -160,7 +200,7 @@ function ManageMeals() {
                 </LoaderButton>
             </Form.Group>
           </Form>
-
+          <AdminMealDisplayCycle addOrderIdToState={addOrderIdToState} />
         </div>
     )
 }
