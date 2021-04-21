@@ -12,51 +12,55 @@ function SingleMealDisplay(userinfo) {
         }
     );
     useEffect(async () => await fetchMeals(),[userinfo.props.currentOrderId]) 
+
     async function fetchMeals(){
+        
         let api= "production-DynamoAccess-api";
         let api_path = "/getmealstatusfromorderid"; 
         let mealData =  {message:"empty"}
-        let orderid = {
-            body:{
-                orderId: userinfo.props.currentOrderId
+        if(userinfo.props.currentOrderId==null){
+            setLoadComponent(false);
+        }
+        else{
+            let orderid = {
+                body:{
+                    orderId: userinfo.props.currentOrderId
+                }
+            }
+            try{
+                mealData =  await API.put(api, api_path,orderid);
+                console.log("hellp",mealData);
+             
+                console.log(mealData.length)
+                let gatherMealsFromDB = [];
+                for (let i = 0; i < mealData.length; i++) {
+                    let element = mealData[i];
+                    gatherMealsFromDB.push({
+                        id: element.MealId,
+                        desc: element.MealDescription,
+                        title: element.MealTitle,
+                        qty: element.OrderedQty
+                    })
+                }
+                // console.log(gatherMealsFromDB)
+                setCurrentOrder(gatherMealsFromDB);
+                
+                // currentOrder.map((item)=> console.log(item))
+                // console.log(currentOrder);
+                if(mealData!=null){
+                    setLoadComponent(true);
+                }else{
+                setLoadComponent(false);
+                }
+            }catch(error){
+                console.log(error);
+                // setLoadComponent(!loadComponent);
+    
             }
         }
-        try{
-            mealData =  await API.put(api, api_path,orderid);
-            // console.log("hellp",mealData);
-            console.log("hellp",mealData[0]);
-            // console.log(mealData.orderId)
-            // mealData.Item.map((item) => 
-            // {
-            //     console.log(item)
-            // });     
-            console.log(mealData.length)
-            let gatherMealsFromDB = [];
-            for (let i = 0; i < mealData.length; i++) {
-                let element = mealData[i];
-                gatherMealsFromDB.push({
-                    id: element.MealId,
-                    desc: element.MealDescription,
-                    title: element.MealTitle,
-                    qty: element.OrderedQty
-                })
-            }
-            // console.log(gatherMealsFromDB)
-            setCurrentOrder(gatherMealsFromDB);
-            
-            // currentOrder.map((item)=> console.log(item))
-            // console.log(currentOrder);
-
-            setLoadComponent(true);
-            
-        }catch(error){
-            console.log(error);
-            // setLoadComponent(!loadComponent);
-
-        }                      
-        if(mealData!=null){
-            // setLoadComponent(!loadComponent);
-        }
+        
+                              
+        
     };
 
 

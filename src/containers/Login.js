@@ -73,7 +73,7 @@ export default function Login() {
 
     try {
 
-      let loggedUserTmp = await Auth.signIn(fields.email, fields.password);
+      let loggedUserTmp = await Auth.signIn(fields.email, fields.password);   
         let isAuthenticated = {
           isAuthenticated:true,
           userType:loggedUserTmp.signInUserSession.idToken.payload["custom:UserType"],

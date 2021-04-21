@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Col } from "react-bootstrap";
+import { Col, useAccordionToggle } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import SideBar from "../components/SideBar";
 import UserData from '../contextData/UserData';
@@ -9,45 +9,50 @@ import { Button } from "react-bootstrap";
 import { API } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import SingleMealDisplay from "../components/SingleMealDisplay";
-
 import swal from "sweetalert";
-
 
 
 function MealPreface() {
     const {setUserInfo} = useContext(UserData);
-
     const [reload,setReload]=useState(false);
     const userInfo = useContext(UserData);
-
+    const [hasOrdered,setHasOrdered] = useState(true);
     const [buttonStatus, setButtonStatus] = useState(true);
+
     const randomOrderId = () =>{
         return "OD-" + Math.random().toString(36).substr(2,9);
     };
     
     useEffect(()=>{
-        
     console.log(userInfo.userInfo)
-        // updateTest(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />)
-        if(userInfo.userInfo.currentOrderId!=null){
+        if(userInfo.userInfo.address==null || userInfo.userInfo.address=="")
+        {    
             setButtonStatus(true);
-        }
-        else if(userInfo.userInfo.address==null){
-            setButtonStatus(true);
-            swal({
+            swal
+            ({
                 icon: 'error',
                 title: 'Oh bummer!',
                 text: 'We need you to provide us with an address so that we can deliver you the food! Please update your profile.',
-              })
+            });
         }
-        else{
+        else
+        {
             setButtonStatus(false);
         }
-    },[])
+        if(userInfo.userInfo.currentOrderId==null || userInfo.userInfo.currentOrderId==""){
+            setHasOrdered(true);
+            setButtonStatus(false);
+        }
+        else{
+            setButtonStatus(true);
+            setHasOrdered(false);
+        }
+    },[userInfo.userInfo.currentOrderId])
+
     const [isLoading, setIsLoading] = useState(false);
     const [initaltesting, updateTest] = useState(<MealDisplayCycle addOrderIdToState={addOrderIdToState} />);
-//    console.log(userInfo.userInfo)
-   const [orderedQty,setQtyOrdered] = useState(0);
+    const [mealCapcity,setQtyOrdered] = useState(null);
+
     const [mealOrder, SetMealOrder]=useState({ 
         email: userInfo.userInfo.email,
         mealId:"",
@@ -56,160 +61,145 @@ function MealPreface() {
         role: "CLI"
         
     });
-    // console.log(mealOrder);
-    // only for testing this page! Get rid until -------
    
     async function handleSubmit(event){
-        console.log(event);
         event.preventDefault();
         setIsLoading(true);
-        // console.log(mealOrder)
-        console.log(orderedQty)
-        await updateOrder();
-        // if(mealOrder.mealId==""){
-        //     console.log("mi;")
-        //     swal("choose a meal first in order to proceed.");
-        //     setIsLoading(false);
-        // } else if(mealOrder.mealServingCap >= orderedQty){
-        //     await updateOrder();
-        // }
-        // else{
-        //     swal("Meal Quantity can not exceed the quantity that we are serving");
-        //     setIsLoading(false);
-        // }
-    }
-
-    const selectedMeals = [];
-    let mealReqCount = 0;
-
-    
-
-    async function addOrderIdToState(event){
-        
-        let bool = true;
-        let temp = 0;
-
-        if (selectedMeals.length!=0){
-        
-            console.log("is not null",selectedMeals);
-            let updatedMealQty = Number(event.target.id) - Number(event.target.value);
-            
-            // console.log(temp, "before if, in length", event.target.value)
-            // if(Number(temp) + Number(event.target.value) < 7 ){
-            //     temp += Number(event.target.value);
-            // }
-            // else{
-            //     swal({
-            //         title: "oh no! ):",
-            //         text: "we only allow our clients to book a max of 6 meals",
-            //         icon: "danger",
-            //         dangerMode:true,
-            //     });
-            // }
-            console.log(temp, "after if", event.target.value)
-            
-
-            selectedMeals.map(function(item, i){
-
-                let updatedMealQty = Number(event.target.id) - Number(event.target.value)
-                
-                if(event.target.className==item.mealId){
-                    console.log("its a match",bool);
-                    item.qtyOrdered = event.target.value;
-                    item.newQtyLeft = updatedMealQty;
-                    bool = false;
+        console.log(mealCapcity)
+        if(mealCapcity == 0 || mealCapcity == null){
+            swal("choose a meal first in order to proceed.");
+            setIsLoading(false);
+        }
+        else{
+            if(userInfo.userInfo.currentOrderId==null || userInfo.userInfo.currentOrderId==""){
+                if(userInfo.userInfo.address==null || userInfo.userInfo.address=="")
+                {    
+                    setButtonStatus(true);
+                    swal
+                    ({
+                        icon: 'error',
+                        title: 'Oh bummer!',
+                        text: 'We need you to provide us with an address so that we can deliver you the food! Please update your profile.',
+                    });
+                }
+                else{
+                    if(mealCapcity < 7 && mealCapcity > 0){
+                        alert("alright, remove the comment")
+                        await updateOrder(); 
+                    }
+                    else{
+                        swal
+                        ({
+                            icon: 'error',
+                            title: 'Please revise your selections!',
+                            text: 'At the moment we only allow our clients to book only 1 single order with a max of 6 meals.',
+                        });
+                    }
+                    
                 }
                 
-                temp += Number(item.qtyOrdered);
-                console.log(temp,"in map")
-            
-            });
-            console.log(temp,"out map")
-            console.log("it was a match outter map",bool);
-            if(temp + Number(event.target.value) <= 6){
-                temp+=event.target.value;
-                // bool=true;
-                console.log("io")
             }
             else{
+                setIsLoading(false);
                 swal({
-                    title: "oh no! ):",
-                    text: "we only allow our clients to book a max of 6 meals",
+                    title: "We are sorry! ):",
+                    text: "Please wait until next thursday to place another order with us",
                     icon: "danger",
                     dangerMode:true,
                 });
             }
+        }
+    }
+
+    const selectedMeals = [];
+    let mealReqCount = 0;
+    let count = 0;
+
+    async function addOrderIdToState(event){
+        event.preventDefault();
+
+        console.log(userInfo.userInfo.currentOrderId)
+        
+        let bool = true;
+        let temp = 0;
+        let quantityDemanded = Number(event.target.value);
+        let availableMealQty = Number(event.target.id);
+        
+        if (selectedMeals.length!=0){
+
+            let updatedMealQty = availableMealQty - quantityDemanded;
+                        
+            selectedMeals.map(function(item, i){
+
+                let updatedMealQty = availableMealQty - quantityDemanded
+                
+                if(event.target.className==item.mealId){
+
+                    item.qtyOrdered = event.target.value;
+                    item.newQtyLeft = updatedMealQty;
+                    bool = false;
+
+                }                
+        
+            });
+        
+            console.log(selectedMeals);
 
             if(bool==true){
-            
-                console.log("putting item 1")
+
                 selectedMeals.push({                   
                     mealId: event.target.className,
                     mealServingCap: event.target.id,
                     qtyOrdered: event.target.value,
                     newQtyLeft: updatedMealQty
                 })
+
             }
-            
+
             mealReqCount =temp;
-       
+            
+            selectedMeals.map(function(item, i){                
+                temp+= Number(item.qtyOrdered); 
+                setQtyOrdered(temp)
+            });
+            
+            if (temp < 7){
+                setButtonStatus(false);
+            }
+            else{
+                swal({
+                    title: "oh no! ):",
+                    text: "we only allow our clients to book a max of 6 meals"+ temp,
+                    icon: "danger",
+                    dangerMode:true,
+                });
+                setButtonStatus(true)
+            }
         }
         else{
-
             console.log("is null",selectedMeals)
-            // if(mealReqCount > 6 || (mealReqCount+Number(event.target.value)) > 6){
-            //     swal("error can't select more than 6 meals")
-            // }
-            
+
             selectedMeals.push({
                 mealId: event.target.className,
                 mealServingCap: event.target.id,
                 qtyOrdered: event.target.value,
-                newQtyLeft: Number(event.target.id) - Number(event.target.value)
+                newQtyLeft: availableMealQty - quantityDemanded
             })
-            
-            temp += Number(event.target.value);
 
-            console.log("state in else",temp)
+            setQtyOrdered( quantityDemanded)
+       
+            count = quantityDemanded;
             
-            mealReqCount = mealReqCount + Number(event.target.value);
+            mealReqCount = mealReqCount + quantityDemanded;
             
-            setQtyOrdered(mealReqCount);
-            
-            console.log("this[]" , selectedMeals);
-            console.log(orderedQty)
+            setQtyOrdered(Number(mealReqCount));
             
             SetMealOrder({...mealOrder, mealId: event.target.className, mealServingCap: event.target.id, qtyOrdered: event.target.value})
         
-        }
-        event.preventDefault();
-        // console.log("hi",event.target.value,"id", event.target.id, "cl", event.target.className)
-        console.log(mealReqCount)
-        
-        // let user = {
-        //     // email: localStorage.getItem("email"),
-        //     email: userInfo.userInfo.email,
-        //     role: "CLI",
-        //     CurrentOrderId: currentOrderId,
-        //     QtyOrdered: Number(mealOrder.mealReqCount),
-        //     UpdatedMealQty: "none",
-        //     MealId: selectedMeals,
-        //     instructions: "none"
-        //     // role: userInfo.userInfo.userType,
-        // }
-
-        
-        // selectedMeals.map(function (item,i){
-        //     console.log(item);
-        //     SetMealOrder({wholeMeal: item})
-        // })
+        }    
         SetMealOrder(selectedMeals);
-        
-        // console.log(user);
-        
-        
-        // console.log(orderedQty)
     }
+
     async function updateTheOrderIdInContextAPI(orderId){
         setUserInfo({
             email: userInfo.userInfo.email,
@@ -237,7 +227,7 @@ function MealPreface() {
         
         // console.log(mealOrder)
 
-        const updateMealCap = Number(mealOrder.mealServingCap) - Number(mealOrder.qtyOrdered);
+        // const updateMealCap = Number(mealOrder.mealServingCap) - Number(mealOrder.qtyOrdered);
         // console.log(updateMealCap)
         const currentOrderId = randomOrderId();
         // console.log(currentOrderId);
@@ -268,15 +258,12 @@ function MealPreface() {
                 dangerMode: true
               });
               setReload(!reload);
-            //   console.log(mealOrder);
-        //    swal("Succesfully booked your meal! Thank you.");
-            
 
         }catch(error){        
             swal({
                 title: "Bummer! ):",
                 text: "something went wrong",
-                icon: "success",
+                icon: "error",
                 dangerMode:true,
             });
             setIsLoading(false);
@@ -301,12 +288,9 @@ function MealPreface() {
                         {initaltesting}
                     
                         <Form.Control 
-                        type ="number"
-                        placeholder="Quantity"
-                        min="0"
-                        max="6"
-                        value={orderedQty}
-                        onChange={e => setQtyOrdered(e.target.value)}
+                        plaintext 
+                        readOnly 
+                        defaultValue={mealCapcity} 
                         /><br></br>
                         
                         <LoaderButton
