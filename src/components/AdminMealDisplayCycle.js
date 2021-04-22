@@ -12,7 +12,7 @@ function AdminMealDisplayCycle(props) {
     // useEffect(async () => await fetchMeals(),[])
     useEffect(async () => await fetchMeals(),[userInfo.userInfo.currentOrderId]) 
 
-
+    const {deleteMeal}= props;
     const {addOrderIdToState} = props;
     const [meals, setMealData] = useState({});
     const [dropDownLoopVal, setDropDownLoopVal] = useState(6);
@@ -68,12 +68,15 @@ function AdminMealDisplayCycle(props) {
                             <Card.Body>
                             <div className="mealLeftFloat">
                                 {item.MealDescription}
-                                <br></br><span className="MealServe">
+                                <br></br>
+                                
+                                <span className="MealServe">
                                     |Meals Left: {item.MealServingCap}|
                                 </span>    
                             </div>
                             
                             <button onClick={addOrderIdToState} id={item.MealServingCap} value={item.ID}>Edit/Update</button>
+                            <button onClick={deleteMeal} id={item.MealServingCap} value={item.ID}>DeleteMeal</button>
                             
                             </Card.Body>
                            

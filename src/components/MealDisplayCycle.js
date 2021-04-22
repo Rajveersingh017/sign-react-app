@@ -61,6 +61,19 @@ function MealDisplayCycle(props) {
         <div>
             {
                 meals.map(item => {
+                    let meals = "";
+                    let bool = false;
+                    if(Number(item.MealServingCap)< 10)
+                    {
+                        meals = "|Meals Left: "+ item.MealServingCap+" |"
+                    }
+
+                    if(Number(item.MealServingCap) <= 0)
+                    {
+                        bool = true;
+                        meals = "| 0 Meals Left | Not available for booking |";
+                    }
+                    
                     return(
                         <div key={item.ID}>
                         <Card> 
@@ -68,15 +81,17 @@ function MealDisplayCycle(props) {
                             <Card.Body>
                             <div className="mealLeftFloat">
                                 {item.MealDescription}
-                                <br></br><span className="MealServe">
-                                    |Meals Left: {item.MealServingCap}|
+                                <br></br>
+                                <span className="MealServe">
+                                    {meals}
                                 </span>    
                             </div>
                             <div className="mealRightFloat">
                                 <select
                                 onChange={addOrderIdToState}
                                 id={item.MealServingCap} 
-                                className={item.ID}>
+                                className={item.ID}
+                                disabled={bool}>
                                     <option value="0">QTY</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -86,9 +101,9 @@ function MealDisplayCycle(props) {
                                     <option value="6">6</option>
                                 </select>
                             </div>
-                            </Card.Body>
-                           
-                        </Card><br></br>
+                            </Card.Body> 
+                        </Card>
+                        <br></br>
                         </div>
                     )
                 })

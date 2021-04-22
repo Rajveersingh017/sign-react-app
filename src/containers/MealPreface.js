@@ -84,7 +84,7 @@ function MealPreface() {
                 }
                 else{
                     if(mealCapcity < 7 && mealCapcity > 0){
-                        alert("alright, remove the comment")
+                        // alert("alright, remove the comment")
                         await updateOrder(); 
                     }
                     else{
@@ -102,7 +102,7 @@ function MealPreface() {
             else{
                 setIsLoading(false);
                 swal({
-                    title: "We are sorry! ):",
+                    title: "We are sorry!",
                     text: "Please wait until next thursday to place another order with us",
                     icon: "danger",
                     dangerMode:true,
@@ -124,80 +124,102 @@ function MealPreface() {
         let temp = 0;
         let quantityDemanded = Number(event.target.value);
         let availableMealQty = Number(event.target.id);
-        
-        if (selectedMeals.length!=0){
+        console.log(quantityDemanded,availableMealQty,availableMealQty - quantityDemanded)
+       
+        if(availableMealQty - quantityDemanded > -1){
 
-            let updatedMealQty = availableMealQty - quantityDemanded;
-                        
-            selectedMeals.map(function(item, i){
+            if (selectedMeals.length!=0){
 
-                let updatedMealQty = availableMealQty - quantityDemanded
+                let updatedMealQty = availableMealQty - quantityDemanded;
+                    
+                selectedMeals.map(function(item, i){
+
+                    let updatedMealQty = availableMealQty - quantityDemanded
+                    
+                    if(event.target.className==item.mealId){
+                        // if(quantityDemanded == 0 ){
+                        //     console.log("zero")
+                        //     selectedMeals.pop()
+                        // }
+                        // else{
+                        //     item.qtyOrdered = event.target.value;
+                        //     item.newQtyLeft = updatedMealQty;
+                        //     bool = false;
+                        // }
+
+                            item.qtyOrdered = event.target.value;
+                            item.newQtyLeft = updatedMealQty;
+                            bool = false;
+                    }                
+            
+                });
+            
+                console.log(selectedMeals);
+
+                if(bool==true){
+
+                    selectedMeals.push({                   
+                        mealId: event.target.className,
+                        mealServingCap: event.target.id,
+                        qtyOrdered: event.target.value,
+                        newQtyLeft: updatedMealQty
+                    })
+
+                }
+
+                mealReqCount =temp;
                 
-                if(event.target.className==item.mealId){
+                selectedMeals.map(function(item, i){                
+                    temp+= Number(item.qtyOrdered); 
+                    setQtyOrdered(temp)
+                });
+                
+                if (temp < 7){
+                    setButtonStatus(false);
+                }
+                else{
+                    swal({
+                        title: "oh no!",
+                        text: "we only allow our clients to book a max of 6 meals"+ temp,
+                        icon: "danger",
+                        dangerMode:true,
+                    });
+                    setButtonStatus(true)
+                }
+            }
+            else{
+                console.log("is null",selectedMeals)
 
-                    item.qtyOrdered = event.target.value;
-                    item.newQtyLeft = updatedMealQty;
-                    bool = false;
-
-                }                
-        
-            });
-        
-            console.log(selectedMeals);
-
-            if(bool==true){
-
-                selectedMeals.push({                   
+                selectedMeals.push({
                     mealId: event.target.className,
                     mealServingCap: event.target.id,
                     qtyOrdered: event.target.value,
-                    newQtyLeft: updatedMealQty
+                    newQtyLeft: availableMealQty - quantityDemanded
                 })
 
-            }
-
-            mealReqCount =temp;
+                setQtyOrdered( quantityDemanded)
+        
+                count = quantityDemanded;
+                
+                mealReqCount = mealReqCount + quantityDemanded;
+                
+                setQtyOrdered(Number(mealReqCount));
+                
+                SetMealOrder({...mealOrder, mealId: event.target.className, mealServingCap: event.target.id, qtyOrdered: event.target.value})
             
-            selectedMeals.map(function(item, i){                
-                temp+= Number(item.qtyOrdered); 
-                setQtyOrdered(temp)
-            });
-            
-            if (temp < 7){
-                setButtonStatus(false);
-            }
-            else{
-                swal({
-                    title: "oh no! ):",
-                    text: "we only allow our clients to book a max of 6 meals"+ temp,
-                    icon: "danger",
-                    dangerMode:true,
-                });
-                setButtonStatus(true)
-            }
+            }    
+ 
+            SetMealOrder(selectedMeals);
         }
         else{
-            console.log("is null",selectedMeals)
-
-            selectedMeals.push({
-                mealId: event.target.className,
-                mealServingCap: event.target.id,
-                qtyOrdered: event.target.value,
-                newQtyLeft: availableMealQty - quantityDemanded
-            })
-
-            setQtyOrdered( quantityDemanded)
-       
-            count = quantityDemanded;
+            swal({
+                title: "oh no!",
+                text: "No Meals available for this meal option",
+                icon: "danger",
+                dangerMode:true,
+            });
+        }
             
-            mealReqCount = mealReqCount + quantityDemanded;
-            
-            setQtyOrdered(Number(mealReqCount));
-            
-            SetMealOrder({...mealOrder, mealId: event.target.className, mealServingCap: event.target.id, qtyOrdered: event.target.value})
-        
-        }    
-        SetMealOrder(selectedMeals);
     }
 
     async function updateTheOrderIdInContextAPI(orderId){
@@ -261,7 +283,7 @@ function MealPreface() {
 
         }catch(error){        
             swal({
-                title: "Bummer! ):",
+                title: "Bummer!",
                 text: "something went wrong",
                 icon: "error",
                 dangerMode:true,
