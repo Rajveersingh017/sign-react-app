@@ -68,7 +68,9 @@ function AdminMealDisplayCycle(props) {
                             <Card.Body>
                             <div className="mealLeftFloat">
                                 {item.MealDescription}
-                                <br></br><span className="MealServe">
+                                <br></br>
+                                
+                                <span className="MealServe">
                                     |Meals Left: {item.MealServingCap}|
                                 </span>    
                             </div>
