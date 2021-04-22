@@ -101,9 +101,9 @@ function MealDisplayCycle(props) {
                                     <option value="6">6</option>
                                 </select>
                             </div>
-                            </Card.Body>
-                           
-                        </Card><br></br>
+                            </Card.Body> 
+                        </Card>
+                        <br></br>
                         </div>
                     )
                 })

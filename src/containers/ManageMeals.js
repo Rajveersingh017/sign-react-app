@@ -40,14 +40,12 @@ function ManageMeals() {
         return data;
     }
 
-   
-
-    const [fields, handleFieldChange] = useFormFields({
-        ID:"",
-        MealTitle:"",
-        MealDescription:"",
-        MealServingCap:"",
-    });
+    // const [fields, handleFieldChange] = useFormFields({
+    //     ID:"",
+    //     MealTitle:"",
+    //     MealDescription:"",
+    //     MealServingCap:"",
+    // });
 
     const [field, handleFieldChanges] = useState({
         ID:"",
@@ -55,32 +53,71 @@ function ManageMeals() {
         MealDescription:"",
         MealServingCap:"",
     });
+    const [mealTitle, setMealTitle] = useState("");
+    const [mealDescription, setMealDescription] = useState("");
+    const [mealServingCap, setMealServingCap] = useState("");
+    const [mealId, setMealId] = useState(uuidv4());
+    const [disableEdit,EnableEdit] = useState(false);
     
     const [isLoading, setIsLoading] = useState(false);
-    async function updateMealOption(){
-        let apiName= "production-DynamoAccess-api";
-        let path = "/updatefood"; 
-        let data =  {message:"empty"}
-        
-        let init ={ body:{
-            ID:uuidv4(),
-            MealTitle: fields.MealTitle,
-            MealDescription: fields.MealDescription,
-            MealServingCap: fields.MealServingCap
-        }}
-       
-        console.log(init);
-        try{
 
-            data =  await API.put(apiName, path,init);
-            swal({
-                title: "Thank You!",
-                text: "Gotcha! the new meal option will be displayed to the clients.",
-                icon: "success",    
-                dangerMode: false,
-            });
-        }catch(error){
-            data.message = error.message;
+    async function updateMealOption(){
+        if(disableEdit){
+
+            let apiName= "production-DynamoAccess-api";
+            let path = "/admineditfooddynamodbupdate"; 
+            let data =  {message:"empty"}
+            console.log(field)
+            let init ={ body:{
+                MealId: mealId,
+                MealTitle: mealTitle,
+                MealDescription: mealDescription,
+                MealServingCap: mealServingCap
+            }}
+
+            console.log(init);
+            try{
+                data =  await API.put(apiName, path,init);
+                setMealServingCap("");
+                setMealTitle("");
+                setMealId(uuidv4());
+                setMealDescription("");
+                EnableEdit(false);
+                swal({
+                    title: "Thank You!",
+                    text: "Gotcha! Meal option has been updated.",
+                    icon: "success",    
+                    dangerMode: false,
+                });
+            }catch(error){
+                data.message = error.message;
+            }
+        }
+        else{
+            let apiName= "production-DynamoAccess-api";
+            let path = "/updatefood"; 
+            let data =  {message:"empty"}
+            console.log(field)
+            let init ={ body:{
+                ID: mealId,
+                MealTitle: mealTitle,
+                MealDescription: mealDescription,
+                MealServingCap: mealServingCap
+            }}
+
+            console.log(init);
+            try{
+
+                data =  await API.put(apiName, path,init);
+                swal({
+                    title: "Thank You!",
+                    text: "Gotcha! the new meal option will be displayed to the clients.",
+                    icon: "success",    
+                    dangerMode: false,
+                });
+            }catch(error){
+                data.message = error.message;
+            }
         }
     }
     async function handleSubmit(event) {
@@ -98,10 +135,51 @@ function ManageMeals() {
             setIsLoading(false);
         }
     }
+
+    async function deleteMealFromDynamoDB(mealID){
+        console.log("hello from delee function",mealID)
+
+        let apiName= "production-DynamoAccess-api";
+        let path = "/adminupdatefoodfetchsinglemeal"; 
+        let init =  {
+            body:{
+                MealId: mealID
+            }
+        }
+        let data = {message: "none"}
+        console.log(init);
+        try{
+            data = await API.del(apiName,path,init);
+        }catch(error){
+            data.message = error.message;
+        }
+        return data;
+    }
+
+    async function deleteMeal(event){
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this Meal Option!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                deleteMealFromDynamoDB(event.target.value);
+                swal("The meal option has been successfully removed!!", {
+                icon: "success",
+              });
+            } else {
+              swal("Meal is not deleted!");
+            }
+        });
+    }
     async function addOrderIdToState(event){
         // console.log(event.target.value)
-        await updateMealOption()
-        async function updateMealOption(){
+        await fetchTheParticularMeal()
+        
+        async function fetchTheParticularMeal(){
             let apiName= "production-DynamoAccess-api";
             let path = "/adminupdatefoodfetchsinglemeal"; 
             let data =  {message:"empty"}
@@ -113,16 +191,12 @@ function ManageMeals() {
             console.log(init);
             try{
                 data =  await API.put(apiName, path,init);
-                console.log(data)
-
-                console.log(field)
-                handleFieldChanges({
-                    ID:data.Item.ID,
-                    MealTitle:data.Item.MealTitle,
-                    MealDescription: data.Item.MealDescription,
-                    MealServingCap: data.Item.MealServingCap,
-                })
-                console.log(field)
+                console.log(data)                
+                setMealId(data.Item.ID || null);
+                setMealTitle( data.Item.MealTitle || null);
+                setMealDescription(data.Item.MealDescription || null);
+                setMealServingCap(data.Item.MealServingCap || null);    
+                EnableEdit(true);   
             }catch(error){
                 data.message = error.message;
             }
@@ -148,8 +222,8 @@ function ManageMeals() {
                     size = "lg"
                     id = "MealTitle"
                     placeholder ="Eg. Chicken Soup"
-                    value={field.MealTitle}
-                    onChange={e  => handleFieldChanges(e.target.value)}
+                    value={mealTitle}
+                    onChange={e  => setMealTitle(e.target.value)}
                 />
             </Form.Group>
 
@@ -169,8 +243,8 @@ function ManageMeals() {
                  id="MealServingCap"
                  size="lg"
                  placeholder="Number of meals"
-                 value={field.MealServingCap}
-                 onChange={handleFieldChange}
+                 value={mealServingCap}
+                 onChange={e  => setMealServingCap(e.target.value)}
                 />
             </Form.Group>
                 
@@ -182,8 +256,8 @@ function ManageMeals() {
                 type="MealDescription"
                 id = "MealDescription"
                 placeholder="Eg. Pumpkin pie, with lentil soup"
-                value={field.MealDescription}
-                onChange={handleFieldChange}
+                value={mealDescription}
+                onChange={e  => setMealDescription(e.target.value)}
                 />
             </Form.Group>
     
@@ -200,7 +274,7 @@ function ManageMeals() {
                 </LoaderButton>
             </Form.Group>
           </Form>
-          <AdminMealDisplayCycle addOrderIdToState={addOrderIdToState} />
+          <AdminMealDisplayCycle addOrderIdToState={addOrderIdToState} deleteMeal = {deleteMeal} />
         </div>
     )
 }
