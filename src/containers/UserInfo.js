@@ -68,7 +68,8 @@ function isPhoneValid(inputnum) {
   //   match = inputnum.match(/\d/g).length===10;
   // }
   // return match ;
-  return (inputnum != null && inputnum != "" && (inputnum != inputnum.match(/^[a-zA-Z\s]*$/)) && inputnum.match(/\d/g).length===10);
+  return (inputnum == null || inputnum == "" || (inputnum != inputnum.match(/^\D+$/)) && inputnum.match(/\d/g).length===10);
+  // return (inputnum != null && inputnum != "" && (inputnum != inputnum.match(/^[a-zA-Z\s]*$/)) && inputnum.match(/\d/g).length===10);
   // return (inputnum != null && inputnum != "" && inputnum.match(/\d/g).length===10);
 
 }
@@ -79,7 +80,9 @@ function isNameValid(inputtxt) {
 }
 
 function isAlergyValid(input){
-  return (input !="" && input != null && input.match(/^[a-zA-Z\s]*$/));
+  return (input =="" || input == null || input.match(/^[a-zA-Z\s]*$/) && input != input.match(/^\D+$/));
+  // return (input !="" && input != null && input.match(/^[a-zA-Z\s]*$/));
+
 }
 
 // function isAddressValid(address){
@@ -118,7 +121,7 @@ function isFormValid(){
 
   let nameValid = isNameValid(fields.clientName)
   if(!nameValid){
-    let error = {id:"clientName", error:"Please Enter Your Name"};
+    let error = {id:"clientName", error:"Please Enter a Valid Name"};
     errors.push(error);
     ret = false;
   }
