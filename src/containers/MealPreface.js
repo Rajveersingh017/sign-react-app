@@ -310,7 +310,9 @@ function MealPreface() {
                         {initaltesting}
                     
                         <Form.Control 
+                        className="totalMealSelected"
                         plaintext 
+                        placeholder="Total appears here"
                         readOnly 
                         defaultValue={mealCapcity} 
                         /><br></br>
