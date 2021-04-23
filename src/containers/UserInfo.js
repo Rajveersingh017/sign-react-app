@@ -80,7 +80,9 @@ function isNameValid(inputtxt) {
 }
 
 function isAlergyValid(input){
-  return (input =="" || input == null || input.match(/^[a-zA-Z\s]*$/) && input != input.match(/^\D+$/));
+  return (input =="" || input == null || input.match(/^[a-zA-Z\s]*$/));
+  // return (input =="" || input == null || input.match(/^[a-zA-Z\s]*$/) && input != input.match(/^\D+$/));
+
   // return (input !="" && input != null && input.match(/^[a-zA-Z\s]*$/));
 
 }
