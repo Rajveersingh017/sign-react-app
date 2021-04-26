@@ -110,12 +110,7 @@ function App() {
                   </LinkContainer> */}
 
 
-                  <LinkContainer to="/Volunteer_Registration">
-                    <Nav.Link>Volunteer Sign Up</Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to="/Agency_Registration">
-                    <Nav.Link>Agency Sign Up</Nav.Link>
-                  </LinkContainer>
+                  
                  
                   <LinkContainer to="/signup">
                     <Nav.Link>Client Signup</Nav.Link>
@@ -152,7 +147,12 @@ function App() {
   //                 <LinkContainer to="/UserInformation">
   //                 <Nav.Link>User Information</Nav.Link>
   //                 </LinkContainer>
- 
+//   <LinkContainer to="/Volunteer_Registration">
+//   <Nav.Link>Volunteer Sign Up</Nav.Link>
+// </LinkContainer>
+// <LinkContainer to="/Agency_Registration">
+//   <Nav.Link>Agency Sign Up</Nav.Link>
+// </LinkContainer>
 
   //                 <LinkContainer to="/settings">
   //                   <Nav.Link>Settings</Nav.Link>

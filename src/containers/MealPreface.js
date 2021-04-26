@@ -10,6 +10,7 @@ import { API } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import SingleMealDisplay from "../components/SingleMealDisplay";
 import swal from "sweetalert";
+import "./MealPreface.css"
 
 
 function MealPreface() {
@@ -31,8 +32,8 @@ function MealPreface() {
             swal
             ({
                 icon: 'error',
-                title: 'Oh bummer!',
-                text: 'We need you to provide us with an address so that we can deliver you the food! Please update your profile.',
+                title: 'We\'re Sorry!',
+                text: 'We need you to provide us with an address so that we can deliver you the food. Please update your profile.',
             });
         }
         else
@@ -78,8 +79,8 @@ function MealPreface() {
                     swal
                     ({
                         icon: 'error',
-                        title: 'Oh bummer!',
-                        text: 'We need you to provide us with an address so that we can deliver you the food! Please update your profile.',
+                        title: 'We\'re Sorry!',
+                        text: 'Please provide us with an address so that we can deliver you the food.',
                     });
                 }
                 else{
@@ -104,7 +105,7 @@ function MealPreface() {
                 swal({
                     title: "We are sorry!",
                     text: "Please wait until next thursday to place another order with us",
-                    icon: "danger",
+                    icon: "error",
                     dangerMode:true,
                 });
             }
@@ -179,9 +180,9 @@ function MealPreface() {
                 }
                 else{
                     swal({
-                        title: "oh no!",
-                        text: "we only allow our clients to book a max of 6 meals"+ temp,
-                        icon: "danger",
+                        title: "We're Sorry!",
+                        text: "we only allow our clients to book a max of 6 meals",
+                        icon: 'error',
                         dangerMode:true,
                     });
                     setButtonStatus(true)
@@ -283,8 +284,8 @@ function MealPreface() {
 
         }catch(error){        
             swal({
-                title: "Bummer!",
-                text: "something went wrong",
+                title: "We're Sorry!",
+                text: "something went wrong. Please contact admin",
                 icon: "error",
                 dangerMode:true,
             });

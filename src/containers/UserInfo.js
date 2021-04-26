@@ -212,6 +212,7 @@ function getError(id){
           adultsHome:fields.adultsHome,
           childrenHome:fields.childrenHome,
           clientAllergies:fields.clientAllergies,
+          currentOrderId: userInfo.userInfo.currentOrderId || null
         }
         let retUser = await updateUser(user);
         setUserInfo(user);
@@ -224,6 +225,7 @@ function getError(id){
 
           dangerMode: true,
         });
+        history.push("/Request_Meal");
   
         setIsLoading(false);
       } catch (e) {
@@ -258,13 +260,17 @@ function getError(id){
         </Form.Group>
 
         <Form.Group controlId="phoneNumber" size="lg">
-          <Form.Label>Phone Number With Area Code</Form.Label>
+          <Form.Label>Phone Number </Form.Label>
+          
           <Form.Control
             type="phone"
-            placeholder="Phone number"
+            placeholder="Phone Number With Area Code"
             value={fields.phoneNumber}
             onChange={handleFieldChangeInner}
           />
+          <Form.Text className="text-muted">
+          Example: 2041234567
+          </Form.Text>
            <Form.Label className= "errorStyle">{getError("phoneNumber")}</Form.Label>
         </Form.Group>
 

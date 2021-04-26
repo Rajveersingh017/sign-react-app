@@ -191,7 +191,7 @@ export default function Signup() {
 
 
        <Form.Group controlId="policyCheckBox">
-         <Form.Check onChange={handleFieldChange}  type="checkbox" label="Privacy Policy" />
+         <Form.Check onChange={handleFieldChange}  type="checkbox" label="I agree to privacy policy." />
          <Form.Text id="passwordHelpBlock" muted >
           <a href="https://www.thesignfoundation.org/privacy-policy" target="_blank">Read our Privacy Policy</a>
           </Form.Text>
