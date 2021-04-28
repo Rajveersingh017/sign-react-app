@@ -1,0 +1,17 @@
+.MealButtonsContainer{
+    color:red;
+    border: 2px solid black;
+    padding: 5%;
+    overflow: hidden;
+}
+.nonRed{
+    color: black;
+}
+.floatleftMealButton{
+    width: 50%;
+    float: left;
+}
+.floatrightMealButton{
+    width: 40%;
+    float: right;
+}

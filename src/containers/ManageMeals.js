@@ -12,6 +12,7 @@ import Button from 'react-bootstrap/Button'
 import { v4 as uuidv4 } from 'uuid';
 import swal from "sweetalert";
 import AdminMealDisplayCycle from "../components/AdminMealDisplayCycle";
+import MealPauseOrStart from "../components/MealPauseOrStart"
 
 
 function ManageMeals() {
@@ -208,6 +209,7 @@ function ManageMeals() {
     return (mealOption &&
         <div className="ManageMeals">
         
+            <MealPauseOrStart />
         
 
             
