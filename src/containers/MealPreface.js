@@ -214,9 +214,9 @@ function MealPreface() {
         }
         else{
             swal({
-                title: "oh no!",
-                text: "No Meals available for this meal option",
-                icon: "danger",
+                title: "We're Sorry!",
+                text: "At the moment, we are unable to provide a meal for the selected meal option.",
+                icon: "error",
                 dangerMode:true,
             });
         }
