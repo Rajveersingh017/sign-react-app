@@ -37,7 +37,7 @@ const [fields, handleFieldChange] = useFormFields({
   address:"",
   phoneNumber:"",
   clientName:"",
-  clientCity:"",
+  clientCity:"winnipeg",
   neighbourhood:"0",
   adultsHome:"0",
   childrenHome:"-1",
@@ -128,12 +128,12 @@ function isFormValid(){
     ret = false;
   }
 
-  let nameCityValid = isNameValid(fields.clientCity)
-  if(!nameCityValid){
-    let error = {id:"clientCity", error:"Please Enter Your City"};
-    errors.push(error);
-    ret = false;
-  }
+  // let nameCityValid = isNameValid(fields.clientCity)
+  // if(nameCityValid){
+  //   // let error = {id:"clientCity", error:"Please Enter Your City"};
+  //   // errors.push(error);
+  //   // ret = false;
+  // }
 
   if(fields.neighbourhood == "0" || fields.neighbourhood == "" || fields.neighbourhood == null){
     let error = {id:"neighbourhood", error:"Please choose from the provided list"};
@@ -207,7 +207,7 @@ function getError(id){
           address:fields.address,
           phoneNumber:fields.phoneNumber,
           clientName:fields.clientName,
-          clientCity:fields.clientCity,
+          clientCity:"winnipeg",
           neighbourhood:fields.neighbourhood,
           adultsHome:fields.adultsHome,
           childrenHome:fields.childrenHome,
@@ -292,6 +292,7 @@ function getError(id){
             placeholder="Your City"
             value={fields.clientCity}
             onChange={handleFieldChangeInner}
+            disabled
           />
           <Form.Label className= "errorStyle">{getError("clientCity")}</Form.Label>
         </Form.Group>
